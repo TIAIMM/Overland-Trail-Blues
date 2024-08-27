@@ -24,11 +24,11 @@ QQ群：761409041，提问前请至少完成基础部分
 
 最推荐购买GOG平台上的新维加斯终极版（全DLC版，即Fallout: New Vegas Ultimate Edition）
 
-​[GOG版购买链接](www.gog.com/zh/game/fallout_new_vegas_ultimate_edition)
+​[GOG版购买链接](https://www.gog.com/zh/game/fallout_new_vegas_ultimate_edition)
 
 次之推荐购买Steam平台上的新维加斯终极版
 
-​​[Steam版购买链接](www.store.steampowered.com/sub/13435/)
+​​[Steam版购买链接](https://www.store.steampowered.com/sub/13435/)
 
 不推荐购买其他任何平台的版本或不购买某个DLC！
 
