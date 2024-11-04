@@ -1,0 +1,37 @@
+; Handles the issue with slideshow sizing on custom FOV setting.
+; Before entering cell with slideshow script will persist your custom FOV, then
+; set default FOV (75) and return your custom FOV when player get out of slideshow
+; cell.
+
+; Requirements:
+; - xNVSE
+; - JIP LN NVSE
+
+ref rSFFCallbackOnEnter
+let rSFFCallbackOnEnter := (begin Function {ref rEnteredCell}
+player.AuxiliaryVariableSetFloat "*WorldFOV" (player.GetPlayerCamFOV 0)
+player.AuxiliaryVariableSetFloat "*1stPersonFOV" (player.GetPlayerCamFOV 1)
+fov 75
+end)
+
+ref rSFFCallbackOnExit
+let rSFFCallbackOnExit := (begin Function {ref rEnteredCell}
+SetCameraFOV (player.AuxiliaryVariableGetFloat "*WorldFOV") (player.AuxiliaryVariableGetFloat "*1stPersonFOV")
+end)
+
+array_var rSFFCell
+array_var SFFCells
+
+SFFCells = Ar_Construct "array"
+Ar_Append SFFCells, Endgame
+Ar_Append SFFCells, NVDLC01Slideshow
+Ar_Append SFFCells, NVDLC02SlideShow
+Ar_Append SFFCells, NVDLC03SlideShow
+Ar_Append SFFCells, NVDLC04SlideShow
+
+foreach rSFFCell <- SFFCells
+SetEventHandler "OnCellEnter" rSFFCallbackOnEnter "first"::rSFFCell["value"]
+SetEventHandler "OnCellExit" rSFFCallbackOnExit "first"::rSFFCell["value"]
+loop
+
+Print "Slideshow FOV Fix loaded successfully."
