@@ -1,0 +1,16 @@
+Uranium Haze TTW Potato说明
+基于H2O和Uranium Haze预设修改而来，关闭和调整部分效果，将性能影响尽可能降低
+
+删除WaterManagement.esp可支持非TTW的游戏
+
+使用MO2安装
+包含NVR本体和预设，前置需要自行下载安装，详情参见:
+https://www.nexusmods.com/newvegas/mods/88817
+
+必须的前置包括：
+DXVK
+Simple Fog Remover
+Neutral Weathers
+Cartographer
+
+Uranium Haze提到的其他前置最好也全部安装
