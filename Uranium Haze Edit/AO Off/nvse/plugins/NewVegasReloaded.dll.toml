@@ -60,7 +60,7 @@ SmartBackgroundProcess = false
 
 [_Main.LowHFSound.Main]
 FatigueCoeff = 0.5
-FatigueEnabled = true
+FatigueEnabled = false
 HealthCoeff = 0.5
 HealthEnabled = false
 
@@ -77,7 +77,7 @@ ReplaceIntro = false
 ScreenshotKey = 88
 
 [_Main.Main.Precipitations]
-RemovePrecipitations = true
+RemovePrecipitations = false
 
 [_Main.Main.Water]
 ForceReflections = true
@@ -151,29 +151,29 @@ Enabled = false
 [_Shaders.AmbientOcclusion]
 
 [_Shaders.AmbientOcclusion.Exteriors]
-AngleBias = 1.1
-BlurDropThreshold = 8.0
-BlurRadiusMultiplier = 2.0
+AngleBias = 1.0
+BlurDropThreshold = 3.0
+BlurRadiusMultiplier = 3.5
 ClampStrength = 0.15
-Enabled = true
-LumThreshold = 0.3
-Range = 20.0
-Samples = 5
-StrengthMultiplier = 1.0
-
-[_Shaders.AmbientOcclusion.Interiors]
-AngleBias = 0.2
-BlurDropThreshold = 8.0
-BlurRadiusMultiplier = 2.0
-ClampStrength = 0.1
 Enabled = true
 LumThreshold = 0.3
 Range = 30.0
 Samples = 5
-StrengthMultiplier = 2.0
+StrengthMultiplier = 1.5
+
+[_Shaders.AmbientOcclusion.Interiors]
+AngleBias = 1.0
+BlurDropThreshold = 3.0
+BlurRadiusMultiplier = 3.5
+ClampStrength = 0.1
+Enabled = true
+LumThreshold = 1.0
+Range = 30.0
+Samples = 5
+StrengthMultiplier = 1.5
 
 [_Shaders.AmbientOcclusion.Status]
-Enabled = false
+Enabled = true
 
 [_Shaders.Blood]
 
@@ -249,17 +249,17 @@ Enabled = false
 [_Shaders.Cinema]
 
 [_Shaders.Cinema.Main]
-AspectRatio = 2.35
-ChromaticAberration = 1.0
-FilmGrainAmount = 0.3
+AspectRatio = 1.0
+ChromaticAberration = 0.1
+FilmGrainAmount = 0.1
 LetterBoxDepth = 0.0
-Mode = 1
-OverlayStrength = 0.1
+Mode = 0
+OverlayStrength = 0.0
 VignetteDarkness = 1.2
 VignetteRadius = 0.4
 
 [_Shaders.Cinema.Status]
-Enabled = false
+Enabled = true
 
 
 [_Shaders.Coloring]
@@ -392,13 +392,13 @@ Enabled = true
 [_Shaders.GodRays]
 
 [_Shaders.GodRays.Coloring]
-RayB = 1.96
-RayG = 1.7
-RayR = 2.55
+RayB = 2.47
+RayG = 1.3
+RayR = 1.26
 Saturate = 0.2
 
 [_Shaders.GodRays.Main]
-DayMultiplier = 1.0
+DayMultiplier = 0.8
 LightShaftPasses = 8
 Luminance = 0.4
 NightMultiplier = 0.0
@@ -432,11 +432,11 @@ Enabled = false
 [_Shaders.ImageAdjust]
 
 [_Shaders.ImageAdjust.Interiors]
-Brightness = 1.5
+Brightness = 1.2
 Contrast = 1.02
-DarkColorB = 1.1
-DarkColorG = 0.9
-DarkColorR = 0.9
+DarkColorB = 1.0
+DarkColorG = 1.0
+DarkColorR = 1.2
 LightColorB = 1.0
 LightColorG = 1.0
 LightColorR = 1.0
@@ -445,26 +445,26 @@ Strength = 1.0
 
 [_Shaders.ImageAdjust.Main]
 Brightness = 1.1
-Contrast = 1.25
-DarkColorB = 1.0
-DarkColorG = 1.1
-DarkColorR = 1.1
-LightColorB = 1.0
-LightColorG = 1.1
-LightColorR = 1.1
+Contrast = 1.225
+DarkColorB = 1.05
+DarkColorG = 0.95
+DarkColorR = 0.95
+LightColorB = 1.05
+LightColorG = 0.95
+LightColorR = 0.95
 Saturation = 1.0
-Strength = 0.6
+Strength = 1.0
 
 [_Shaders.ImageAdjust.Night]
-Brightness = 0.8
-Contrast = 1.03
-DarkColorB = 1.0
+Brightness = 0.9
+Contrast = 1.005
+DarkColorB = 1.1
 DarkColorG = 1.0
 DarkColorR = 1.0
-LightColorB = 1.0
+LightColorB = 1.1
 LightColorG = 1.0
 LightColorR = 1.0
-Saturation = 0.9
+Saturation = 1.0
 Strength = 1.7
 
 [_Shaders.ImageAdjust.Status]
@@ -597,7 +597,7 @@ Speed = 2.4
 VerticalScale = 0.8
 
 [_Shaders.Precipitations.Status]
-Enabled = true
+Enabled = false
 
 
 [_Shaders.ShadowsExteriors]
@@ -775,13 +775,13 @@ UseNormals = false
 AthmosphereThickness = 2.0
 GlareStrength = 2.0
 ReplaceSun = false
-StarStrength = 2.5
+StarStrength = 2.0
 StarTwinkle = 0.3
-SunInfluence = 4.0
-SunStrength = 7.0
-SunsetB = 0.098
-SunsetG = 0.085
-SunsetR = 0.1275
+SunInfluence = 0.7
+SunStrength = 0.7
+SunsetB = 0.1275
+SunsetG = 0.065
+SunsetR = 0.063
 UseSunDiskColor = false
 
 [_Shaders.Sky.Status]
@@ -795,7 +795,7 @@ Flakes = 0.5
 Speed = 1.4
 
 [_Shaders.Snow.Status]
-Enabled = true
+Enabled = false
 
 
 [_Shaders.SnowAccumulation]
@@ -811,7 +811,7 @@ SnowColorR = 0.9
 SunPower = 1.3
 
 [_Shaders.SnowAccumulation.Status]
-Enabled = true
+Enabled = false
 
 
 [_Shaders.Specular]
@@ -913,10 +913,10 @@ WeatherModifier = 1.0
 [_Shaders.Tonemapping.Main]
 BloomExponent = 0.7
 BloomStrength = 0.15
-Exposure = 1.4
-Gamma = 2.2
+Exposure = 1.5
+Gamma = 2.0
 HighlightSaturation = 1.0
-Linearization = 2.2
+Linearization = 2.1
 PointLightMultiplier = 1.0
 Saturation = 1.0
 SkyMultiplier = 1.8
@@ -934,9 +934,9 @@ WeatherModifier = 1.0
 BloomExponent = 1.0
 BloomStrength = 0.25
 Exposure = 1.2
-Gamma = 2.2
+Gamma = 2.0
 HighlightSaturation = 1.0
-Linearization = 2.2
+Linearization = 2.1
 PointLightMultiplier = 1.0
 Saturation = 1.0
 SkyMultiplier = 1.0
@@ -979,36 +979,36 @@ SimpleFogHeight = 0.5
 WeatherImpact = 0.6
 
 [_Shaders.VolumetricFog.Main]
-Amount = 0.9
+Amount = 0.6
 AmountInterior = 0.0
-DistantFogBlend = 0.25
-DistantFogHeight = 0.3
-DistantFogRange = 1.0
+DistantFogBlend = 0.6
+DistantFogHeight = 0.6
+DistantFogRange = 0.9
 Extinction = 2.0
-FogNight = 1.0
-FogSaturation = 0.2
+FogNight = 2.0
+FogSaturation = 4.6
 HeightFogBlend = 1.5
-HeightFogDensity = 0.7
-HeightFogDist = 0.27
-HeightFogFalloff = 50.0
-HeightFogHeight = 3.0
-HeightFogRolloff = 1.6
-HeightFogSkyColor = 4.0
-Inscattering = 1.5
+HeightFogDensity = 1.0
+HeightFogDist = 1.0
+HeightFogFalloff = 18.0
+HeightFogHeight = 18.0
+HeightFogRolloff = 1.7
+HeightFogSkyColor = 0.0
+Inscattering = 0.27
 LowFogBlend = 5.0
 LowFogDensity = 2.0
 LowFogDist = 8.0
 LowFogFalloff = 2.0
 LowFogHeight = 10.0
-MinimumBaseFog = 0.1
-SimpleFogBlend = 0.01
+MinimumBaseFog = 1.0
+SimpleFogBlend = 0.5
 SimpleFogExtinction = 1.0
-SimpleFogHeight = 0.01
+SimpleFogHeight = 0.2
 SimpleFogInscattering = 11.5
 SimpleFogNight = 50.0
-SimpleFogSkyColor = 10.0
-SunPower = 0.1
-WeatherImpact = 0.5
+SimpleFogSkyColor = 6.0
+SunPower = 0.4
+WeatherImpact = 0.2
 
 [_Shaders.VolumetricFog.Status]
 Enabled = true
@@ -1018,19 +1018,19 @@ Enabled = true
 
 [_Shaders.Water.Default]
 causticsStrength = 1.0
-causticsStrengthS = 0.2
-choppiness = 1.5
+causticsStrengthS = 1.0
+choppiness = 2.0
 depthDarkness = 1.0
 inExtCoeff_B = 1.0
 inExtCoeff_G = 1.0
 inExtCoeff_R = 1.0
 inScattCoeff = 1.0
 reflectivity = 0.8
-refractionPower = 0.75
-shoreFactor = 1.0
-shoreMovement = 0.4
-turbidity = 2.5
-waveSpeed = 0.2
+refractionPower = 0.5
+shoreFactor = 2.0
+shoreMovement = 0.8
+turbidity = 20.0
+waveSpeed = 0.5
 waveWidth = 1.0
 
 [_Shaders.Water.Interiors]
