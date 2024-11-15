@@ -1,5 +1,25 @@
-Player.AuxVarSetFlt "*_ARsoutog" (GetINIFloat "AlertSound:fAlertSoundToggle" "AlertReaction.ini")
+StopSoundFile
+
+if GetNVSEVersionFull < 6.35
+	MessageBoxEx "Alert Reaction requirement not detected!%rInstall latest xNVSE."
+	return
+endif
+if GetPluginVersion "JIP LN NVSE" < 57.30
+	MessageBoxEx "Alert Reaction requirement not detected!%rInstall latest JIP LN NVSE Plugin."
+	return
+endif
+if GetPluginVersion "JohnnyGuitarNVSE" < 511
+	MessageBoxEx "Alert Reaction requirement not detected!%rInstall latest JohnnyGuitar NVSE."
+	return
+endif
+if GetPluginVersion "ShowOffNVSE Plugin" < 180
+	MessageBoxEx "Alert Reaction requirement not detected!%rInstall latest ShowOff NVSE plugin."
+	return
+endif
+
+Player.AuxVarSetFlt "*_ARaltsotog" (GetINIFloat "AlertSound:fAlertSoundToggle" "AlertReaction.ini")
 Player.AuxVarSetFlt "*_ARslomotog" (GetINIFloat "SlowMotion:fSlowMotionToggle" "AlertReaction.ini")
+Player.AuxVarSetFlt "*_ARslomosot" (GetINIFloat "SlowMotion:fSlowMotionSoundToggle" "AlertReaction.ini")
 Player.AuxVarSetFlt "*_ARslomosca" (GetINIFloat "SlowMotion:fSlowMotionTimeScale" "AlertReaction.ini")
 Player.AuxVarSetFlt "*_ARslomodur" (GetINIFloat "SlowMotion:fSlowMotionDuration" "AlertReaction.ini")
 Player.AuxVarSetFlt "*_ARslomopls" (GetINIFloat "SlowMotion:fSlowMotionEnemyNumGain" "AlertReaction.ini")
@@ -21,6 +41,7 @@ SetEventHandlerAlt "OnCombatEnd" (begin function {ref rTgt, ref rEdr}
 			Player.AuxVarSetFlt "*_ARappalert" 0
 			Player.AuxVarSetFlt "*_ARnumofenm" 0
 			sgtm 1.0
+			StopSoundFile
 			print "Cleared"
 		endif
 	end)
@@ -28,11 +49,11 @@ end)
 
 SetEventHandlerAlt "AlertReactionStart" (begin function {}
 	Player.AuxVarSetFlt "*_ARappalert" 1
-	if Player.AuxVarGetFlt "*_ARsoutog"
+	if Player.AuxVarGetFlt "*_ARaltsotog"
 		PlaySoundFile "Data/sound/fx/AlertReaction/AlertSound.mp3" 1 0 0
 		print "Play sound"
 	endif
-	if Player.AuxVarGetFlt "*_ARslomotog"
+	if Player.AuxVarGetFlt "*_ARslomotog" && Player.AuxVarGetFlt "*_ARslomosca"
 		DispatchEventAlt "AlertReactionSlowMo"
 		print "Slowmo start"
 	endif
@@ -42,8 +63,12 @@ end)
 SetEventHandlerAlt "AlertReactionSlowMo" (begin function {}
 	if ggtm == 1.0
 		sgtm (Player.AuxVarGetFlt "*_ARslomosca")
+		if Player.AuxVarGetFlt "*_ARslomosot"
+			PlaySoundFile "Data/sound/fx/AlertReaction/Heartbeatsound.mp3" 1 1 0
+		endif
 		CallAfterSeconds ((Player.AuxVarGetFlt "*_ARslomodur") * (Player.AuxVarGetFlt "*_ARslomosca") + (Player.AuxVarGetFlt "*_ARslomopls") * ((Player.AuxVarGetFlt "*_ARnumofenm") - 1)) (begin function {}
 			sgtm 1.0
+			StopSoundFile
 		end)
 	endif
 end)
