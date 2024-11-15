@@ -1,0 +1,109 @@
+StopSoundFile
+
+if eval GetNVSEVersionFull < 6.35
+	MessageBoxEx "Alert Reaction requirement not detected!%rInstall latest xNVSE."
+	return
+endif
+if eval GetPluginVersion "JIP LN NVSE" < 57.30
+	MessageBoxEx "Alert Reaction requirement not detected!%rInstall latest JIP LN NVSE Plugin."
+	return
+endif
+if eval GetPluginVersion "JohnnyGuitarNVSE" < 511
+	MessageBoxEx "Alert Reaction requirement not detected!%rInstall latest JohnnyGuitar NVSE."
+	return
+endif
+if eval GetPluginVersion "ShowOffNVSE Plugin" < 180
+	MessageBoxEx "Alert Reaction requirement not detected!%rInstall latest ShowOff NVSE plugin."
+	return
+endif
+
+Player.AuxVarSetFlt "*_ARaltsotog" (GetINIFloat "AlertSound:fAlertSoundToggle" "AlertReaction.ini")
+Player.AuxVarSetFlt "*_ARaltsorag" (GetINIFloat "AlertSound:fAlertSoundRange" "AlertReaction.ini")
+Player.AuxVarSetFlt "*_ARaltsonsk" (GetINIFloat "AlertSound:fAlertSoundWhenNotSneaking" "AlertReaction.ini")
+Player.AuxVarSetFlt "*_ARslomotog" (GetINIFloat "SlowMotion:fSlowMotionToggle" "AlertReaction.ini")
+Player.AuxVarSetFlt "*_ARslomorag" (GetINIFloat "SlowMotion:fSlowMotionRange" "AlertReaction.ini")
+Player.AuxVarSetFlt "*_ARslomonsk" (GetINIFloat "SlowMotion:fSlowMotionWhenNotSneaking" "AlertReaction.ini")
+Player.AuxVarSetFlt "*_ARslomosot" (GetINIFloat "SlowMotion:fSlowMotionSoundToggle" "AlertReaction.ini")
+Player.AuxVarSetFlt "*_ARslomosca" (GetINIFloat "SlowMotion:fSlowMotionTimeScale" "AlertReaction.ini")
+Player.AuxVarSetFlt "*_ARslomodur" (GetINIFloat "SlowMotion:fSlowMotionDuration" "AlertReaction.ini")
+Player.AuxVarSetFlt "*_ARslomopls" (GetINIFloat "SlowMotion:fSlowMotionEnemyNumGain" "AlertReaction.ini")
+Player.AuxVarSetFlt "*_ARappalert" 0
+Player.AuxVarSetFlt "*_ARnumofenm" 0
+
+;Update enemy number and save first enemy as a ref
+SetEventHandlerAlt "OnStartCombat" (begin function {ref rTrt, ref rAtk}
+	if eval rTrt
+		Player.AuxVarSetFlt "*_ARnumofenm" (Ar_Size Player.GetCombatTargets)
+		Player.AuxVarSetRef "*_ARcombatenm" rTrt
+	endif
+end) 2::player
+
+;Clear effect apply status,enemy number and stop sound/slowmo
+SetEventHandlerAlt "OnCombatEnd" (begin function {ref rTgt, ref rEdr}
+	CallAfterFrames 5 (begin function {}
+		if eval (Player.AuxVarGetRef "*_ARcombatenm")
+			if eval !(Player.IsInCombat) && !((Player.AuxVarGetRef "*_ARcombatenm").IsLimbCrippled 6)
+				Player.AuxVarSetFlt "*_ARappalert" 0
+				Player.AuxVarSetFlt "*_ARnumofenm" 0
+				sgtm 1.0
+				StopSoundFile
+			endif
+		endif
+	end)
+end)
+
+;Change effect apply status
+SetEventHandlerAlt "AlertReactionStart" (begin function {}
+	Player.AuxVarSetFlt "*_ARappalert" 1
+	DispatchEventAlt "AlertReactionAlertSoundFilter"
+	DispatchEventAlt "AlertReactionSlowMoFilter"
+end)
+
+; Check range, sneaking status, INI settings before execute alert sound
+SetEventHandlerAlt "AlertReactionAlertSoundFilter" (begin function {}
+	if eval (Player.AuxVarGetRef "*_ARcombatenm")
+		if eval Player.GetDistance3D (Player.AuxVarGetRef "*_ARcombatenm") <= (Player.AuxVarGetFlt "*_ARaltsorag") && (player.IsSneaking || (Player.AuxVarGetFlt "*_ARaltsonsk")) && Player.AuxVarGetFlt "*_ARaltsotog"
+				PlaySoundFile "Data/sound/fx/AlertReaction/AlertSound.mp3" 1 0 0
+		endif
+	endif
+end)
+
+; Check range, sneaking status, INI settings before execute slowmo
+SetEventHandlerAlt "AlertReactionSlowMoFilter" (begin function {}
+	if eval (Player.AuxVarGetRef "*_ARcombatenm")
+		if eval Player.GetDistance3D (Player.AuxVarGetRef "*_ARcombatenm") <= (Player.AuxVarGetFlt "*_ARslomorag") && (player.IsSneaking || (Player.AuxVarGetFlt "*_ARslomonsk")) && Player.AuxVarGetFlt "*_ARslomotog" && Player.AuxVarGetFlt "*_ARslomosca"
+			DispatchEventAlt "AlertReactionSlowMo"
+		endif
+	endif
+end)
+
+; SlowMo Time Calculation: Duration * Timescale + EnemyNumGain * (EnemyNumber - 1)
+SetEventHandlerAlt "AlertReactionSlowMo" (begin function {}
+	if eval ggtm == 1.0
+		sgtm (Player.AuxVarGetFlt "*_ARslomosca")
+		if eval Player.AuxVarGetFlt "*_ARslomosot"
+			DispatchEventAlt "AlertReactionSlowMoSound"
+		endif
+		CallAfterSeconds ((Player.AuxVarGetFlt "*_ARslomodur") * (Player.AuxVarGetFlt "*_ARslomosca") + (Player.AuxVarGetFlt "*_ARslomopls") * ((Player.AuxVarGetFlt "*_ARnumofenm") - 1)) (begin function {}
+			sgtm 1.0
+			StopSoundFile
+		end)
+	endif
+end)
+
+; SlowMo Sound Delay Time Calculation: 1.5 * Timescale
+SetEventHandlerAlt "AlertReactionSlowMoSound" (begin function {}
+	if eval (Player.AuxVarGetFlt "*_ARaltsotog") && ((Player.AuxVarGetFlt "*_ARslomodur") >= 1.5)
+		CallAfterSeconds ( 1.5 * (Player.AuxVarGetFlt "*_ARslomosca")) ({} => PlaySoundFile "Data/sound/fx/AlertReaction/Heartbeatsound.mp3" 1 1 0)
+	endif
+	if eval !(Player.AuxVarGetFlt "*_ARaltsotog")
+		PlaySoundFile "Data/sound/fx/AlertReaction/Heartbeatsound.mp3" 1 1 0
+	endif
+end)
+
+;Execute alert reaction by checking combat enemy number and whether the effect apply status every frame
+SetGameMainLoopCallback (begin function {}
+	if eval !(Player.AuxVarGetFlt "*_ARappalert") && (Player.AuxVarGetFlt "*_ARnumofenm")
+		DispatchEventAlt "AlertReactionStart"
+	endif
+end) 1 3 1
