@@ -20,6 +20,7 @@ endif
 Player.AuxVarSetFlt "*_ARaltsotog" (GetINIFloat "AlertSound:fAlertSoundToggle" "AlertReaction.ini")
 Player.AuxVarSetFlt "*_ARslomotog" (GetINIFloat "SlowMotion:fSlowMotionToggle" "AlertReaction.ini")
 Player.AuxVarSetFlt "*_ARslomosot" (GetINIFloat "SlowMotion:fSlowMotionSoundToggle" "AlertReaction.ini")
+Player.AuxVarSetFlt "*_ARsotdelay" (GetINIFloat "SlowMotion:fSlowMotionSoundDelay" "AlertReaction.ini")
 Player.AuxVarSetFlt "*_ARslomosca" (GetINIFloat "SlowMotion:fSlowMotionTimeScale" "AlertReaction.ini")
 Player.AuxVarSetFlt "*_ARslomodur" (GetINIFloat "SlowMotion:fSlowMotionDuration" "AlertReaction.ini")
 Player.AuxVarSetFlt "*_ARslomopls" (GetINIFloat "SlowMotion:fSlowMotionEnemyNumGain" "AlertReaction.ini")
@@ -64,13 +65,17 @@ SetEventHandlerAlt "AlertReactionSlowMo" (begin function {}
 	if ggtm == 1.0
 		sgtm (Player.AuxVarGetFlt "*_ARslomosca")
 		if Player.AuxVarGetFlt "*_ARslomosot"
-			PlaySoundFile "Data/sound/fx/AlertReaction/Heartbeatsound.mp3" 1 1 0
+			DispatchEventAlt "AlertReactionSlowMoSound"
 		endif
 		CallAfterSeconds ((Player.AuxVarGetFlt "*_ARslomodur") * (Player.AuxVarGetFlt "*_ARslomosca") + (Player.AuxVarGetFlt "*_ARslomopls") * ((Player.AuxVarGetFlt "*_ARnumofenm") - 1)) (begin function {}
 			sgtm 1.0
 			StopSoundFile
 		end)
 	endif
+end)
+
+SetEventHandlerAlt "AlertReactionSlowMoSound" (begin function {}
+	CallAfterSeconds ((Player.AuxVarGetFlt "*_ARslomosca") * (Player.AuxVarGetFlt "*_ARsotdelay")) ({} => PlaySoundFile "Data/sound/fx/AlertReaction/Heartbeatsound.mp3" 1 1 0)
 end)
 
 SetGameMainLoopCallback (begin function {}
