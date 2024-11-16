@@ -1,0 +1,82 @@
+<rect name="AlertReaction">
+	<_MarkerRed> 255 </_MarkerRed>
+	<_MarkerGreen> 0 </_MarkerGreen>
+	<_MarkerBlue> 0 </_MarkerBlue>
+	
+	<_MarkerX> 0 </_MarkerX>
+	<_MarkerY> 0 </_MarkerY>
+	<_MarkerZ> 100 </_MarkerZ>
+	
+	<_MarkerWidth>
+		<copy> 128 </copy>
+	</_MarkerWidth>
+	
+	<_MarkerHeight>
+		<copy> 512 </copy>
+	</_MarkerHeight>
+	
+	<x> 0 </x>
+	<y> 0 </y>
+	<locus> &true; </locus>
+</rect>
+
+<template name="AlertRect">
+	<rect name="AlertReaction">
+	</rect>
+</template>
+
+<template name="AlertMarker">
+	<rect name="AlertTemp"> 
+		<locus> &true; </locus>
+		<x> 0 </x>
+		<y> 0 </y>
+		
+		<width> <copy src="AlertReaction" trait="_MarkerWidth"/> </width>
+		<height> <copy src="AlertReaction" trait="_MarkerHeight"/> </height>
+		
+		<visible> 1 </visible>
+		
+		<image name="Marker">
+			<filename> AlertReaction\exclamation.dds </filename>
+			
+			<locus>&true;</locus>
+			<depth> 10 </depth>
+			
+			<x> 
+				<copy src="screen()" trait="width"/>
+				<mul> <copy src="AlertReaction" trait="_MarkerX"/> </mul>
+				<sub>
+					<copy src="me()" trait="width"/>
+					<mul>
+						<copy src="me()" trait="zoom"/>
+						<div> 100 </div>
+					</mul>
+					<mul> 0.5 </mul>
+				</sub>
+			</x>
+			<y>
+				<copy src="screen()" trait="height"/>
+				<mul> <copy src="AlertReaction" trait="_MarkerY"/> </mul>
+				<sub> 
+					<copy src="me()" trait="height"/>
+					<mul>
+						<copy src="me()" trait="zoom"/>
+						<div> 100 </div>
+					</mul>
+				</sub>
+			</y>
+			
+			<zoom> <copy src="AlertReaction" trait="_MarkerZ"/> </zoom>
+			<width> <copy src="AlertReaction" trait="_MarkerWidth"/> </width>
+			<height> <copy src="AlertReaction" trait="_MarkerHeight"/> </height>
+			
+			<red> <copy src="AlertReaction" trait="_MarkerRed"/> </red>
+			<green> <copy src="AlertReaction" trait="_MarkerGreen"/> </green>
+			<blue> <copy src="AlertReaction" trait="_MarkerBlue"/> </blue>
+			<systemcolor>0</systemcolor>
+			<alpha>255</alpha>
+			
+			<visible> 1 </visible>
+		</image>
+	</rect>
+</template>
