@@ -21,9 +21,9 @@ if eval GetPluginVersion "UI Organizer Plugin" < 230
 endif
 
 
-
-StopSound (Player.AuxVarGetRef "*_ARSMsound")
-
+if eval (Player.AuxVarGetRef "*_ARSMsound")
+	StopSound (Player.AuxVarGetRef "*_ARSMsound")
+endif
 
 
 ;Read INI settings
@@ -118,6 +118,8 @@ Player.AuxVarSetFlt "*_ARscraxisx" 0
 Player.AuxVarSetFlt "*_ARscraxisy" 0
 Player.AuxVarSetFlt "*_ARisonscrn" 0
 
+
+
 SetEventHandlerAlt "EraseAllArrayAux" (begin function {}
 	Player.AuxVarErase "*_ARcombatenm" -1
 	Player.AuxVarErase "*_ARamkisapl" -1
@@ -176,7 +178,6 @@ SetEventHandlerAlt "EnemyJoinPreLoop" (begin function {ref rJLr}
 		while ((Player.AuxVarGetFlt "*_AREnmLoop") < (Player.AuxVarGetFlt "*_AREnmNums"))
 			if eval (rJLr == (Player.AuxVarGetRef "*_ARcombatenm" (Player.AuxVarGetFlt "*_AREnmLoop")))
 				Player.AuxVarSetFlt "*_ARSameEnm" 1
-				print "Same!"
 			endif
 			Player.AuxVarSetFlt "*_AREnmLoop" ((Player.AuxVarGetFlt "*_AREnmLoop") + 1)
 		loop
@@ -275,11 +276,9 @@ end)
 
 SetEventHandlerAlt "AlertMarkFilter" (begin function {ref rARei, int iARmn}
 	if eval rARei
-		print "AMFilter"
 		if eval !(Player.AuxVarGetFlt "*_ARamkisapl" iARmn)
 			if eval Player.GetDistance3D rARei <= (Player.AuxVarGetFlt "*_ARaltmkrag") && (player.IsSneaking || (Player.AuxVarGetFlt "*_ARaltmknsk")) && (Player.AuxVarGetFlt "*_ARaltmktog")
 				DispatchEventAlt "AlertMarkerTileAdd" rARei, iARmn
-				print "StartAM"
 				Player.AuxVarSetFlt "*_ARappaltmk" 1
 			endif
 		endif
@@ -292,7 +291,6 @@ SetEventHandlerAlt "AlertMarkerTileAdd" (begin function {ref rARtr, int iARta}
 		AddTileFromTemplate "HUDMainMenu\AlertReaction|AlertRectTemp|AlertRect"
 	endif
 	AddTileFromTemplate "HUDMainMenu\AlertReaction\AlertRect|AlertMarker|AM%g" iARta
-	print "TileAdd"
 	DispatchEventAlt "AlertMarkerTileInitial" rARtr,iARta
 end)
 
@@ -301,7 +299,6 @@ SetEventHandlerAlt "AlertMarkerTileInitial" (begin function {ref rARti, int iARt
 		DispatchEventAlt "AlertMarkerLocCal" rARti, iARts
 		DispatchEventAlt "AlertMarkerFisrtShow" iARts
 		DispatchEventAlt "AlertMarkerIndyUnload" iARts
-		print "StartInit"
 	endif
 end)
 
@@ -344,7 +341,6 @@ SetEventHandlerAlt "AlertMarkerFisrtShow" (begin function {int iARfc}
 		if eval (Player.AuxVarGetFlt "*_ARisonscrn" iARfc)
 			SetUIFloatGradual ("HUDMainMenu\AlertReaction\AlertRect\AM" + (tostring iARfc) + "\Marker\alpha") 0 255 0.05
 			CallAfterSeconds (0.05 * (ggtm)) ({} => Player.AuxVarSetFlt "*_ARamkissho" 1 iARfc)
-			print "AMFirstS"
 		endif
 	end)
 end)
@@ -464,7 +460,6 @@ SetEventHandlerAlt "OnStartCombat" (begin function {ref rTrt, ref rAtk}
 			Player.AuxVarSetFlt "*_AREnmNums" (Player.AuxVarSize "*_ARcombatenm")
 			Player.AuxVarSetFlt "*_ARSameEnm" 0
 			DispatchEventAlt "EnemyJoinPreLoop" (rTrt)
-			print "StartJoin"
 		else
 			DispatchEventAlt "FirstIntoCombat" (rTrt)
 		endif
