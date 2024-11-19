@@ -1,0 +1,472 @@
+;Requirements check
+if eval GetNVSEVersionFull < 6.35
+	MessageBoxEx "Alert Reaction requirement not detected!%rInstall latest xNVSE."
+	return
+endif
+if eval GetPluginVersion "JIP LN NVSE" < 57.30
+	MessageBoxEx "Alert Reaction requirement not detected!%rInstall latest JIP LN NVSE Plugin."
+	return
+endif
+if eval GetPluginVersion "JohnnyGuitarNVSE" < 511
+	MessageBoxEx "Alert Reaction requirement not detected!%rInstall latest JohnnyGuitar NVSE."
+	return
+endif
+if eval GetPluginVersion "ShowOffNVSE Plugin" < 180
+	MessageBoxEx "Alert Reaction requirement not detected!%rInstall latest ShowOff NVSE plugin."
+	return
+endif
+if eval GetPluginVersion "UI Organizer Plugin" < 230
+	MessageBoxEx "Alert Reaction requirement not detected!%rInstall latest UIO - User Interface Organizer."
+	return
+endif
+
+
+
+StopSound (Player.AuxVarGetRef "*_ARSMsound")
+
+
+
+;Read INI settings
+Player.AuxVarSetFlt "*_ARearlyfeh" (GetMaxOf 0 (GetMinOf 1 (GetINIFloat "Global:fAlertReactionEarlierRefresh" "AlertReaction.ini")))
+
+Player.AuxVarSetFlt "*_ARaltsotog" (GetMaxOf 0 (GetMinOf 1 (GetINIFloat "AlertSound:fAlertSoundToggle" "AlertReaction.ini")))
+Player.AuxVarSetFlt "*_ARaltsorag" (GetMaxOf 0 (GetINIFloat "AlertSound:fAlertSoundRange" "AlertReaction.ini"))
+Player.AuxVarSetFlt "*_ARaltsonsk" (GetMaxOf 0 (GetMinOf 1 (GetINIFloat "AlertSound:fAlertSoundWhenNotSneaking" "AlertReaction.ini")))
+Player.AuxVarSetFlt "*_ARaltsovol" (GetMaxOf 0 (GetMinOf 1 (GetINIFloat "AlertSound:fAlertSoundVolumeScale" "AlertReaction.ini")))
+Player.AuxVarSetFlt "*_ARaltsomti" (GetMaxOf 0 (GetMinOf 1 (GetINIFloat "AlertSound:fAllowMutipleAlertSound" "AlertReaction.ini")))
+
+Player.AuxVarSetFlt "*_ARslomotog" (GetMaxOf 0 (GetMinOf 1 (GetINIFloat "SlowMotion:fSlowMotionToggle" "AlertReaction.ini")))
+Player.AuxVarSetFlt "*_ARslomorag" (GetMaxOf 0 (GetINIFloat "SlowMotion:fSlowMotionRange" "AlertReaction.ini"))
+Player.AuxVarSetFlt "*_ARslomonsk" (GetMaxOf 0 (GetMinOf 1 (GetINIFloat "SlowMotion:fSlowMotionWhenNotSneaking" "AlertReaction.ini")))
+Player.AuxVarSetFlt "*_ARslomosot" (GetMaxOf 0 (GetMinOf 1 (GetINIFloat "SlowMotion:fSlowMotionSoundToggle" "AlertReaction.ini")))
+Player.AuxVarSetFlt "*_ARslomovol" (GetMaxOf 0 (GetMinOf 1 (GetINIFloat "SlowMotion:fSlowMotionSoundVolumeScale" "AlertReaction.ini")))
+Player.AuxVarSetFlt "*_ARslomosca" (GetMaxOf 0 (GetINIFloat "SlowMotion:fSlowMotionTimeScale" "AlertReaction.ini"))
+Player.AuxVarSetFlt "*_ARslomodur" (GetMaxOf 0 (GetINIFloat "SlowMotion:fSlowMotionDuration" "AlertReaction.ini"))
+Player.AuxVarSetFlt "*_ARslomopls" (GetMaxOf 0 (GetINIFloat "SlowMotion:fSlowMotionEnemyNumGain" "AlertReaction.ini"))
+
+Player.AuxVarSetFlt "*_ARaltmktog" (GetMaxOf 0 (GetMinOf 1 (GetINIFloat "AlertMarker:fAlertMarkertoggle" "AlertReaction.ini")))
+Player.AuxVarSetFlt "*_ARaltmksiz" (GetMaxOf 0 (GetINIFloat "AlertMarker:fAlertMarkerSizeScale" "AlertReaction.ini"))
+Player.AuxVarSetFlt "*_ARaltmkhgt" (GetINIFloat "AlertMarker:fAlertMarkerHeightAdjust" "AlertReaction.ini")
+Player.AuxVarSetFlt "*_ARaltmkind" (GetMaxOf 0 (GetMinOf 1 (GetINIFloat "AlertMarker:fAlertMarkerIndependentCalculate" "AlertReaction.ini")))
+Player.AuxVarSetFlt "*_ARaltmkitm" (GetMaxOf 0 (GetINIFloat "AlertMarker:fAlertMarkerIndependentTime" "AlertReaction.ini"))
+Player.AuxVarSetFlt "*_ARaltmkrag" (GetMaxOf 0 (GetINIFloat "AlertMarker:fAlertMarkerRange" "AlertReaction.ini"))
+Player.AuxVarSetFlt "*_ARaltmknsk" (GetMaxOf 0 (GetMinOf 1 (GetINIFloat "AlertMarker:fAlertMarkerWhenNotSneaking" "AlertReaction.ini")))
+Player.AuxVarSetFlt "*_ARaltmkcor" (GetMaxOf 0 (GetMinOf 255 (GetINIFloat "AlertMarker:fAlertMarkerColorRed" "AlertReaction.ini")))
+Player.AuxVarSetFlt "*_ARaltmkcog" (GetMaxOf 0 (GetMinOf 255 (GetINIFloat "AlertMarker:fAlertMarkerColorGreen" "AlertReaction.ini")))
+Player.AuxVarSetFlt "*_ARaltmkcob" (GetMaxOf 0 (GetMinOf 255 (GetINIFloat "AlertMarker:fAlertMarkerColorBlue" "AlertReaction.ini")))
+
+
+
+;Apply INI alert marker settings
+SetUIFloatAlt "HudMainMenu\AlertReaction\_MarkerRed" (Player.AuxVarGetFlt "*_ARaltmkcor")
+SetUIFloatAlt "HudMainMenu\AlertReaction\_MarkerGreen" (Player.AuxVarGetFlt "*_ARaltmkcog")
+SetUIFloatAlt "HudMainMenu\AlertReaction\_MarkerBlue" (Player.AuxVarGetFlt "*_ARaltmkcob")
+SetUIFloatAlt "HudMainMenu\AlertReaction\_MarkerZoom" (Player.AuxVarGetFlt "*_ARaltmksiz")
+SetUIFloatAlt "HudMainMenu\AlertReaction\_MarkerHgtAdj" (Player.AuxVarGetFlt "*_ARaltmkhgt")
+
+
+
+;Clone BaseForm
+Player.AuxVarSetRef "*_ARASsound" (TempCloneForm FSTSnow 1)
+if eval (Player.AuxVarGetRef "*_ARASsound")
+	SetSoundSourceFile (Player.AuxVarGetRef "*_ARASsound") "fx\AlertReaction\AlertSound\AlertSound.wav"
+	SetSoundFlag (Player.AuxVarGetRef "*_ARASsound") 0 0	;No Random Frequency Shift
+	SetSoundFlag (Player.AuxVarGetRef "*_ARASsound") 5 1	;Set to Menu Sound
+	SetSoundFlag (Player.AuxVarGetRef "*_ARASsound") 12 0	;No Mute When Submerged
+	SetSoundTraitNumeric (Player.AuxVarGetRef "*_ARASsound") 2 0	;Set Frequency Adjustment to 0
+	SetSoundTraitNumeric (Player.AuxVarGetRef "*_ARASsound") 3 (Player.AuxVarGetFlt "*_ARaltsovol")	;Volume Adjust
+endif
+
+Player.AuxVarSetRef "*_ARSMsound" (TempCloneForm FSTSnow 1)
+if eval (Player.AuxVarGetRef "*_ARSMsound")
+	SetSoundSourceFile (Player.AuxVarGetRef "*_ARSMsound") "fx\AlertReaction\Heartbeatsound\Heartbeatsound.wav"
+	SetSoundFlag (Player.AuxVarGetRef "*_ARSMsound") 0 0	;No Random Frequency Shift
+	SetSoundFlag (Player.AuxVarGetRef "*_ARSMsound") 5 1	;Set to Menu Sound
+	SetSoundFlag (Player.AuxVarGetRef "*_ARSMsound") 12 0	;No Mute When Submerged
+	SetSoundTraitNumeric (Player.AuxVarGetRef "*_ARSMsound") 2 0	;Set Frequency Adjustment to 0
+	SetSoundTraitNumeric (Player.AuxVarGetRef "*_ARSMsound") 3 (Player.AuxVarGetFlt "*_ARslomovol")	;Volume Adjust
+	SetSoundFlag (Player.AuxVarGetRef "*_ARSMsound") 4 1	;Set to Loop
+endif
+
+Player.AuxVarSetRef "*_ARSMimod" (TempCloneForm PipBackgroundFX 1)
+
+
+
+;Initialization
+
+;Uesd in loop
+Player.AuxVarSetFlt "*_ARappalert" 0
+Player.AuxVarSetFlt "*_ARappaltso" 0
+Player.AuxVarSetFlt "*_ARappslomo" 0
+Player.AuxVarSetFlt "*_ARappaltmk" 0
+Player.AuxVarSetFlt "*_ARnumofenm" 0
+
+Player.AuxVarSetFlt "*_AREnmLoop" 0
+Player.AuxVarSetFlt "*_AREnmNums" 0
+Player.AuxVarSetFlt "*_ARSameEnm" 0
+
+Player.AuxVarSetFlt "*_ARalstopud" 0
+
+Player.AuxVarSetFlt "*_ARmknumlop" 0
+Player.AuxVarSetFlt "*_ARmktotaln" 0
+
+;Used as array
+;A ref auxvar: "*_ARcombatenm"
+Player.AuxVarSetFlt "*_ARamkisapl" 0
+Player.AuxVarSetFlt "*_ARamkissho" 0
+Player.AuxVarSetFlt "*_ARscraxisx" 0
+Player.AuxVarSetFlt "*_ARscraxisy" 0
+Player.AuxVarSetFlt "*_ARisonscrn" 0
+
+SetEventHandlerAlt "EraseAllArrayAux" (begin function {}
+	Player.AuxVarErase "*_ARcombatenm" -1
+	Player.AuxVarErase "*_ARamkisapl" -1
+	Player.AuxVarErase "*_ARamkissho" -1
+	Player.AuxVarErase "*_ARscraxisx" -1
+	Player.AuxVarErase "*_ARscraxisy" -1
+	Player.AuxVarErase "*_ARisonscrn" -1
+end)
+
+SetEventHandlerAlt "EraseNomLoopAux" (begin function {}
+	Player.AuxVarSetFlt "*_ARappalert" 0
+	Player.AuxVarSetFlt "*_ARappaltso" 0
+	Player.AuxVarSetFlt "*_ARappslomo" 0
+	Player.AuxVarSetFlt "*_ARnumofenm" 0
+	Player.AuxVarSetFlt "*_ARalstopud" 0
+	Player.AuxVarSetFlt "*_ARappaltmk" 0
+end)
+
+SetEventHandlerAlt "EraseEJLoopAux" (begin function {}
+	Player.AuxVarSetFlt "*_AREnmLoop" 0
+	Player.AuxVarSetFlt "*_AREnmNums" 0
+	Player.AuxVarSetFlt "*_ARSameEnm" 0
+end)
+
+SetEventHandlerAlt "EraseAMLoopAux" (begin function {}
+	Player.AuxVarSetFlt "*_ARmknumlop" 0
+	Player.AuxVarSetFlt "*_ARmktotaln" 0
+end)
+
+DispatchEventAlt "EraseAllArrayAux"
+DispatchEventAlt "EraseNomLoopAux"
+DispatchEventAlt "EraseEJLoopAux"
+DispatchEventAlt "EraseAMLoopAux"
+UnloadUIComponent "HUDMainMenu\AlertReaction\AlertRect"
+
+
+
+;With slow motion off, calculate alert marker time independently
+if eval !(Player.AuxVarGetFlt "*_ARslomotog")
+	Player.AuxVarSetFlt "*_ARaltmkind" 1
+endif
+
+
+
+SetEventHandlerAlt "FirstIntoCombat" (begin function {ref rFce}
+	if eval rFce
+		Player.AuxVarSetFlt "*_ARappalert" 1
+		Player.AuxVarSetFlt "*_ARnumofenm" 1
+		Player.AuxVarSetRef "*_ARcombatenm" rFce 0
+		DispatchEventAlt "AlertFirstEffect" rFce
+	endif
+end)
+
+SetEventHandlerAlt "EnemyJoinPreLoop" (begin function {ref rJLr}
+	if rJLr
+		while ((Player.AuxVarGetFlt "*_AREnmLoop") < (Player.AuxVarGetFlt "*_AREnmNums"))
+			if eval (rJLr == (Player.AuxVarGetRef "*_ARcombatenm" (Player.AuxVarGetFlt "*_AREnmLoop")))
+				Player.AuxVarSetFlt "*_ARSameEnm" 1
+				print "Same!"
+			endif
+			Player.AuxVarSetFlt "*_AREnmLoop" ((Player.AuxVarGetFlt "*_AREnmLoop") + 1)
+		loop
+		DispatchEventAlt "EnemyJoinFilter" rJLr
+	endif
+end)
+
+SetEventHandlerAlt "EnemyJoinFilter" (begin function {ref rJFr}
+	if rJFr
+		Player.AuxVarSetFlt "*_AREnmLoop" 0
+		Player.AuxVarSetFlt "*_AREnmNums" 0
+		if eval !(Player.AuxVarGetFlt "*_ARSameEnm")
+			DispatchEventAlt "EnemyJoinCombat" rJFr
+		endif
+		Player.AuxVarSetFlt "*_ARSameEnm" 0
+	endif
+end)
+
+SetEventHandlerAlt "EnemyJoinCombat" (begin function {ref rJce}
+	if eval rJce
+		Player.AuxVarSetFlt "*_ARnumofenm" ((Player.AuxVarGetFlt "*_ARnumofenm") + 1)
+		Player.AuxVarSetRef "*_ARcombatenm" rJce ((Player.AuxVarGetFlt "*_ARnumofenm") - 1)
+		if eval (Player.AuxVarGetFlt "*_ARaltsotog")
+			DispatchEventAlt "AlertSoundFilter" rJce
+		endif
+		if eval !(Player.AuxVarGetFlt "*_ARalstopud")
+			DispatchEventAlt "AlertMarkFilter" rJce, ((Player.AuxVarGetFlt "*_ARnumofenm") - 1)
+		endif
+	endif
+end)
+
+SetEventHandlerAlt "AlertFirstEffect" (begin function {ref rFet}
+	CallAfterFrames 3 (begin function {}
+		if rFet
+			if eval !(Player.AuxVarGetFlt "*_ARappaltso")
+				DispatchEventAlt "AlertSoundFilter" rFet
+			endif
+			if eval !(Player.AuxVarGetFlt "*_ARappslomo")
+				DispatchEventAlt "SlowMoFilter" rFet
+			endif
+			DispatchEventAlt "AlertMarkFilter" rFet, 0
+		endif
+	end)
+end)
+
+; Check range, sneaking status, INI settings before execute alert sound (alert sound execution within)
+SetEventHandlerAlt "AlertSoundFilter" (begin function {ref rARcy}
+	if eval rARcy
+		if eval Player.GetDistance3D rARcy <= (Player.AuxVarGetFlt "*_ARaltsorag") && (player.IsSneaking || (Player.AuxVarGetFlt "*_ARaltsonsk")) && (Player.AuxVarGetFlt "*_ARaltsotog") && (!(Player.AuxVarGetFlt "*_ARappaltso") || (Player.AuxVarGetFlt "*_ARaltsomti"))
+			PlaySound (Player.AuxVarGetRef "*_ARASsound")
+			Player.AuxVarSetFlt "*_ARappaltso" 1
+		endif
+	endif
+end)
+
+; Check range, sneaking status, INI settings before execute slowmo
+SetEventHandlerAlt "SlowMoFilter" (begin function {ref rARem}
+	if eval rARem
+		if eval Player.GetDistance3D rARem <= (Player.AuxVarGetFlt "*_ARslomorag") && (player.IsSneaking || (Player.AuxVarGetFlt "*_ARslomonsk")) && (Player.AuxVarGetFlt "*_ARslomotog") && !(Player.AuxVarGetFlt "*_ARappslomo") && (Player.AuxVarGetFlt "*_ARslomosca")
+			DispatchEventAlt "SlowMoStart"
+		endif
+	endif
+end)
+
+;Start Slow Motion
+SetEventHandlerAlt "SlowMoStart" (begin function {}
+	if eval ggtm == 1.0
+		sgtm (Player.AuxVarGetFlt "*_ARslomosca") 1
+		Player.AuxVarSetFlt "*_ARappslomo" 1
+		DispatchEventAlt "SlowMoSound"
+		DispatchEventAlt "SlowMoTimeEnd"
+	endif
+end)
+
+SetEventHandlerAlt "SlowMoSound" (begin function {}
+	if eval Player.AuxVarGetFlt "*_ARslomosot"
+		PlaySoundFade (Player.AuxVarGetRef "*_ARSMsound") 0.5
+	endif
+end)
+
+; SlowMo Time Calculation: Duration * Timescale + EnemyNumGain * (EnemyNumber - 1)
+SetEventHandlerAlt "SlowMoTimeEnd" (begin function {}
+	CallAfterSeconds ((Player.AuxVarGetFlt "*_ARslomodur") * (Player.AuxVarGetFlt "*_ARslomosca") + (Player.AuxVarGetFlt "*_ARslomopls") * ((Player.AuxVarGetFlt "*_ARnumofenm") - 1)) (begin function {}
+		StopSound (Player.AuxVarGetRef "*_ARSMsound")
+		DispatchEventAlt "SlowMoAMUnload"
+		sgtm 1.0
+	end)
+end)
+
+SetEventHandlerAlt "SlowMoAMUnload" (begin function {}
+	if eval !(Player.AuxVarGetFlt "*_ARaltmkind") && (Player.AuxVarGetFlt "*_ARappslomo")
+		UnloadUIComponent "HUDMainMenu\AlertReaction\AlertRect"
+		Player.AuxVarSetFlt "*_ARalstopud" 1
+	endif
+end)
+
+SetEventHandlerAlt "AlertMarkFilter" (begin function {ref rARei, int iARmn}
+	if eval rARei
+		print "AMFilter"
+		if eval !(Player.AuxVarGetFlt "*_ARamkisapl" iARmn)
+			if eval Player.GetDistance3D rARei <= (Player.AuxVarGetFlt "*_ARaltmkrag") && (player.IsSneaking || (Player.AuxVarGetFlt "*_ARaltmknsk")) && (Player.AuxVarGetFlt "*_ARaltmktog")
+				DispatchEventAlt "AlertMarkerTileAdd" rARei, iARmn
+				print "StartAM"
+				Player.AuxVarSetFlt "*_ARappaltmk" 1
+			endif
+		endif
+	endif
+end)
+
+SetEventHandlerAlt "AlertMarkerTileAdd" (begin function {ref rARtr, int iARta}
+	Player.AuxVarSetFlt "*_ARamkisapl" 1 iARta
+	if (GetUIFloatAlt "HUDMainMenu\AlertReaction\AlertRect\visible" == -999)
+		AddTileFromTemplate "HUDMainMenu\AlertReaction|AlertRectTemp|AlertRect"
+	endif
+	AddTileFromTemplate "HUDMainMenu\AlertReaction\AlertRect|AlertMarker|AM%g" iARta
+	print "TileAdd"
+	DispatchEventAlt "AlertMarkerTileInitial" rARtr,iARta
+end)
+
+SetEventHandlerAlt "AlertMarkerTileInitial" (begin function {ref rARti, int iARts}
+	if rARti
+		DispatchEventAlt "AlertMarkerLocCal" rARti, iARts
+		DispatchEventAlt "AlertMarkerFisrtShow" iARts
+		DispatchEventAlt "AlertMarkerIndyUnload" iARts
+		print "StartInit"
+	endif
+end)
+
+SetEventHandlerAlt "AlertMarkerLocCal" (begin function {ref rARco, int iARlc}
+	if eval rARco
+		Player.AuxVarSetFlt "*_ARisonscrn" (WorldToScreen (float xOut) (float yOut) (float zOut) 0 0 (rARco.GetObjectDimensions Z) 0 rARco) iARlc
+		Player.AuxVarSetFlt "*_ARscraxisx" xOut iARlc
+		Player.AuxVarSetFlt "*_ARscraxisy" yOut iARlc
+		DispatchEventAlt "AlertMarkerTileCalXY" rARco, iARlc
+	endif
+end)
+
+SetEventHandlerAlt "AlertMarkerTileCalXY" (begin function {ref rARtc, int iARct}
+	if rARtc
+		SetUIFloatAlt ("HUDMainMenu\AlertReaction\AlertRect\AM" + (tostring iARct) +"\_MarkerX") (Player.AuxVarGetFlt "*_ARscraxisx" iARct)
+		SetUIFloatAlt ("HUDMainMenu\AlertReaction\AlertRect\AM" + (tostring iARct) +"\_MarkerY") (Player.AuxVarGetFlt "*_ARscraxisy" iARct)
+		DispatchEventAlt "AlertMarkerTileCalZ" rARtc, iARct
+	endif
+end)
+
+SetEventHandlerAlt "AlertMarkerTileCalZ" (begin function {ref rARtz, int iARcz}
+	if rARtz
+		SetUIFloatAlt ("HUDMainMenu\AlertReaction\AlertRect\AM" + (tostring iARcz) +"\_MarkerZ") (flr (Player.GetDistance3D rARtz))
+		DispatchEventAlt "AlertMarkerTileShow" iARcz
+	endif
+end)
+
+SetEventHandlerAlt "AlertMarkerTileShow" (begin function {int iARtc}
+	if eval (Player.AuxVarGetFlt "*_ARamkissho" iARtc)
+		if eval !(Player.AuxVarGetFlt "*_ARisonscrn" iARtc)
+			SetUIFloatAlt ("HUDMainMenu\AlertReaction\AlertRect\AM" + (tostring iARtc) + "\Marker\alpha") 0
+		else
+			SetUIFloatAlt ("HUDMainMenu\AlertReaction\AlertRect\AM" + (tostring iARtc) + "\Marker\alpha") 255
+		endif
+	endif
+end)
+
+SetEventHandlerAlt "AlertMarkerFisrtShow" (begin function {int iARfc}
+	CallAfterFrames 3 (begin function {}
+		if eval (Player.AuxVarGetFlt "*_ARisonscrn" iARfc)
+			SetUIFloatGradual ("HUDMainMenu\AlertReaction\AlertRect\AM" + (tostring iARfc) + "\Marker\alpha") 0 255 0.05
+			CallAfterSeconds (0.05 * (ggtm)) ({} => Player.AuxVarSetFlt "*_ARamkissho" 1 iARfc)
+			print "AMFirstS"
+		endif
+	end)
+end)
+
+SetEventHandlerAlt "AlertMarkerIndyUnload" (begin function {int iARiu}
+	CallAfterFrames 5 (begin function {int iARdu}
+		if eval (Player.AuxVarGetFlt "*_ARaltmkind") || !(Player.AuxVarGetFlt "*_ARappslomo")
+			CallAfterSeconds ((Player.AuxVarGetFlt "*_ARaltmkitm") * (ggtm)) (begin function {int iARfu}
+				UnloadUIComponent ("HUDMainMenu\AlertReaction\AlertRect\AM" + (tostring iARfu))
+				Player.AuxVarSetFlt "*_ARamkisapl" 2 iARfu
+			end) iARdu
+		endif
+	end) iARiu
+end)
+
+;Change effect apply status, start effect filter
+SetEventHandlerAlt "AlertReactionLoop" (begin function {}
+	if eval (Player.AuxVarGetFlt "*_ARaltmktog")
+		if eval (Player.AuxVarGetFlt "*_ARappaltmk") && !(Player.AuxVarGetFlt "*_ARalstopud")
+			Player.AuxVarSetFlt "*_ARmknumlop" 0
+			Player.AuxVarSetFlt "*_ARmktotaln" (Player.AuxVarGetFlt "*_ARnumofenm")
+			DispatchEventAlt "AlertMarkerLocLoop"
+		endif
+	endif
+	DispatchEventAlt "AlertReactionPrestop"
+end)
+
+SetEventHandlerAlt "AlertMarkerLocLoop" (begin function {}
+	while ((Player.AuxVarGetFlt "*_ARmknumlop") < (Player.AuxVarGetFlt "*_ARmktotaln"))
+		if eval ((Player.AuxVarGetFlt "*_ARamkisapl" (Player.AuxVarGetFlt "*_ARmknumlop")) == 1)
+			DispatchEventAlt "AlertMarkerRecal" (Player.AuxVarGetFlt "*_ARmknumlop")
+		endif
+		Player.AuxVarSetFlt "*_ARmknumlop" ((Player.AuxVarGetFlt "*_ARmknumlop") + 1)
+	loop
+	DispatchEventAlt "EraseAMLoopAux"
+end)
+
+SetEventHandlerAlt "AlertMarkerRecal" (begin function {int iARmr}
+	DispatchEventAlt "AlertMarkerLocCal" (Player.AuxVarGetRef "*_ARcombatenm" iARmr), iARmr
+end)
+
+;When effect applyed, start alert reaction stop filter
+SetEventHandlerAlt "AlertReactionPrestop" (begin function {}
+	if eval (Player.AuxVarGetFlt "*_ARearlyfeh")
+		DispatchEventAlt "AlertReactionEarlierStopFilter"
+	else
+		DispatchEventAlt "AlertReactionStopFilter"
+	endif
+end)
+
+;Earlier stop filter, refresh the effect once the player detection state is not "DANGER"
+SetEventHandlerAlt "AlertReactionEarlierStopFilter" (begin function {}
+	if eval (Player.AuxVarGetRef "*_ARcombatenm")
+		if eval (GetPCDetectionState != 3) && !((Player.AuxVarGetRef "*_ARcombatenm").IsLimbCrippled 6)
+			DispatchEventAlt "ClearAREffect"
+		endif
+	else
+		if eval (GetPCDetectionState != 3)
+			DispatchEventAlt "ClearAREffect"
+		endif
+	endif
+end)
+
+;Stop filter, refresh the effect when completely out of combat(enemy taken down or stop searching)
+SetEventHandlerAlt "AlertReactionStopFilter" (begin function {}
+	if eval (Player.AuxVarGetRef "*_ARcombatenm")
+		if eval !(Player.IsInCombat) && !((Player.AuxVarGetRef "*_ARcombatenm").IsLimbCrippled 6)
+			DispatchEventAlt "ClearAREffect"
+		endif
+	else
+		if eval !(Player.IsInCombat)
+			DispatchEventAlt "ClearAREffect"
+		endif
+	endif
+end)
+
+;Clear effect apply status,enemy number and stop sound/slowmo
+SetEventHandlerAlt "ClearAREffect" (begin function {}
+	StopSound (Player.AuxVarGetRef "*_ARSMsound")
+	sgtm 1.0
+	UnloadUIComponent "HUDMainMenu\AlertReaction\AlertRect"
+	DispatchEventAlt "EraseAllArrayAux"
+	DispatchEventAlt "EraseNomLoopAux"
+	DispatchEventAlt "EraseEJLoopAux"
+	DispatchEventAlt "EraseAMLoopAux"
+end)
+
+SetEventHandlerAlt "AlertMarkerMenuCheck" (begin function {}
+	if eval (MenuMode)
+		SetUIFloatAlt "HUDMainMenu\AlertReaction\AlertRect\visible" 0
+	else
+		SetUIFloatAlt "HUDMainMenu\AlertReaction\AlertRect\visible" 1
+	endif
+end)
+
+;Execute and stop alert reaction by checking combat enemy number and whether the effect apply status every frame
+SetGameMainLoopCallback (begin function {}
+	if eval (Player.AuxVarGetFlt "*_ARappalert")
+		DispatchEventAlt "AlertReactionLoop"
+	endif
+end) 1 1 1
+
+SetGameMainLoopCallback (begin function {}
+	if eval (Player.AuxVarGetFlt "*_ARappalert")
+		if eval (Player.AuxVarGetFlt "*_ARaltmktog")
+			if eval (Player.AuxVarGetFlt "*_ARappaltmk") && !(Player.AuxVarGetFlt "*_ARalstopud")
+				DispatchEventAlt "AlertMarkerMenuCheck"
+			endif
+		endif
+	endif
+end) 1 1 3
+
+SetEventHandlerAlt "OnStartCombat" (begin function {ref rTrt, ref rAtk}
+	if eval rTrt
+		if eval (Player.AuxVarGetRef "*_ARcombatenm" 0)
+			Player.AuxVarSetFlt "*_AREnmLoop" 0
+			Player.AuxVarSetFlt "*_AREnmNums" (Player.AuxVarSize "*_ARcombatenm")
+			Player.AuxVarSetFlt "*_ARSameEnm" 0
+			DispatchEventAlt "EnemyJoinPreLoop" (rTrt)
+			print "StartJoin"
+		else
+			DispatchEventAlt "FirstIntoCombat" (rTrt)
+		endif
+	endif
+end) 2::player
