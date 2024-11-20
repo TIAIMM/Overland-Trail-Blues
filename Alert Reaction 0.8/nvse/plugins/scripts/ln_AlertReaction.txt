@@ -74,7 +74,7 @@ if eval (Player.AuxVarGetRef "*_ARASsound")
 	SetSoundFlag (Player.AuxVarGetRef "*_ARASsound") 5 1	;Set to Menu Sound
 	SetSoundFlag (Player.AuxVarGetRef "*_ARASsound") 12 0	;No Mute When Submerged
 	SetSoundTraitNumeric (Player.AuxVarGetRef "*_ARASsound") 2 0	;Set Frequency Adjustment to 0
-	SetSoundTraitNumeric (Player.AuxVarGetRef "*_ARASsound") 3 (Player.AuxVarGetFlt "*_ARaltsovol")	;Volume Adjust
+	SetSoundTraitNumeric (Player.AuxVarGetRef "*_ARASsound") 3 (- (50 - 50 * (Player.AuxVarGetFlt "*_ARaltsovol")	))	;Volume Adjust
 endif
 
 Player.AuxVarSetRef "*_ARSMsound" (TempCloneForm FSTSnow 1)
@@ -84,7 +84,7 @@ if eval (Player.AuxVarGetRef "*_ARSMsound")
 	SetSoundFlag (Player.AuxVarGetRef "*_ARSMsound") 5 1	;Set to Menu Sound
 	SetSoundFlag (Player.AuxVarGetRef "*_ARSMsound") 12 0	;No Mute When Submerged
 	SetSoundTraitNumeric (Player.AuxVarGetRef "*_ARSMsound") 2 0	;Set Frequency Adjustment to 0
-	SetSoundTraitNumeric (Player.AuxVarGetRef "*_ARSMsound") 3 (Player.AuxVarGetFlt "*_ARslomovol")	;Volume Adjust
+	SetSoundTraitNumeric (Player.AuxVarGetRef "*_ARSMsound") 3 (- (40 - 40 * (Player.AuxVarGetFlt "*_ARslomovol")	));Volume Adjust
 	SetSoundFlag (Player.AuxVarGetRef "*_ARSMsound") 4 1	;Set to Loop
 endif
 
@@ -345,14 +345,12 @@ SetEventHandlerAlt "AlertMarkerFisrtShow" (begin function {int iARfc}
 end)
 
 SetEventHandlerAlt "AlertMarkerIndyUnload" (begin function {int iARiu}
-	CallAfterFrames 5 (begin function {int iARdu}
-		if eval (Player.AuxVarGetFlt "*_ARaltmkind") || !(Player.AuxVarGetFlt "*_ARappslomo")
-			CallAfterSeconds ((Player.AuxVarGetFlt "*_ARaltmkitm") * (ggtm)) (begin function {int iARfu}
-				UnloadUIComponent ("HUDMainMenu\AlertReaction\AlertRect\AM" + (tostring iARfu))
-				Player.AuxVarSetFlt "*_ARamkisapl" 2 iARfu
-			end) iARdu
-		endif
-	end) iARiu
+	if eval (Player.AuxVarGetFlt "*_ARaltmkind") || !(Player.AuxVarGetFlt "*_ARappslomo")
+		CallAfterSeconds ((Player.AuxVarGetFlt "*_ARaltmkitm") * (ggtm)) (begin function {int iAMir}
+			UnloadUIComponent ("HUDMainMenu\AlertReaction\AlertRect\AM" + (tostring iAMir))
+			Player.AuxVarSetFlt "*_ARamkisapl" 2 iAMir
+		end) 0 iARiu
+	endif
 end)
 
 ;Change effect apply status, start effect filter

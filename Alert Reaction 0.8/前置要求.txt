@@ -1,0 +1,6 @@
+需要以下插件的最新版：
+xNVSE （6.35或更新）
+JIP LN NVSE （57.30或更新）
+JohnnyGuitarNVSE （5.11或更新）
+ShowOffNVSE Plugin （1.80或更新）
+UIO - User Interface Organizer（2.30或更新）
