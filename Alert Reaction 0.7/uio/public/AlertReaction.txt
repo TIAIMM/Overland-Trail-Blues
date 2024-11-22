@@ -1,2 +1,0 @@
-AlertReaction\HudAlertReaction.xml::HUDMainMenu::HUDMainMenu
-true

@@ -1,7 +1,0 @@
-SetEventHandlerAlt "OnStartCombat" (begin function {ref rTrt, ref rAtk}
-	if IsFormValid rTrt && GetPCDetectionState != 3
-		if Player.GetDistance3D rTrt <= 3500 && player.IsSneaking
-			PlaySoundFile "Data/sound/fx/AlertReaction/AlertSound.mp3" 1 0 0
-		endif
-	endif
-end) 2::player
