@@ -14,6 +14,9 @@ Cartographer
 
 Uranium Haze提到的其他前置最好也全部安装
 
+推荐额外安装Natural Interiors：
+https://www.nexusmods.com/newvegas/mods/81420
+
 特别注意：
 由于NVR本体的更新，Simple Fog Remover已经不需要装了
 
