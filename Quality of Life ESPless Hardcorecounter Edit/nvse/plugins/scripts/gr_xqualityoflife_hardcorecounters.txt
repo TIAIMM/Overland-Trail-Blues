@@ -1,0 +1,618 @@
+if GetINIFloat "HardcoreCounters:Enable" "QOL__HC.ini" < 1
+	return
+endif
+
+if eval (GetBipedModelPath 0, PipBoy) == "pipboy3000\pipboyarm.nif"
+	if eval ((GetFileSize "data\meshes\pipboy3000\pipboyarm.nif") > 140000 && (GetFileSize "data\meshes\pipboy3000\pipboyarm.nif") < 150000)
+		Player.AuxVarSetFlt "*_HCC2500" 1
+	else
+		Player.AuxVarSetFlt "*_HCC2500" 0
+	endif
+else
+	Player.AuxVarSetFlt "*_HCC2500" 0
+endif
+
+int iHCCEN = GetINIFloat "HardcoreCounters:Enable" "QOL__HC.ini"
+int iHCCCS = GetINIFloat "HardcoreCounters:UseColors" "QOL__HC.ini"
+int iHSMIM = IsModLoaded "fixy crap ue.esp"
+
+int iHCCHP = FileExists "config\PipBoyHoloPanel.ini"
+int iHCCPA
+if iHCCHP == 1
+	iHCCPA = GetINIFloat "General:PowerArmorOnly" "PipBoyHoloPanel.ini"
+	if iHCCPA == 1
+		SetEventHandler "OnActorEquip" (Begin Function {ref rPlayer ref rArmor}
+			int iMask = GetESM rArmor
+			if eval (GetBit iMask, 2)
+				CallAfterSeconds 0.02 (Begin Function {}
+					DispatchEventAlt "HCC_HH"
+				End) 1
+			endif
+		End) "first"::Player
+		SetEventHandler "OnActorUnequip" (Begin Function {ref rPlayer ref rArmor}
+			int iMask = GetESM rArmor
+			if eval (GetBit iMask, 2)
+				CallAfterSeconds 0.02 (Begin Function {}
+					DispatchEventAlt "HCC_HH"
+				End) 1
+			endif
+		End) "first"::Player
+	endif
+endif
+
+int iHCCUP = IsModLoaded "Universal Pip-Boy Customization.esp"
+
+int iHCCHH
+if IsModLoaded "Readius_NV.esp" || IsModLoaded "pipboy2500_edisleado.esp"
+	iHCCHH = 1
+else
+	iHCCHH = 0
+endif
+
+Player.AuxVarSetStr "*_HCCPath" "Bip01 L ForeTwist|hc_counters\hcc_pipboy.nif"
+Player.AuxVarSetStr "*_HCCPathD" "Bip01 L ForeTwist|hc_counters\hcc_pipboy"
+
+SetJohnnyOnSettingsUpdateEventHandler 1 (Begin Function {}
+	if (Player.IsHardcore == 1 && iHCCEN == 1) || iHCCEN == 2
+		DispatchEventAlt "HCC_Delete"
+	else
+		DispatchEventAlt "HCC_DeleteOnly"
+	endif
+End) 0
+
+SetEventHandler "NewGame" (Begin Function {}
+	DispatchEventAlt "HCC_DeleteOnly"
+End)
+
+SetEventHandler "PostLoadGame" (Begin Function {int iLoad}
+	DispatchEventAlt "HCC_Delete"
+	CallAfterSeconds 0.05 (Begin Function {}
+		if iHCCHP == 1
+			if PlayerRef.AuxVarGetFlt "*_PBHPA" == 1
+				Player.SetNifFlag "##PipCntrNode" 0 1 1
+				Player.SetNifFlag "##PipCntrNode" 0 1 2
+			else
+				Player.SetNifFlag "##PipCntrNode" 0 0 1
+				Player.SetNifFlag "##PipCntrNode" 0 0 2
+			endif
+		endif
+	End)
+End)
+
+SetEventHandler "OnActorEquip" (Begin Function {ref rPlayer ref rPipboy}
+	int iMask = GetESM rPipboy
+	if eval (GetBit iMask, 6)
+		CallWhen (Begin Function {}
+			DispatchEventAlt "HCC_Delete"
+		End) ({} => Player.GetEquippedObject 6 != 0)
+	endif
+End) "first"::Player
+
+SetEventHandler "OnActorUnequip" (Begin Function {ref rPlayer ref rPipboy}
+	int iMask = GetESM rPipboy
+	if eval (GetBit iMask, 6)
+		DispatchEventAlt "HCC_DeleteOnly"
+	endif
+End) "first"::Player
+
+SetEventHandler "HCC_HH" (Begin Function {}
+	if iHCCHP == 1
+		if PlayerRef.AuxVarGetFlt "*_PBHPA" == 1
+			Player.SetNifFlag "##PipCntrNode" 0 1 1
+			Player.SetNifFlag "##PipCntrNode" 0 1 2
+		else
+			Player.SetNifFlag "##PipCntrNode" 0 0 1
+			Player.SetNifFlag "##PipCntrNode" 0 0 2
+			if (Player.IsHardcore == 1 && iHCCEN == 1) || iHCCEN == 2
+				DispatchEventAlt "HCCMenuOpen"
+			endif
+		endif
+	endif
+End)
+
+SetOnActorValueChangeEventHandler 1 (Begin Function {int iCode, float fValueP, float fValueN}
+	if ((Player.IsHardcore == 1 && iHCCEN == 1) || iHCCEN == 2) && GetPipBoyMode == 3
+		DispatchEventAlt "HCCRad1"
+	endif
+End) 0 54
+
+SetOnActorValueChangeEventHandler 1 (Begin Function {int iCode, float fValueP, float fValueN}
+	if ((Player.IsHardcore == 1 && iHCCEN == 1) || iHCCEN == 2) && GetPipBoyMode == 3
+		DispatchEventAlt "HCCH2O1"
+	endif
+End) 0 73
+
+SetOnActorValueChangeEventHandler 1 (Begin Function {int iCode, float fValueP, float fValueN}
+	if ((Player.IsHardcore == 1 && iHCCEN == 1) || iHCCEN == 2) && GetPipBoyMode == 3
+		DispatchEventAlt "HCCFod1"
+	endif
+End) 0 74
+
+SetOnActorValueChangeEventHandler 1 (Begin Function {int iCode, float fValueP, float fValueN}
+	if (Player.IsHardcore == 1 && iHCCEN == 1) || iHCCEN == 2
+		DispatchEventAlt "HCCSlp1"
+	endif
+End) 0 75
+
+SetEventHandler "HCC_DeleteOnly" (Begin Function {}
+	Let string_var sPath := Player.AuxVarGetStr "*_HCCPathD"
+	AttachModel PlayerRef 2 (sPath + "3m.nif")
+	AttachModel PlayerRef 2 (sPath + "3f.nif")
+	AttachModel PlayerRef 2 (sPath + "3ff.nif")
+	AttachModel PlayerRef 2 (sPath + "2m.nif")
+	AttachModel PlayerRef 2 (sPath + "2f.nif")
+	AttachModel PlayerRef 2 (sPath + "2mm.nif")
+	AttachModel PlayerRef 2 (sPath + "2mf.nif")
+	DispatchEventAlt "HCC_DeleteOnlyC" sPath
+End)
+
+SetEventHandler "HCC_DeleteOnlyC" (Begin Function {string_var sPath}
+	AttachModel PlayerRef 2 (sPath + "25m.nif")
+	AttachModel PlayerRef 2 (sPath + "25f.nif")
+	AttachModel PlayerRef 2 (sPath + "25hm.nif")
+	AttachModel PlayerRef 2 (sPath + "25hf.nif")
+	AttachModel PlayerRef 2 (sPath + "hm.nif")
+	AttachModel PlayerRef 2 (sPath + "hf.nif")
+End)
+
+SetEventHandler "HCC_Delete" (Begin Function {}
+	Let string_var sPath := Player.AuxVarGetStr "*_HCCPathD"
+	AttachModel PlayerRef 2 (sPath + "3m.nif")
+	AttachModel PlayerRef 2 (sPath + "3f.nif")
+	AttachModel PlayerRef 2 (sPath + "3ff.nif")
+	AttachModel PlayerRef 2 (sPath + "2m.nif")
+	AttachModel PlayerRef 2 (sPath + "2f.nif")
+	AttachModel PlayerRef 2 (sPath + "2mm.nif")
+	AttachModel PlayerRef 2 (sPath + "2mf.nif")
+	DispatchEventAlt "HCC_DeleteC" sPath
+End)
+
+SetEventHandler "HCC_DeleteC" (Begin Function {string_var sPath}
+	AttachModel PlayerRef 2 (sPath + "25m.nif")
+	AttachModel PlayerRef 2 (sPath + "25f.nif")
+	AttachModel PlayerRef 2 (sPath + "25hm.nif")
+	AttachModel PlayerRef 2 (sPath + "25hf.nif")
+	AttachModel PlayerRef 2 (sPath + "hm.nif")
+	AttachModel PlayerRef 2 (sPath + "hf.nif")
+	DispatchEventAlt "HCC_Check"
+End)
+
+SetEventHandler "HCC_Check" (Begin Function {}
+	if (Player.IsHardcore == 1 && iHCCEN == 1) || iHCCEN == 2
+	else
+		return
+	endif
+	Let ref rEQPB := Player.GetEquippedObject 6
+	if GetPipBoyMode == 3
+		CallWhen (Begin Function {}
+			rEQPB = Player.GetEquippedObject 6
+			DispatchEventAlt "HCC_Identify" rEQPB
+		End) ({} => Player.GetEquippedObject 6 != 0)
+		return
+	endif
+	if rEQPB != 0
+		DispatchEventAlt "HCC_Identify" rEQPB
+	endif
+End)
+
+SetEventHandler "HCC_Identify" (Begin Function {ref rEQPB}
+	Let string_var sEQPB := GetBipedModelPath 0, rEQPB
+	int iHCCT = 0
+	if Player.GetNifBlockScale "DateM" != 0
+		iHCCT = 22
+		if Player.GetNifBlockScale "GlassLight" != 0
+			iHCCT = 21
+		endif
+	elseif rEQPB == PipBoy && Player.AuxVarGetFlt "*_HCC2500" == 1
+		iHCCT = 25
+	else
+		if eval (Sv_Count "250", sEQPB) > 0
+			iHCCT = 26
+		elseif eval (Sv_Count "scorptech", sEQPB) > 0
+			iHCCT = 27
+		endif
+	endif
+	DispatchEventAlt "HCC_Identify2" iHCCT sEQPB
+End)
+
+SetEventHandler "HCC_Identify2" (Begin Function {int iHCCT, string_var sEQBP}
+	if iHCCUP
+		if eval ((Sv_Count "UPBC\Wrist03", sEQPB) > 0) || ((Sv_Count "UPBC\Wrist05", sEQPB) > 0)
+			iHCCT = 0
+		elseif eval ((Sv_Count "UPBC\Wrist04", sEQPB) > 0)
+			iHCCT = 25
+		endif
+	endif
+	DispatchEventAlt "HCC_Load" iHCCT
+End)
+
+SetEventHandler "HCC_Load" (Begin Function {int iHCCT}
+	Let string_var sPath := Player.AuxVarGetStr "*_HCCPath"
+	if Player.GetIsSex Male
+		Sv_Insert "m", sPath, 40
+	else
+		if iHCCT == 0 || iHCCT == 25
+			if iHSMIM
+				Sv_Insert "f", sPath, 40
+			else
+				Sv_Insert "f", sPath, 40
+			endif
+		else
+			Sv_Insert "f", sPath, 40
+		endif
+	endif
+	DispatchEventAlt "HCC_Attach" iHCCT sPath
+End)
+
+SetEventHandler "HCC_Attach" (Begin Function {int iHCCT, string_var sPath}
+	if iHCCT == 0
+		Sv_Insert "3", sPath, 40
+	elseif iHCCT == 21
+		Sv_Insert "2", sPath, 40
+	elseif iHCCT == 22
+		Sv_Insert "2m", sPath, 40
+	elseif iHCCT == 25
+		Sv_Insert "25", sPath, 40
+	elseif iHCCT == 26
+		Sv_Insert "h25", sPath, 40
+	elseif iHCCT == 27
+		Sv_Insert "h", sPath, 40
+	endif
+	AttachModel PlayerRef 3 (sPath)
+End)
+
+SetOnMenuOpenEventHandler (Begin Function {int iMenu}
+	if GetPipBoyMode == 3
+		return
+	endif
+	if iHCCHH == 1
+		CallWhen (Begin Function {}
+			CallAfterFrames 1 (Begin Function {}
+				DispatchEventAlt "HCCMenuOpen"
+			End) 1
+		End) ({} => GetPipBoyMode == 3)
+	else
+		DispatchEventAlt "HCCMenuOpen"
+	endif
+End) 1 1002
+
+SetOnMenuOpenEventHandler (Begin Function {int iMenu}
+	if GetPipBoyMode == 3
+		return
+	endif
+	if iHCCHH == 1
+		CallWhen (Begin Function {}
+			CallAfterFrames 1 (Begin Function {}
+				DispatchEventAlt "HCCMenuOpen"
+			End) 1
+		End) ({} => GetPipBoyMode == 3)
+	else
+		DispatchEventAlt "HCCMenuOpen"
+	endif
+End) 1 1003
+
+SetOnMenuOpenEventHandler (Begin Function {int iMenu}
+	if GetPipBoyMode == 3
+		return
+	endif
+	if iHCCHH == 1
+		CallWhen (Begin Function {}
+			CallAfterSeconds 1 (Begin Function {}
+				DispatchEventAlt "HCCMenuOpen"
+			End) 1
+		End) ({} => GetPipBoyMode == 3)
+	else
+		DispatchEventAlt "HCCMenuOpen"
+	endif
+End) 1 1023
+
+SetEventHandler "HCCMenuOpen" (Begin Function {}
+	CallWhen (Begin Function {}
+		float fTime = GameHour
+		float fHour = Floor fTime
+		float fMins = Round ((fTime - fHour) * 60)
+		DispatchEventAlt "T_1" fTime fHour fMins
+		DispatchEventAlt "HCCRad1"
+		DispatchEventAlt "HCCH2O1"
+		DispatchEventAlt "HCCFod1"
+		DispatchEventAlt "HCCSlp1"
+	End) ({} => GetPipBoyMode == 3) 
+End)
+
+SetEventHandler "T_1" (Begin Function {float fTime, float fHour, float fMins}
+	Player.AuxVarSetFlt "*_HCCPM" 0
+	if fHour > 12
+		fHour -= 12
+		Player.AuxVarSetFlt "*_HCCPM" 1
+	endif
+	Let string_var sHour1 := $fHour
+	Let string_var sHour2 := $fHour
+	Let string_var sMins1 := $fMins
+	Let string_var sMins2 := $fMins
+	Let int iSizH := Sv_Length sHour1
+	Let int iSizM := Sv_Length sMins1
+	DispatchEventAlt "T_2" iSizH iSizM sHour1 sHour2 sMins1 sMins2
+End)
+
+SetEventHandler "T_2" (Begin Function {int iSizH, int iSizM, string_var sHour1, string_var sHour2, string_var sMins1, string_var sMins2}
+	if iSizH == 2
+		Sv_Erase sHour1 1
+		Sv_Erase sHour2 0, 1
+	else
+		Let sHour1 := "0"
+	endif
+	if iSizM == 2
+		Sv_Erase sMins1 1
+		Sv_Erase sMins2 0, 1
+	else
+		Let sMins1 := "0"
+	endif
+	Player.AuxVarSetStr "*_HCCH1" ($sHour1)
+	Player.AuxVarSetStr "*_HCCH2" ($sHour2)
+	Player.AuxVarSetStr "*_HCCM1" ($sMins1)
+	Player.AuxVarSetStr "*_HCCM2" ($sMins2)
+	DispatchEventAlt "T_3"
+End)
+
+SetEventHandler "T_3" (Begin Function {}
+	if Player.AuxVarGetFlt "*_HCCPM" == 1
+		SwapTexture Player "##PipClockZ" "pipcntr\new\sym\z12b"
+	else
+		SwapTexture Player "##PipClockZ" "pipcntr\new\sym\z12a"
+	endif
+	SwapTexture Player "##PipClockCol" "pipcntr\new\sym\zcol"
+	Let string_var sBp := "pipcntr\new\x\a"
+	DispatchEventAlt "T_4" sBp
+End)
+
+SetEventHandler "T_4" (Begin Function {string_var sBp}
+	Let string_var sFp := $sBp + $(Player.AuxVarGetStr "*_HCCH1")
+	SwapTexture Player "##PipClockHA" ($sFp)
+	Let sFp := $sBp + $(Player.AuxVarGetStr "*_HCCH2")
+	SwapTexture Player "##PipClockHB" ($sFp)
+	DispatchEventAlt "T_5" sBp
+End)
+
+SetEventHandler "T_5" (Begin Function {string_var sBp}
+	Let string_var sBp := "pipcntr\new\x\a"
+	Let string_var sFp := $sBp + $(Player.AuxVarGetStr "*_HCCM1")
+	SwapTexture Player "##PipClockMA" ($sFp)
+	Let sFp := $sBp + $(Player.AuxVarGetStr "*_HCCM2")
+	SwapTexture Player "##PipClockMB" ($sFp)
+End)
+
+SetEventHandler "HCCRad1" (Begin Function {int iRad}
+	int iRad = Player.GetAV RadiationRads
+	Let string_var sRad := $iRad
+	Let int iSize := Sv_Length sRad
+	Let string_var sRadA := sRad
+	Let string_var sRadB := sRad
+	Let string_var sRadC := sRad
+	if iSize > 3
+		Let sRadA := "9"
+		Let sRadB := "9"
+		Let sRadC := "9"
+	endif
+	DispatchEventAlt "HCCRad2" iSize sRadA sRadB sRadC iRad
+End)
+
+SetEventHandler "HCCRad2" (Begin Function {int iSize, string_var sRadA, string_var sRadB, string_var sRadC, int iRad}
+	if iSize == 3
+		Sv_Erase sRadA 1
+		Sv_Erase sRadB 0, 1
+		Sv_Erase sRadB 1
+		Sv_Erase sRadC 0, 2
+	elseif iSize == 2
+		Sv_Erase sRadB 1
+		Sv_Erase sRadC 0, 1
+	endif
+	DispatchEventAlt "HCCRad3" iSize sRadA sRadB sRadC iRad
+End)
+
+SetEventHandler "HCCRad3" (Begin Function {int iSize, string_var sRadA, string_var sRadB, string_var sRadC, int iRad}
+	Let string_var sBp := "pipcntr\new\x\"
+	if iRad < 200 || iHCCCS == 0
+		Let sBp := sBp + "a"
+	elseif iRad < 400
+		Let sBp := sBp + "b"
+	elseif iRad < 600
+		Let sBp := sBp + "c"
+	elseif iRad < 800
+		Let sBp := sBp + "d"
+	else
+		Let sBp := sBp + "e"
+	endif
+	DispatchEventAlt "HCCRad4" iSize sRadA sRadB sRadC sBp
+End)
+
+SetEventHandler "HCCRad4" (Begin Function {int iSize, string_var sRadA, string_var sRadB, string_var sRadC, string_var sBp}
+	SwapTexture Player "##PipRadE" ($sBp + "b")
+	SwapTexture Player "##PipRadD" ($sBp + "b")
+	SwapTexture Player "##PipRadC" ($sBp + "b")
+	if iSize >= 1
+		SwapTexture Player "##PipRadE" ($sBp + $sRadC)
+	endif
+	if iSize >= 2
+		SwapTexture Player "##PipRadD" ($sBp + $sRadB)
+	endif
+	if iSize >= 3
+		SwapTexture Player "##PipRadC" ($sBp + $sRadA)
+	endif
+End)
+
+SetEventHandler "HCCH2O1" (Begin Function {int iH2O}
+	int iH2O = Player.GetAV Dehydration
+	Let string_var sH2O := $iH2O
+	Let int iSize := Sv_Length sH2O
+	Let string_var sH2OA := sH2O
+	Let string_var sH2OB := sH2O
+	Let string_var sH2OC := sH2O
+	if iSize > 3
+		Let sH2OA := "9"
+		Let sH2OB := "9"
+		Let sH2OC := "9"
+	endif
+	DispatchEventAlt "HCCH2O2" iSize sH2OA sH2OB sH2OC iH2O
+End)
+
+SetEventHandler "HCCH2O2" (Begin Function {int iSize, string_var sH2OA, string_var sH2OB, string_var sH2OC, int iH2O}
+	if iSize == 3
+		Sv_Erase sH2OA 1
+		Sv_Erase sH2OB 0, 1
+		Sv_Erase sH2OB 1
+		Sv_Erase sH2OC 0, 2
+	elseif iSize == 2
+		Sv_Erase sH2OB 1
+		Sv_Erase sH2OC 0, 1
+	endif
+	DispatchEventAlt "HCCH2O3" iSize sH2OA sH2OB sH2OC iH2O
+End)
+
+SetEventHandler "HCCH2O3" (Begin Function {int iSize, string_var sH2OA, string_var sH2OB, string_var sH2OC, int iH2O}
+	Let string_var sBp := "pipcntr\new\x\"
+	if iH2O < 200 || iHCCCS == 0
+		Let sBp := sBp + "a"
+	elseif iH2O < 400
+		Let sBp := sBp + "b"
+	elseif iH2O < 600
+		Let sBp := sBp + "c"
+	elseif iH2O < 800
+		Let sBp := sBp + "d"
+	else
+		Let sBp := sBp + "e"
+	endif
+	DispatchEventAlt "HCCH2O4" iSize sH2OA sH2OB sH2OC sBp
+End)
+
+SetEventHandler "HCCH2O4" (Begin Function {int iSize, string_var sH2OA, string_var sH2OB, string_var sH2OC, string_var sBp}
+	SwapTexture Player "##PipH2OE" ($sBp + "b")
+	SwapTexture Player "##PipH2OD" ($sBp + "b")
+	SwapTexture Player "##PipH2OC" ($sBp + "b")
+	if iSize >= 1
+		SwapTexture Player "##PipH2OE" ($sBp + $sH2OC)
+	endif
+	if iSize >= 2
+		SwapTexture Player "##PipH2OD" ($sBp + $sH2OB)
+	endif
+	if iSize >= 3
+		SwapTexture Player "##PipH2OC" ($sBp + $sH2OA)
+	endif
+End)
+
+SetEventHandler "HCCFod1" (Begin Function {int iFod}
+	int iFod = Player.GetAV Hunger
+	Let string_var sFod := $iFod
+	Let int iSize := Sv_Length sFod
+	Let string_var sFodA := sFod
+	Let string_var sFodB := sFod
+	Let string_var sFodC := sFod
+	if iSize > 3
+		Let sFodA := "9"
+		Let sFodB := "9"
+		Let sFodC := "9"
+	endif
+	DispatchEventAlt "HCCFod2" iSize sFodA sFodB sFodC iFod
+End)
+
+SetEventHandler "HCCFod2" (Begin Function {int iSize, string_var sFodA, string_var sFodB, string_var sFodC, int iFod}
+	if iSize == 3
+		Sv_Erase sFodA 1
+		Sv_Erase sFodB 0, 1
+		Sv_Erase sFodB 1
+		Sv_Erase sFodC 0, 2
+	elseif iSize == 2
+		Sv_Erase sFodB 1
+		Sv_Erase sFodC 0, 1
+	endif
+	DispatchEventAlt "HCCFod3" iSize sFodA sFodB sFodC iFod
+End)
+
+SetEventHandler "HCCFod3" (Begin Function {int iSize, string_var sFodA, string_var sFodB, string_var sFodC, int iFod}
+	Let string_var sBp := "pipcntr\new\x\"
+	if iFod < 200 || iHCCCS == 0
+		Let sBp := sBp + "a"
+	elseif iFod < 400
+		Let sBp := sBp + "b"
+	elseif iFod < 600
+		Let sBp := sBp + "c"
+	elseif iFod < 800
+		Let sBp := sBp + "d"
+	else
+		Let sBp := sBp + "e"
+	endif
+	DispatchEventAlt "HCCFod4" iSize sFodA sFodB sFodC sBp
+End)
+
+SetEventHandler "HCCFod4" (Begin Function {int iSize, string_var sFodA, string_var sFodB, string_var sFodC, string_var sBp}
+	SwapTexture Player "##PipFODE" ($sBp + "b")
+	SwapTexture Player "##PipFODD" ($sBp + "b")
+	SwapTexture Player "##PipFODC" ($sBp + "b")
+	if iSize >= 1
+		SwapTexture Player "##PipFODE" ($sBp + $sFodC)
+	endif
+	if iSize >= 2
+		SwapTexture Player "##PipFODD" ($sBp + $sFodB)
+	endif
+	if iSize >= 3
+		SwapTexture Player "##PipFODC" ($sBp + $sFodA)
+	endif
+End)
+
+SetEventHandler "HCCSlp1" (Begin Function {int iSlp}
+	int iSlp = Player.GetAV SleepDeprevation
+	Let string_var sSlp := $iSlp
+	Let int iSize := Sv_Length sSlp
+	Let string_var sSlpA := sSlp
+	Let string_var sSlpB := sSlp
+	Let string_var sSlpC := sSlp
+	if iSize > 3
+		Let sSlpA := "9"
+		Let sSlpB := "9"
+		Let sSlpC := "9"
+	endif
+	DispatchEventAlt "HCCSlp2" iSize sSlpA sSlpB sSlpC iSlp
+End)
+
+SetEventHandler "HCCSlp2" (Begin Function {int iSize, string_var sSlpA, string_var sSlpB, string_var sSlpC, int iSlp}
+	if iSize == 3
+		Sv_Erase sSlpA 1
+		Sv_Erase sSlpB 0, 1
+		Sv_Erase sSlpB 1
+		Sv_Erase sSlpC 0, 2
+	elseif iSize == 2
+		Sv_Erase sSlpB 1
+		Sv_Erase sSlpC 0, 1
+	endif
+	DispatchEventAlt "HCCSlp3" iSize sSlpA sSlpB sSlpC iSlp
+End)
+
+SetEventHandler "HCCSlp3" (Begin Function {int iSize, string_var sSlpA, string_var sSlpB, string_var sSlpC, int iSlp}
+	Let string_var sBp := "pipcntr\new\x\"
+	if iSlp < 200 || iHCCCS == 0
+		Let sBp := sBp + "a"
+	elseif iSlp < 400
+		Let sBp := sBp + "b"
+	elseif iSlp < 600
+		Let sBp := sBp + "c"
+	elseif iSlp < 800
+		Let sBp := sBp + "d"
+	else
+		Let sBp := sBp + "e"
+	endif
+	DispatchEventAlt "HCCSlp4" iSize sSlpA sSlpB sSlpC sBp
+End)
+
+SetEventHandler "HCCSlp4" (Begin Function {int iSize, string_var sSlpA, string_var sSlpB, string_var sSlpC, string_var sBp}
+	SwapTexture Player "##PipSLPE" ($sBp + "b")
+	SwapTexture Player "##PipSLPD" ($sBp + "b")
+	SwapTexture Player "##PipSLPC" ($sBp + "b")
+	if iSize >= 1
+		SwapTexture Player "##PipSLPE" ($sBp + $sSlpC)
+	endif
+	if iSize >= 2
+		SwapTexture Player "##PipSLPD" ($sBp + $sSlpB)
+	endif
+	if iSize >= 3
+		SwapTexture Player "##PipSLPC" ($sBp + $sSlpA)
+	endif
+End)
