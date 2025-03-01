@@ -22,7 +22,13 @@ endif
 
 
 
+AuxTimerStop "*_HSt"
+
+
+
 ;Read INI settings
+Player.AuxVarSetFlt "*_HSframetmr" (GetMaxOf 0 (GetINIFloat "HitSound:fHitSoundFrameTimer" "HitSound.ini"))
+Player.AuxVarSetFlt "*_HSmelatkso" (GetMaxOf 0 (GetMinOf 1 (GetINIFloat "HitSound:fHitSoundForMeleeAttack" "HitSound.ini")))
 Player.AuxVarSetFlt "*_HSbdssovol" (GetMaxOf 0 (GetMinOf 1 (GetINIFloat "HitSound:fBodyHitSoundVolumeScale" "HitSound.ini")))
 Player.AuxVarSetFlt "*_HShsssovol" (GetMaxOf 0 (GetMinOf 1 (GetINIFloat "HitSound:fHeadHitSoundVolumeScale" "HitSound.ini")))
 Player.AuxVarSetFlt "*_HSctssovol" (GetMaxOf 0 (GetMinOf 1 (GetINIFloat "HitSound:fCritHitSoundVolumeScale" "HitSound.ini")))
@@ -73,24 +79,31 @@ endif
 
 
 ;Initialization
+SetEventHandlerAlt "SetTimer" (begin function {}
+	AuxTimerStart "*_HSt" (Player.AuxVarGetFlt "*_HSframetmr") (2+8+128+512+1024)
+end)
+
 SetEventHandlerAlt "PlayHitSound" (begin function {ref rRgt, float fDmg, int iHet, int iCtc, int iHlc}
-	if rRgt
-		if fDmg >= iHet
-			PlaySound (Player.AuxVarGetRef "*_HSKHsound")
-		elseif iCtc
-			PlaySound (Player.AuxVarGetRef "*_HSCTsound")
-		elseif iHlc == 1 || iHlc == 2 || iHlc == 13
-			PlaySound (Player.AuxVarGetRef "*_HSHSsound")
-		else
-			PlaySound (Player.AuxVarGetRef "*_HSBDsound")
+	if eval (AuxTimerTimeToCountdown "*_HSt") == -1
+		if rRgt
+			if fDmg >= iHet
+				PlaySound (Player.AuxVarGetRef "*_HSKHsound")
+			elseif iCtc
+				PlaySound (Player.AuxVarGetRef "*_HSCTsound")
+			elseif iHlc == 1 || iHlc == 2 || iHlc == 13
+				PlaySound (Player.AuxVarGetRef "*_HSHSsound")
+			else
+				PlaySound (Player.AuxVarGetRef "*_HSBDsound")
+			endif
 		endif
 	endif
+	DispatchEventAlt "SetTimer"
 end)
 
 SetOnHitEventHandler (begin function {ref rTgt}
 	rTgt = this
 	if rTgt
-		if eval rTgt != PlayerRef && GetHitAttacker == PlayerRef && Player.GetEquippedWeaponType >= 3 && rTgt.isActor && !(rTgt.GetDead)
+		if eval rTgt != PlayerRef && GetHitAttacker == PlayerRef && (Player.GetEquippedWeaponType >= 3 || Player.AuxVarGetFlt "*_HSmelatkso") && rTgt.isActor && !(rTgt.GetDead)
 			DispatchEventAlt "PlayHitSound" rTgt, (rTgt.GetHitHealthDamage), (rTgt.GetActorValue Health), (GetLastHitCritical), (GetHitLocation)
 		endif
 	endif
