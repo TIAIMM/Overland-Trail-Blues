@@ -175,7 +175,6 @@ SetEventHandlerAlt "EnemyPreJoinLoop" (begin function {ref rJLr, int iEJl, int i
 			let iEJl += 1
 		loop
 		DispatchEventAlt "EnemyJoinFilter" rJLr, iEJs, iELf
-		printvar rJLr, iEJl, iEJs, iELf
 	endif
 end)
 
@@ -184,7 +183,6 @@ SetEventHandlerAlt "EnemyJoinFilter" (begin function {ref rJFr, int iJFs, int iJ
 		if eval !(iJFf)
 			DispatchEventAlt "EnemyJoinCombat" rJFr, iJFs
 		endif
-		printvar rJFr, iJFs, iJFf
 	endif
 end)
 
@@ -198,7 +196,6 @@ SetEventHandlerAlt "EnemyJoinCombat" (begin function {ref rJce, int iJCs}
 		if eval !(Player.AuxVarGetFlt "*_ARalstopud")
 			DispatchEventAlt "AlertMarkFilter" rJce, iJCs
 		endif
-		printvar rJce, iJCs
 	endif
 end)
 

@@ -1,0 +1,97 @@
+;Requirements check
+if eval GetNVSEVersionFull < 6.35
+	MessageBoxEx "Hit Sound requirement not detected!%rInstall latest xNVSE."
+	return
+endif
+if eval GetPluginVersion "JIP LN NVSE" < 57.30
+	MessageBoxEx "Hit Sound requirement not detected!%rInstall latest JIP LN NVSE Plugin."
+	return
+endif
+if eval GetPluginVersion "JohnnyGuitarNVSE" < 511
+	MessageBoxEx "Hit Sound requirement not detected!%rInstall latest JohnnyGuitar NVSE."
+	return
+endif
+if eval GetPluginVersion "ShowOffNVSE Plugin" < 180
+	MessageBoxEx "Hit Sound requirement not detected!%rInstall latest ShowOff NVSE plugin."
+	return
+endif
+if eval GetPluginVersion "UI Organizer Plugin" < 230
+	MessageBoxEx "Hit Sound requirement not detected!%rInstall latest UIO - User Interface Organizer."
+	return
+endif
+
+
+
+;Read INI settings
+Player.AuxVarSetFlt "*_HSbdssovol" (GetMaxOf 0 (GetMinOf 1 (GetINIFloat "HitSound:fBodyHitSoundVolumeScale" "HitSound.ini")))
+Player.AuxVarSetFlt "*_HShsssovol" (GetMaxOf 0 (GetMinOf 1 (GetINIFloat "HitSound:fHeadHitSoundVolumeScale" "HitSound.ini")))
+Player.AuxVarSetFlt "*_HSctssovol" (GetMaxOf 0 (GetMinOf 1 (GetINIFloat "HitSound:fCritHitSoundVolumeScale" "HitSound.ini")))
+Player.AuxVarSetFlt "*_HSkhssovol" (GetMaxOf 0 (GetMinOf 1 (GetINIFloat "HitSound:fKillHitSoundVolumeScale" "HitSound.ini")))
+
+
+
+;Clone BaseForm
+Player.AuxVarSetRef "*_HSBDsound" (TempCloneForm FSTSnow 1)
+if eval (Player.AuxVarGetRef "*_HSBDsound")
+	SetSoundSourceFile (Player.AuxVarGetRef "*_HSBDsound") "fx\HitSound\BodyHitSound\BodyHitSound.wav"
+	SetSoundFlag (Player.AuxVarGetRef "*_HSBDsound") 0 0	;No Random Frequency Shift
+	SetSoundFlag (Player.AuxVarGetRef "*_HSBDsound") 5 1	;Set to Menu Sound
+	SetSoundFlag (Player.AuxVarGetRef "*_HSBDsound") 12 0	;No Mute When Submerged
+	SetSoundTraitNumeric (Player.AuxVarGetRef "*_HSBDsound") 2 0	;Set Frequency Adjustment to 0
+	SetSoundTraitNumeric (Player.AuxVarGetRef "*_HSBDsound") 3 (- (50 - 50 * (Player.AuxVarGetFlt "*_HSbdssovol")	))	;Volume Adjust
+endif
+
+Player.AuxVarSetRef "*_HSHSsound" (TempCloneForm FSTSnow 1)
+if eval (Player.AuxVarGetRef "*_HSHSsound")
+	SetSoundSourceFile (Player.AuxVarGetRef "*_HSHSsound") "fx\HitSound\HeadHitSound\HeadHitSound.wav"
+	SetSoundFlag (Player.AuxVarGetRef "*_HSHSsound") 0 0	;No Random Frequency Shift
+	SetSoundFlag (Player.AuxVarGetRef "*_HSHSsound") 5 1	;Set to Menu Sound
+	SetSoundFlag (Player.AuxVarGetRef "*_HSHSsound") 12 0	;No Mute When Submerged
+	SetSoundTraitNumeric (Player.AuxVarGetRef "*_HSHSsound") 2 0	;Set Frequency Adjustment to 0
+	SetSoundTraitNumeric (Player.AuxVarGetRef "*_HSHSsound") 3 (- (50 - 50 * (Player.AuxVarGetFlt "*_HShsssovol")	))	;Volume Adjust
+endif
+
+Player.AuxVarSetRef "*_HSCTsound" (TempCloneForm FSTSnow 1)
+if eval (Player.AuxVarGetRef "*_HSCTsound")
+	SetSoundSourceFile (Player.AuxVarGetRef "*_HSCTsound") "fx\HitSound\CritHitSound\CritHitSound.wav"
+	SetSoundFlag (Player.AuxVarGetRef "*_HSCTsound") 0 0	;No Random Frequency Shift
+	SetSoundFlag (Player.AuxVarGetRef "*_HSCTsound") 5 1	;Set to Menu Sound
+	SetSoundFlag (Player.AuxVarGetRef "*_HSCTsound") 12 0	;No Mute When Submerged
+	SetSoundTraitNumeric (Player.AuxVarGetRef "*_HSCTsound") 2 0	;Set Frequency Adjustment to 0
+	SetSoundTraitNumeric (Player.AuxVarGetRef "*_HSCTsound") 3 (- (50 - 50 * (Player.AuxVarGetFlt "*_HSctssovol")	))	;Volume Adjust
+endif
+
+Player.AuxVarSetRef "*_HSKHsound" (TempCloneForm FSTSnow 1)
+if eval (Player.AuxVarGetRef "*_HSKHsound")
+	SetSoundSourceFile (Player.AuxVarGetRef "*_HSKHsound") "fx\HitSound\KillHitSound\KillHitSound.wav"
+	SetSoundFlag (Player.AuxVarGetRef "*_HSKHsound") 0 0	;No Random Frequency Shift
+	SetSoundFlag (Player.AuxVarGetRef "*_HSKHsound") 5 1	;Set to Menu Sound
+	SetSoundFlag (Player.AuxVarGetRef "*_HSKHsound") 12 0	;No Mute When Submerged
+	SetSoundTraitNumeric (Player.AuxVarGetRef "*_HSKHsound") 2 0	;Set Frequency Adjustment to 0
+	SetSoundTraitNumeric (Player.AuxVarGetRef "*_HSKHsound") 3 (- (50 - 50 * (Player.AuxVarGetFlt "*_HSkhssovol")	))	;Volume Adjust
+endif
+
+
+;Initialization
+SetEventHandlerAlt "PlayHitSound" (begin function {ref rRgt, float fDmg, int iHet, int iCtc, int iHlc}
+	if rRgt
+		if fDmg >= iHet
+			PlaySound (Player.AuxVarGetRef "*_HSKHsound")
+		elseif iCtc
+			PlaySound (Player.AuxVarGetRef "*_HSCTsound")
+		elseif iHlc == 1 || iHlc == 2 || iHlc == 13
+			PlaySound (Player.AuxVarGetRef "*_HSHSsound")
+		else
+			PlaySound (Player.AuxVarGetRef "*_HSBDsound")
+		endif
+	endif
+end)
+
+SetOnHitEventHandler (begin function {ref rTgt}
+	rTgt = this
+	if rTgt
+		if eval rTgt != PlayerRef && GetHitAttacker == PlayerRef && Player.GetEquippedWeaponType >= 3 && rTgt.isActor && !(rTgt.GetDead)
+			DispatchEventAlt "PlayHitSound" rTgt, (rTgt.GetHitHealthDamage), (rTgt.GetActorValue Health), (GetLastHitCritical), (GetHitLocation)
+		endif
+	endif
+end) 1
