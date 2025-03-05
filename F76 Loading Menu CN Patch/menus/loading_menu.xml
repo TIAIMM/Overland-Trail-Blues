@@ -1,0 +1,197 @@
+<menu name="LoadingMenu">
+	<class>&LoadingMenu;</class>
+	<stackingtype>&no_click_past;</stackingtype>
+	<visible>&true;</visible>
+	<alpha>0</alpha>
+	<locus>&true;</locus>
+	<menufade>0.75</menufade>
+	<image name="loading_tile_slide_01">
+		<id>32</id>
+		<alpha>0</alpha>
+		<depth>-6</depth>
+		<filename>Interface\Shared\Background\solid_black.dds</filename>
+		<height><copy src="screen" trait="height"/></height>
+		<systemcolor>&nosystemcolor;</systemcolor>
+		<visible>&true;</visible>
+		<width><copy src="screen" trait="width"/></width>
+		<zoom>&scale;</zoom>
+	</image>
+	<image name="loading_tile_slide_02">
+		<id>33</id>
+		<alpha>0</alpha>
+		<depth>-7</depth>
+		<filename><copy src="loading_tile_slide_01" trait="filename"/></filename>
+		<height><copy src="loading_tile_slide_01" trait="height"/></height>
+		<systemcolor><copy src="loading_tile_slide_01" trait="systemcolor"/></systemcolor>
+		<visible><copy src="loading_tile_slide_01" trait="visible"/></visible>
+		<width><copy src="loading_tile_slide_01" trait="width"/></width>
+		<zoom><copy src="loading_tile_slide_01" trait="zoom"/></zoom>
+	</image>
+	<rect name="NOGLOW_BRANCH">
+		<id>&noglow_branch;</id>
+		<visible>&false;</visible>
+		<image name="loading_world_image"><id> 12</id></image>
+		<text name="tip_text_01"><id>34</id></text>
+		<text name="tip_text_02"><id>35</id></text>
+		<image name="tip_matte_01"><id>36</id></image>
+		<image name="tip_matte_02"><id>37</id></image>
+		<nif name="loading_nif"><id>0</id><filename>Interface\Loading\LoadingAnim01.NIF</filename></nif>
+		<text name="loading_plateno_text1"><id>13</id></text>
+		<text name="loading_plateno_text2"><id>1</id></text>
+		<text name="loading_info_text"><id>2</id></text>
+		<text name="loading_currobj_label"><id>14</id></text>
+		<text name="loading_currobj_text"><id>3</id></text>
+		<rect name="loading_currobj_rect"><id>27</id></rect>
+		<rect name="loading_stat_rect"><id>31</id></rect>
+		<text name="loading_stat_label_rect"><id>17</id></text>
+		<text name="loading_stat1_label"><id>4</id></text>
+		<text name="loading_stat2_label"><id>6</id></text>
+		<text name="loading_stat3_label"><id>8</id></text>
+		<text name="loading_stat4_label"><id>19</id></text>
+		<text name="loading_stat5_label"><id>21</id></text>
+		<text name="loading_stat6_label"><id>23</id></text>
+		<text name="loading_stat7_label"><id>25</id></text>
+		<rect name="loading_stat_val_rect"><id>18</id></rect>
+		<text name="loading_stat1_val"><id>5</id></text>
+		<text name="loading_stat2_val"><id>7</id></text>
+		<text name="loading_stat3_val"><id>9</id></text>
+		<text name="loading_stat4_val"><id>20</id></text>
+		<text name="loading_stat5_val"><id>22</id></text>
+		<text name="loading_stat6_val"><id>24</id></text>
+		<text name="loading_stat7_val"><id>26</id></text>
+		<image name="loading_levelprog_meter"><id>10</id></image>
+		<text name="loading_levelprog_curlevel"><id>28</id></text>
+		<text name="loading_levelprog_nextlevel"><id>29</id></text>
+		<text name="loading_levelprog_char_marker"><id>30</id></text>
+		<rect name="loading_levelprog_rect"><id>16</id></rect>
+		<text name="loading_levelprog_label"><id>15</id></text>
+	</rect>
+
+	<rect name="f76lt">
+	  <locus>&true;</locus>
+		<visible><copy src="tip_text_01" trait="visible"/></visible>
+	  <x>
+	    <copy><copy src="screen" trait="width"/><div>2</div></copy>
+	    <sub><copy src="child(bg)" trait="width"/><div>2</div></sub>
+			<sub>50</sub>
+	  </x>
+	  <y>
+	    <copy><copy src="screen" trait="height"/></copy>
+	    <sub src="child(bg)" trait="height"/>
+	    <sub>50</sub>
+	  </y>
+	  <hotrect name="tl">
+	    <alpha>255</alpha>
+	    <brightness><copy src="me" trait="alpha"/></brightness>
+	    <height>2</height>
+	    <width><copy src="sibling(bg)" trait="width"/></width>
+	  </hotrect>
+	  <hotrect name="ll">
+	    <alpha><copy src="sibling(tl)" trait="alpha"/></alpha>
+	    <brightness><copy src="me" trait="alpha"/></brightness>
+	    <height><copy src="sibling(bg)" trait="height"/></height>
+	    <width><copy src="sibling(tl)" trait="height"/></width>
+	  </hotrect>
+	  <hotrect name="bl">
+	    <alpha><copy src="sibling(tl)" trait="alpha"/></alpha>
+	    <brightness><copy src="me" trait="alpha"/></brightness>
+	    <height><copy src="sibling(tl)" trait="height"/></height>
+	    <width><copy src="sibling(tl)" trait="width"/></width>
+	    <y><copy src="sibling(bg)" trait="height"/><sub src="me" trait="height"/></y>
+	  </hotrect>
+	  <image name="bg">
+	    <alpha><copy src="sibling(tl)" trait="alpha"/></alpha>
+	    <brightness>0</brightness>
+	    <depth>-1</depth>
+			<filename>f76lt/bg.dds</filename>
+	    <width>1350</width>
+	    <height>100</height>
+			<zoom>&scale;</zoom>
+	  </image>
+	  <image name="s1">
+	    <alpha><copy src="sibling(tl)" trait="alpha"/></alpha>
+	    <brightness><copy src="me" trait="alpha"/></brightness>
+	    <filename>f76lt/separator.dds</filename>
+	    <height><copy>1.24</copy><mult>84</mult></height>
+	    <width><copy src="me" trait="height"/></width>
+	    <x>75</x>
+	    <y>
+	      <copy><copy src="sibling(bg)" trait="height"/><div>2</div></copy>
+	      <sub><copy src="me" trait="height"/><div>2</div></sub>
+	    </y>
+	    <zoom>&scale;</zoom>
+	  </image>
+	  <image name="s2">
+	    <alpha><copy src="sibling(tl)" trait="alpha"/></alpha>
+	    <brightness><copy src="me" trait="alpha"/></brightness>
+	    <filename><copy src="sibling(s1)" trait="filename"/></filename>
+	    <height><copy src="sibling(s1)" trait="height"/></height>
+	    <width><copy src="me" trait="height"/></width>
+	    <x>
+	      <copy src="sibling(bg)" trait="width"/>
+	      <sub>250</sub>
+	    </x>
+	    <y><copy src="sibling(s1)" trait="y"/></y>
+	    <zoom><copy src="sibling(s1)" trait="zoom"/></zoom>
+	  </image>
+	  <image name="Survival">
+	    <alpha><copy src="sibling(tl)" trait="alpha"/></alpha>
+	    <brightness><copy src="me" trait="alpha"/></brightness>
+	    <filename>f76lt/survival.dds</filename>
+	    <height><copy>1.24</copy><mult>100</mult></height>
+	    <width><copy src="me" trait="height"/></width>
+	    <x>5</x>
+	    <y>
+	      <copy><copy src="sibling(bg)" trait="height"/><div>2</div></copy>
+	      <sub><copy src="me" trait="height"/><div>2</div></sub>
+	    </y>
+	    <zoom>&scale;</zoom>
+	  </image>
+	  <text name="Tips">
+	    <font>6</font>
+	    <!-- <string>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ut nisl tincidunt erat tempus vestibulum.</string> -->
+	    <string><copy src="tip_text_01" trait="string"/></string>
+	    <wrapwidth><copy src="sibling(bg)" trait="width"/><mult>0.7</mult></wrapwidth>
+	    <x><copy src="sibling(s1)" trait="x"/><add src="sibling(s1)" trait="width"/></x>
+	    <y>
+	      <copy><copy src="sibling(bg)" trait="height"/><div>2</div></copy>
+	      <sub><copy src="me" trait="height"/><div>2</div></sub>
+				<add>5</add>
+	    </y>
+	    <zoom>70</zoom>
+	  </text>
+		<text name="Loading">
+			<font>6</font>
+			<justify> &center; </justify>
+			<string>PlzSndBy</string>
+			<wrapwidth>120</wrapwidth>
+			<x>
+				<copy src="sibling(s2)" trait="x"/>
+				<add src="sibling(s1)" trait="width"/>
+				<add>35</add>
+			</x>
+			<y>
+				<copy><copy src="sibling(bg)" trait="height"/><div>2</div></copy>
+				<sub><copy src="me" trait="height"/><div>2</div></sub>
+				<add>0</add>
+			</y>
+			<zoom>70</zoom>
+		</text>
+	</rect>
+
+	<nif name="loading_pinwheel">
+		<id>11</id>
+		<filename>Interface\Circular Loading\loading01.nif</filename>
+		<animation>Idle</animation>
+		<x>
+			<copy src="f76lt" trait="x"/>
+			<add src="bg" trait="width"/>
+			<add>203</add>
+		</x>
+		<y>
+			<copy src="f76lt" trait="y"/>
+			<sub>100</sub>
+		</y>
+		<depth>3000</depth>
+	</nif>
+</menu>
