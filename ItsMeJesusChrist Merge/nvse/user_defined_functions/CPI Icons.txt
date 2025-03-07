@@ -1,0 +1,154 @@
+string_var	s_MenuPath
+
+ref	rV
+ref	rI
+int	iP
+
+array_var	aWM
+int	bM1
+int	bM2
+int	bM3
+
+int	iT
+int	iR
+int	iR2
+/*
+XML PATHS TO THE ICON
+1002 - path can be altered by VUI or whathaveyou
+sv_Construct "InventoryMenu\GLOW_BRANCH\IM_MainRect\%{VUI+UnHardcodedItemIcon\%}IM_ItemIcon\filename" (GetUIFloatAlt "InventoryMenu\GLOW_BRANCH\IM_MainRect\VUI+UnHardcodedItemIcon\locus")
+1003 - last highlighted perk, or first one in list, icon and description remains in view when opening pipboy
+"StatsMenu\GLOW_BRANCH\stats_display_rect\stats_icon\filename"
+1008
+"ContainerMenu\NOGLOW_BRANCH\CM_ItemIcon\filename"
+1035
+"RepairMenu\GLOW_BRANCH\RM_MainRect\RM_ItemIcon\filename"
+1053
+"BarterMenu\NOGLOW_BRANCH\BM_ItemIcon\filename"
+1058
+"RepairServicesMenu\NOGLOW_BRANCH\RSM_MainRect\RSM_ItemIcon\filename"
+1061 - (GetMenuTargetRef) - hack to reset view to the weapon when not mouseovering any mod
+"ItemModMenu\GLOW_BRANCH\IMM_MainRect\IMM_ItemIcon\filename"
+1027 (GetMenuTargetRef)
+"LevelUpMenu\NOGLOW_BRANCH\LUM_MainRect\LUM_SelectionIcon\filename"
+1084 (GetMenuTargetRef) - same problems with lingering icon/desc... I really don't want to have to hack it away
+"TraitMenu\NOGLOW_BRANCH\LUM_MainRect\LUM_SelectionIcon\filename"
+*/
+begin Function{int iMenu}
+
+if iMenu == 1027 || iMenu == 1084
+	if iMenu == 1027
+		s_MenuPath = "LevelUpMenu\NOGLOW_BRANCH\LUM_MainRect\LUM_SelectionIcon\filename"
+	elseif iMenu == 1084
+		s_MenuPath = "TraitMenu\NOGLOW_BRANCH\LUM_MainRect\LUM_SelectionIcon\filename"
+	endif
+	rI = GetMenuTargetRef iMenu
+elseif iMenu == 1003
+	s_MenuPath = "StatsMenu\GLOW_BRANCH\stats_display_rect\stats_icon\filename"
+	rI = GetSelectedItemRef
+elseif iMenu != 1061
+	if iMenu == 1002
+		s_MenuPath = sv_Construct "InventoryMenu\GLOW_BRANCH\IM_MainRect\%{VUI+UnHardcodedItemIcon\%}IM_ItemIcon\filename" (GetUIFloatAlt "InventoryMenu\GLOW_BRANCH\IM_MainRect\VUI+UnHardcodedItemIcon\locus")
+	elseif iMenu == 1008
+		s_MenuPath = "ContainerMenu\NOGLOW_BRANCH\CM_ItemIcon\filename"
+	elseif iMenu == 1035
+		s_MenuPath = "RepairMenu\GLOW_BRANCH\RM_MainRect\RM_ItemIcon\filename"
+	elseif iMenu == 1053
+		s_MenuPath = "BarterMenu\NOGLOW_BRANCH\BM_ItemIcon\filename"
+	elseif iMenu == 1058
+		s_MenuPath = "RepairServicesMenu\NOGLOW_BRANCH\RSM_MainRect\RSM_ItemIcon\filename"
+	else
+		Return
+	endif
+	rV = GetSelectedItemRef
+else
+	s_MenuPath = "ItemModMenu\GLOW_BRANCH\IMM_MainRect\IMM_ItemIcon\filename"
+	rV = GetMenuTargetRef iMenu
+endif
+
+eval (IsFormValid rV) && (rI = rV.GBO)
+if eval !(IsFormValid rI) || !(RefMapGetType "*ConsistentPipboyIcons" rI)
+	sv_Destruct s_MenuPath
+	Return
+endif
+iT = GetType rI
+
+if eval iT == 24 && (PlayerRef.GetEquipped (RefMapGetRef "*ConsistentPipboyIcons" rI))
+	if eval (GetPCIsSex Female) && (AuxVarType "*ConsistentPipboyIconsAF" 0 rI)
+		SetUIStringAlt (s_MenuPath) (AuxVarGetStr "*ConsistentPipboyIconsAF" 0 rI)
+	elseif (AuxVarType "*ConsistentPipboyIconsAM" 0 rI)
+		SetUIStringAlt (s_MenuPath) (AuxVarGetStr "*ConsistentPipboyIconsAM" 0 rI)
+	endif
+elseif iT == 40
+	if iMenu != 1061
+	elseif eval GetSelectedItemRef && ((GetSelectedItemRef).GetType != 40)
+		sv_Destruct s_MenuPath
+		Return
+	else
+		SetUIStringAlt "ItemModMenu\GLOW_BRANCH\IMM_MainRect\IMM_ModDesc\string" "%e"
+	endif
+
+	iP = rV.GetWeaponRefModFlags
+	if iP
+		aWM = ar_Construct "Array"
+		bM1 = eval (iP & 1)
+		bM2 = eval (iP & 2)
+		bM3 = eval (iP & 4)
+		if bM1
+			ar_Append aWM "1"
+			if bM2
+				ar_Append aWM "2"
+				ar_Append aWM "12"
+				if bM3
+					ar_Append aWM "3"
+					ar_Append aWM "13"
+					ar_Append aWM "23"
+					ar_Append aWM "123"
+				endif
+			elseif bM3
+				ar_Append aWM "3"
+				ar_Append aWM "13"
+			endif
+		elseif bM2
+			ar_Append aWM "2"
+			if bM3
+				ar_Append aWM "3"
+				ar_Append aWM "23"
+			endif
+		elseif bM3
+			ar_Append aWM "3"
+		endif
+	endif
+
+	iP = ar_Size aWM
+	while (iP -= 1) > -1
+		if eval (GetPCIsSex Female) && (AuxVarType ("*ConsistentPipboyIconsWF" + (aWM[iP])) 0 rI)
+			SetUIStringAlt (s_MenuPath) (AuxVarGetStr ("*ConsistentPipboyIconsWF" + (aWM[iP])) 0 rI)
+			Break
+		elseif eval (AuxVarType ("*ConsistentPipboyIconsWM" + (aWM[iP])) 0 rI)
+			SetUIStringAlt (s_MenuPath) (AuxVarGetStr ("*ConsistentPipboyIconsWM" + (aWM[iP])) 0 rI)
+			Break
+		endif
+	loop
+	if iP > -1
+	elseif eval (GetPCIsSex Female) && (AuxVarType "*ConsistentPipboyIconsF1" 0 rI)
+		SetUIStringAlt (s_MenuPath) (AuxVarGetStr "*ConsistentPipboyIconsF1" 0 rI)
+	elseif iMenu == 1061
+		SetUIStringAlt (s_MenuPath) (GetTexturePath rI)
+	endif
+
+elseif iT == 86
+	iR = (iMenu == 1027) + (PlayerRef.HasPerkRank rI) + 1
+	while (iR -= 1) > 0
+		if eval (GetPCIsSex Female) && (AuxVarType ("*ConsistentPipboyIconsF" + $iR) 0 rI)
+			SetUIStringAlt (s_MenuPath) (AuxVarGetStr ("*ConsistentPipboyIconsF" + $iR) 0 rI)
+			Break
+		elseif eval (AuxVarType ("*ConsistentPipboyIconsM" + $iR) 0 rI)
+			SetUIStringAlt (s_MenuPath) (AuxVarGetStr ("*ConsistentPipboyIconsM" + $iR) 0 rI)
+			Break
+		endif
+	loop
+endif
+
+sv_Destruct s_MenuPath
+
+End

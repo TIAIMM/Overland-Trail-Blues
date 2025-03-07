@@ -1,0 +1,202 @@
+;Xilandro's gotcha - because idgaf, but LOC probably should
+if GetNVSEVersionFull < 6.33
+	MessageBoxEx "Update xNVSE.%rRequired version: 6.33 (6.3.3) or higher.%rInstalled version: %g%rDon't report this as a bug, you will be ignored" (GetNVSEVersionFull)
+	return
+elseif GetPluginVersion "JIP LN NVSE" < 57.01
+	MessageBoxEx "Update JIP LN NVSE plugin.%rRequired version: 57.01 or higher.%rInstalled version: %g%rDon't report this as a bug, you will be ignored" (GetPluginVersion "JIP LN NVSE")
+	return
+elseif GetPluginVersion "JohnnyGuitarNVSE" < 493
+	MessageBoxEx "Update JohnnyGuitar NVSE plugin.%rRequired version: 493 or higher.%rInstalled version: %g%rDon't report this as a bug, you will be ignored" (GetPluginVersion "JohnnyGuitarNVSE")
+	return
+elseif GetPluginVersion "ShowOffNVSE Plugin" < 165
+	MessageBoxEx "Update ShowOff NVSE plugin.%rRequired version: 1.65 (165) or higher.%rInstalled version: %g%rDon't report this as a bug, you will be ignored" (GetPluginVersion "ShowOffNVSE Plugin")
+	return
+elseif eval (IsModLoaded "CPI Icons.esp") || (FileExists "nvse\plugins\scripts\gr_CPIIcons.txt") || (FileExists "nvse\plugins\scripts\gr_CPIRanks.txt")
+	MessageBoxEx "Consistent Pipboy Icons: uninstall CPI Icons.esp and the files %qData\nvse\plugins\scripts\gr_CPIIcons.txt%q and %qData\nvse\plugins\scripts\gr_CPIRanks.txt%q before using the new version."
+	return
+endif
+;variables are shared among all script runner files? have to use names as absurd as possible to avoid breaking other scripts
+;or better yet, put EVERYTHING in UDF texts and just use the script runner to compile them
+;or maybe it was just my shitty scriptrunner bleeding its errors into other txt files in the console log
+
+array_var	CPImaster
+ref	CPIbase
+string_var	CPIpath
+;FIX - removes female armor icons when they're identical to the male ones, so that they don't block redux icons for female pc
+ForEach CPImaster <- GLTA 24
+	CPIbase = *CPImaster
+	if (IsArmorAddon CPIbase) == 0
+		CPIpath = GetBipedIconPath 0 CPIbase
+		if eval (sv_Length CPIpath) > 0
+			eval (CPIpath == (GetBipedIconPath 1 CPIbase)) && (SetBipedIconpathAlt "%e" 1 CPIbase)
+		else
+			CPIpath = GetBipedIconPath 1 CPIbase
+			eval (sv_Length CPIpath) > 0 && (SetBipedIconpathAlt "%e" 1 CPIbase)
+		endif
+
+		CPIpath = GetMessageIconPath CPIbase 0
+		if eval (sv_Length CPIpath) > 0
+			eval (CPIpath == (GetMessageIconPath CPIbase 1)) && (SetMessageIconPath "%e" CPIbase 1)
+		else
+			CPIpath = GetMessageIconPath CPIbase 1
+			eval (sv_Length CPIpath) > 0 && (SetMessageIconPath "%e" CPIbase 1)
+		endif
+	endif
+loop
+
+int CPImenu
+;FIX - puts the default weapon icon back in view in the weapon mod menu when not hovering over a weapon mod. UDF does the same with modded weapon icons
+SetOnMouseoverChangeEventHandler (begin Function{CPImenu}
+	ref CPItarget = GetMenuTargetRef 1061
+	if IsFormValid CPItarget == 0
+		Return
+	endif
+	if eval (!(GetSelectedItemRef) || (GetSelectedItemRef == CPItarget)) && !(RefMapGetType "*ConsistentPipboyIcons" (CPItarget.GBO))
+		SetUIStringAlt "ItemModMenu\GLOW_BRANCH\IMM_MainRect\IMM_ModDesc\string" "%e"
+		SetUIStringAlt "ItemModMenu\GLOW_BRANCH\IMM_MainRect\IMM_ItemIcon\filename" (GetTexturePath (CPItarget.GBO))
+	endif
+end) 1 1061
+
+if FileExists "nvse\user_defined_functions\CPI Icons.txt"
+	SetOnMouseoverChangeEventHandler (CompileScript "CPI Icons.txt") 1
+	SetOnMenuOpenEventHandler (CompileScript "CPI Icons.txt") 1 1061
+else
+	Print "Consistent Pipboy Icons: script file not found. No dynamic icon changes will be applied"
+endif
+
+int	CPImasterSize
+array_var	CPIauxArray
+
+int	CPImasterIndex
+int	CPItype
+int	CPIgender
+int	CPIrank
+ref	CPIarmorSet
+
+array_var CPIfiles = GetFiles "Config\ConsistentPipboyIcons"
+int CPIfileIndex = -1
+while (CPIfileIndex += 1) < (ar_size CPIfiles)
+	CPImaster = ReadArrayFromFile ("Data\Config\ConsistentPipboyIcons\" + (CPIfiles[CPIfileIndex]))
+	CPImasterSize = ar_size CPImaster
+	;at minimum need itemID and iconPath columns
+	if CPImasterSize < 2
+		Print "Consistent Pipboy Icons: the ini file " + $(CPIfiles[CPIfileIndex]) + " is not formatted correctly"
+		Continue
+	;if just one line in the file, make each element its own single element array so loop treats it the same
+	elseif eval ((TypeOf (CPImaster[0])) != "Array")
+		CPIauxArray = ar_Copy CPImaster
+		CPImasterIndex = -1
+		while (CPImasterIndex += 1) < CPImasterSize
+			CPImaster[CPImasterIndex] = ar_Construct "Array"
+			CPImaster[CPImasterIndex][0] = CPIauxArray[CPImasterIndex]
+		loop
+	endif
+
+	CPImasterIndex = -1
+	while (CPImasterIndex += 1) < (ar_Size (CPImaster[0]))
+		if eval (TypeOf (CPImaster[0][CPImasterIndex])) == "String"
+			CPIbase = EditorIDToFormID (CPImaster[0][CPImasterIndex])
+		elseif eval (TypeOf (CPImaster[0][CPImasterIndex])) == "Form"
+			CPIbase = CPImaster[0][CPImasterIndex]
+		else
+			Continue
+		endif
+		if eval !(IsFormValid CPIbase) || !((TypeOf (CPImaster[1][CPImasterIndex])) == "String") || !(FileExists ("Textures\" + $(CPImaster[1][CPImasterIndex])))
+			Continue
+		endif
+		if IsBaseForm CPIbase
+			CPItype = GetType CPIbase
+			CPIarmorSet = 0
+			CPIgender = CPIrank = 0
+			eval CPImasterSize > 2 && (CPIgender = CPImaster[2][CPImasterIndex])
+
+			if CPImasterSize < 4
+			elseif eval ((TypeOf (CPImaster[3][CPImasterIndex])) == "Number")
+				CPIrank = (CPImaster[3][CPImasterIndex])
+			elseif CPItype == 24
+				if eval ((TypeOf (CPImaster[3][CPImasterIndex])) == "Form")
+					CPIarmorSet = (CPImaster[3][CPImasterIndex])
+				elseif eval ((TypeOf (CPImaster[3][CPImasterIndex])) == "String")
+					CPIarmorSet = EditorIDToFormID (CPImaster[3][CPImasterIndex])
+				endif
+				eval (!(IsFormValid CPIarmorSet) || !(IsBaseForm CPIarmorSet) || !((GetIsItem CPIarmorSet) || (GetType CPIarmorSet) == 85)) && (CPIarmorSet = 0)
+			endif
+		else
+			if CPIbase.IsMapMarker
+				CPItype = -1
+			else
+				Print "Consistent Pipboy Icons: item at line " + $(CPImasterIndex + 1) + " in file " + $(CPIfiles[CPIfileIndex]) + " with ID " + $(GetFormIDString CPIbase) + " skipped as it is neither a base form, nor a map marker reference."
+				Continue
+			endif
+		endif
+
+		if CPItype == -1
+			SetCustomMapMarkerIcon CPIbase (CPImaster[1][CPImasterIndex])
+		elseif CPItype == 24
+			if IsArmorAddon CPIbase
+				Print "Consistent Pipboy Icons: item at line " + $(CPImasterIndex + 1) + " in file " + $(CPIfiles[CPIfileIndex]) + " with ID " + $(GetFormIDString CPIbase) + " is an armor addon piece, please use actual armor type items."
+			elseif CPIarmorSet
+				if CPIgender < 1
+					AuxVarSetStr "*ConsistentPipboyIconsAM" (CPImaster[1][CPImasterIndex]) 0 CPIbase
+				elseif CPIgender == 1
+					AuxVarSetStr "*ConsistentPipboyIconsAF" (CPImaster[1][CPImasterIndex]) 0 CPIbase
+				else
+					Continue
+				endif
+				RefMapSetRef "*ConsistentPipboyIcons" CPIarmorSet CPIbase
+			elseif CPIgender == 0 || CPIgender == 1
+				SetBipedIconpathAlt (CPImaster[1][CPImasterIndex]) CPIgender CPIbase
+			elseif CPIgender < 4
+				SetMessageIconPath (CPImaster[1][CPImasterIndex]) CPIbase (CPIgender > 2)
+			else
+				SetItemHotkeyIconPath CPIbase (CPImaster[1][CPImasterIndex])
+			endif
+		elseif CPItype == 40	;AuxVarType is returning whatever it wants when using Flt -1 or 0 at index > 0?
+			eval (CPIgender == 1 || CPIrank > 0) && !(RefMapGetType "*ConsistentPipboyIcons" CPIbase) && (RefMapSetFlt "*ConsistentPipboyIcons" 1 CPIbase)
+			if CPIgender > 3
+				SetItemHotkeyIconPath CPIbase (CPImaster[1][CPImasterIndex])
+			elseif CPIrank < 1
+				if CPIgender < 1
+					SetTexturePath (CPImaster[1][CPImasterIndex]) CPIbase
+				elseif CPIgender == 1
+					AuxVarSetStr "*ConsistentPipboyIconsF1" (CPImaster[1][CPImasterIndex]) 0 CPIbase
+				elseif CPIgender == 2
+					SetMessageIconPath (CPImaster[1][CPImasterIndex]) CPIbase
+				elseif CPIgender == 3
+					Print "Consistent Pipboy Icons: item at line " + $(CPImasterIndex + 1) + " in file " + $(CPIfiles[CPIfileIndex]) + " with ID " + $(GetFormIDString CPIbase) + " is a weapon, cannot set female popup icon on it."
+				;	AuxVarSetStr "*ConsistentPipboyIconsF2" (CPImaster[1][CPImasterIndex]) 0 CPIbase
+				endif
+			elseif CPIgender == 1
+				AuxVarSetStr ("*ConsistentPipboyIconsWF" + $CPIrank) (CPImaster[1][CPImasterIndex]) 0 CPIbase
+			elseif CPIgender < 1
+				AuxVarSetStr ("*ConsistentPipboyIconsWM" + $CPIrank) (CPImaster[1][CPImasterIndex]) 0 CPIbase
+			endif
+		elseif CPItype == 86
+			if CPIgender > 0 || CPIrank > 1
+				eval !(RefMapGetType "*ConsistentPipboyIcons" CPIbase) && (RefMapSetFlt "*ConsistentPipboyIcons" 1 CPIbase)
+				CPIrank = GetMaxOf CPIrank 1
+				if CPIgender > 0
+					CPIpath = "*ConsistentPipboyIconsF"
+				elseif CPIrank > 1
+					CPIpath = "*ConsistentPipboyIconsM"
+				endif
+				AuxVarSetStr (CPIpath + $CPIrank) (CPImaster[1][CPImasterIndex]) 0 CPIbase
+			else
+				SetTexturePath (CPImaster[1][CPImasterIndex]) CPIbase
+			endif
+		elseif CPIgender > 3
+			if (GetIsItem CPIbase)
+				SetItemHotkeyIconPath CPIbase (CPImaster[1][CPImasterIndex])
+			else
+				Print "Consistent Pipboy Icons: item at line " + $(CPImasterIndex + 1) + " in file " + $(CPIfiles[CPIfileIndex]) + " with ID " + $(GetFormIDString CPIbase) + " is not an inventory item, cannot change hotkey icon on it."
+			endif
+		elseif CPIgender > 1
+			SetMessageIconPath (CPImaster[1][CPImasterIndex]) CPIbase
+		else
+			SetTexturePath (CPImaster[1][CPImasterIndex]) CPIbase
+		endif
+	loop
+loop
+
+CPImaster = CPIauxArray = CPIfiles = ar_Null
+sv_Destruct CPIpath

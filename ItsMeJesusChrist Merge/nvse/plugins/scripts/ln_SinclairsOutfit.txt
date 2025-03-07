@@ -1,0 +1,12 @@
+if Player.GetIsSex Male
+   LNSetName "Sinclair's Outfit" nvdlc01starletclean
+else
+   LNSetName "Vera's Outfit" nvdlc01starletclean
+endif
+SetOnMenuCloseEventHandler (Begin Function {int iMenuID}
+  if Player.GetIsSex Male
+    LNSetName "Sinclair's Outfit" nvdlc01starletclean
+  else
+    LNSetName "Vera's Outfit" nvdlc01starletclean
+  endif
+End) 1 1036
