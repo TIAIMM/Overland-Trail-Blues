@@ -1,0 +1,28 @@
+SetArmorRCT ArmorPowerNCRSalvaged "ragdollconstraint/PowerArmor.rdt"
+SetArmorRCT ArmorPowerBrotherhoodOfSteelT45D "ragdollconstraint/PowerArmor.rdt"
+SetArmorRCT ArmorPowerBrotherhoodOfSteelT51B "ragdollconstraint/PowerArmor.rdt"
+SetArmorRCT ArmorPowerNCRSalvaged "ragdollconstraint/PowerArmor.rdt"
+SetArmorRCT ArmorPowerRemnants "ragdollconstraint/PowerArmor.rdt"
+SetArmorRCT ArmorLegate "ragdollconstraint/PowerArmor.rdt"
+SetArmorRCT NVDLC03SkeletonSpaceSuit "ragdollconstraint/traumaharness.rdt"
+SetArmorRCT ArmorPowerT45d "ragdollconstraint/PowerArmor.rdt"
+SetArmorRCT ArmorPowerT51b "ragdollconstraint/PowerArmor.rdt"
+SetArmorRCT NVDLC04ArmorPowerNCRScorched "ragdollconstraint/PowerArmor.rdt"
+SetArmorRCT ArmorRemnantsTesla "ragdollconstraint/PowerArmor.rdt"
+SetArmorRCT ArmorPowerNCRSalvaged "ragdollconstraint/PowerArmor.rdt"
+SetArmorRCT DamWarPowerArmor "ragdollconstraint/PowerArmor.rdt"
+
+SetArmorRCT ArmorEnclave "PowerArmor.rdt"
+SetArmorRCT ArmorTeslaPower "PowerArmor.rdt"
+
+
+;helmets
+SetArmorRCT ArmorPowerNCRHelmet "ragdollconstraint/PowerArmorHelmet.rdt"
+SetArmorRCT ArmorPowerT45dHelmet "ragdollconstraint/PowerArmorHelmet.rdt"
+SetArmorRCT ArmorPowerT51bHelmet "ragdollconstraint/PowerArmorHelmet.rdt"
+SetArmorRCT ArmorPowerRemnantsHelmet "ragdollconstraint/PowerArmorHelmet.rdt"
+SetArmorRCT ArmorRemnantsTeslaHelm "ragdollconstraint/PowerArmorHelmet.rdt"
+SetArmorRCT HelmetNVLegate "ragdollconstraint/PowerArmorHelmet.rdt"
+SetArmorRCT NVDLC04HelmetLegateHelm "ragdollconstraint/PowerArmorHelmet.rdt"
+
+

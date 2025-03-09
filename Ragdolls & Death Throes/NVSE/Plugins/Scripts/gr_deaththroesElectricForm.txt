@@ -1,0 +1,57 @@
+
+ListAddForm MadRagdollElectricWeapons (EditorIDToFormID "NVDLC03WeapLaer")
+ListAddForm MadRagdollElectricWeapons (EditorIDToFormID "NVDLC03WeapLaerUniqueElijah")
+ListAddForm MadRagdollElectricWeapons (EditorIDToFormID "EyeBot1HP")
+ListAddForm MadRagdollElectricWeapons (EditorIDToFormID "WeapNVPulseGun")
+ListAddForm MadRagdollElectricWeapons (EditorIDToFormID "EyeBot1HP")
+ListAddForm MadRagdollElectricWeapons (EditorIDToFormID "WeapNVPulseGun")
+ListAddForm MadRagdollElectricWeapons (EditorIDToFormID "DLC05ShockBaton")
+ListAddForm MadRagdollElectricWeapons (EditorIDToFormID "WeapNVPulseGun")
+ListAddForm MadRagdollElectricWeapons (EditorIDToFormID "EDEZapGun")
+ListAddForm MadRagdollElectricWeapons (EditorIDToFormID "EDEStunBaton")
+ListAddForm MadRagdollElectricWeapons (EditorIDToFormID "EDEStunBatonUpgrade")
+ListAddForm MadRagdollElectricWeapons (EditorIDToFormID "EDEZapGunUpgrade")
+ListAddForm MadRagdollElectricWeapons (EditorIDToFormID "EDEStunBatonUpgrade")
+ListAddForm MadRagdollElectricWeapons (EditorIDToFormID "EDEZapGunUpgrade")
+ListAddForm MadRagdollElectricWeapons (EditorIDToFormID "WeapCattleProd")
+ListAddForm MadRagdollElectricWeapons (EditorIDToFormID "NVDLC03WeapLaer")
+; Classic Fallout Weapons Remastered
+if IsModLoaded "Classic Fallout Weapons Remastered v1.2.esp"
+ListAddForm MadRagdollElectricWeapons (EditorIDToFormID "CFWRYK42BPulseRifle")
+ListAddForm MadRagdollElectricWeapons (EditorIDToFormID "CFWRYK32PulsePistol")
+endif
+; TAR3
+if IsModLoaded "TAR3Gun.esp"
+ListAddForm MadRagdollElectricWeapons (EditorIDToFormID "WeapNVTeslaRifle")
+endif
+	; TeslaGuns
+if IsModLoaded "TeslaWeaponsPack.esp"
+	ListAddForm MadRagdollElectricWeapons (EditorIDToFormID "WeapPrototypeTeslaRifle")
+	ListAddForm MadRagdollElectricWeapons (EditorIDToFormID "WeapTeslalLaserRCW")
+	ListAddForm MadRagdollElectricWeapons (EditorIDToFormID "WeapNVTeslaShotgun")
+	ListAddForm MadRagdollElectricWeapons (EditorIDToFormID "WeapNVTeslaRevolver")
+	ListAddForm MadRagdollElectricWeapons (EditorIDToFormID "WeapTeslaCaster")
+	ListAddForm MadRagdollElectricWeapons (EditorIDToFormID "WeapNVTeslaSniperRifle")
+	ListAddForm MadRagdollElectricWeapons (EditorIDToFormID "WeapPrototypeTeslaRifle")
+endif
+
+; mil
+if IsModLoaded "mil.esp"
+
+
+ListAddForm MadRagdollElectricWeapons (EditorIDToFormID "arcWeapElectroSledge")
+  
+endif
+; ZL_Armaments_Remastered
+if IsModLoaded "ZL_Armaments_Remastered.esm"
+
+
+ListAddForm MadRagdollElectricWeapons (EditorIDToFormID "ZLWeapTeslaSniperRifleChainEffect01")
+ListAddForm MadRagdollElectricWeapons (EditorIDToFormID "ZLWeapTeslaSniperRifleUnique1ChainEffect01")
+ListAddForm MadRagdollElectricWeapons (EditorIDToFormID "ZLWeapTeslaSniperRifleUnique1ChainEffect02")
+ListAddForm MadRagdollElectricWeapons (EditorIDToFormID "ZLWeapTeslaSniperRifle")
+ListAddForm MadRagdollElectricWeapons (EditorIDToFormID "ZLWeapTeslaSniperRifleUnique1")
+ListAddForm MadRagdollElectricWeapons (EditorIDToFormID "ZLWeapKatanaElectric")
+ListAddForm MadRagdollElectricWeapons (EditorIDToFormID "ZLWeapZweihanderElectric")
+   
+endif

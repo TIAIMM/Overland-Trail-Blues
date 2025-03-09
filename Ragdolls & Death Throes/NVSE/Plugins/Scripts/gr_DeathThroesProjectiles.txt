@@ -1,0 +1,64 @@
+SetProjectileTraitNumeric 10mmBulletProjectile 9 12
+SetProjectileTraitNumeric 10mmBulletAutoProjectile 9 10
+SetProjectileTraitNumeric BuckshotProjectile 9 10
+SetProjectileTraitNumeric 127mmPistolBulletProjectile 9 25
+SetProjectileTraitNumeric 308BulletProjectile 9 20
+SetProjectileTraitNumeric 357CalPistolBulletProjectile 9 13
+SetProjectileTraitNumeric 357CalRifleBulletProjectile 9 15
+SetProjectileTraitNumeric 44MagnumPistolBulletProjectile 9 20
+SetProjectileTraitNumeric 44MagnumRifleBulletProjectile 9 20
+SetProjectileTraitNumeric 4570GovtPistolBulletProjectile 9 30
+SetProjectileTraitNumeric 4570GovtRifleBulletProjectile 9 35
+SetProjectileTraitNumeric 556mmPistolBulletProjectile 9 12
+SetProjectileTraitNumeric 556mmRifleBulletProjectile 9 14
+SetProjectileTraitNumeric 9mmBulletProjectile 9 9
+SetProjectileTraitNumeric 22LRPistolProjectile 9 4
+SetProjectileTraitNumeric AutoTracerProjectile 9 7
+SetProjectileTraitNumeric NVDLC04NailProjectile 9 10
+SetProjectileTraitNumeric 12GaBeanBagProjectile 9 15
+SetProjectileTraitNumeric 12GaCoinShotProjectile 9 20
+SetProjectileTraitNumeric 12GaSlugProjectile 9 25
+SetProjectileTraitNumeric NVDLC0512GaFlechetteProjectile 9 9
+SetProjectileTraitNumeric NVDLC0512GaPulseSlugProjectile 9 12
+SetProjectileTraitNumeric 20GaSlugProjectile 9 20
+SetProjectileTraitNumeric NVDLC0512GaFlechetteProjectile 9 9
+SetProjectileTraitNumeric NVDLC0520GaPulseSlugProjectile 9 20
+SetProjectileTraitNumeric PlasmaCasterProjectile 9 45
+SetProjectileTraitNumeric PlasmaProjectile 9 25
+SetProjectileTraitNumeric PlasmaProjectile02 9 25
+SetProjectileTraitNumeric PlasmaProjectileQ35 9 35
+SetProjectileTraitNumeric Stranger44MagnumBulletProjectile 9 20
+SetProjectileTraitNumeric SonicGabeProjectile 9 50
+SetProjectileTraitNumeric SonicOperaProjectile 9 40
+SetProjectileTraitNumeric SonicRevProjectile 9 10
+SetProjectileTraitNumeric SonicRoboProjectile 9 30
+SetProjectileTraitNumeric SonicTaranProjectile 9 20
+SetProjectileTraitNumeric GaussProjectile 9 80
+SetProjectileTraitNumeric NVHatchetProjectile 9 40
+SetProjectileTraitNumeric NVdlc03ProtonaxeProjectile 9 50
+
+
+
+
+SetProjectileTraitNumeric BeamLaserAutoProjectile 9 0
+SetProjectileTraitNumeric BeamLaserCompRegProjectile 9 0
+SetProjectileTraitNumeric BeamLaserGreenProjectile 9 0
+
+SetProjectileTraitNumeric BeamLaserProjectile 9 0
+SetProjectileTraitNumeric BeamPewPewProjectile 9 0
+
+
+SetProjectileTraitNumeric HologramPulseGunProjectile 9 30
+
+SetProjectileTraitNumeric NVDLC01HoloRifleProjectile 9 30
+
+
+SetProjectileTraitNumeric NVDLC03LaserStingerProjectile 9 0
+SetProjectileTraitNumeric NVDLC03LaserStingerSmallProjectile 9 0
+
+
+
+SetProjectileTraitNumeric NVDLC03PulseGunProjectile 9 20
+
+
+SetProjectileTraitNumeric NVdlc03ProtonInversalaxeProjectile 9 50
