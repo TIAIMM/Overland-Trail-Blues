@@ -158,24 +158,24 @@
 	      <sub><copy src="me" trait="height"/><div>2</div></sub>
 				<add>5</add>
 	    </y>
-	    <zoom>70</zoom>
+	    <zoom>80</zoom>
 	  </text>
 		<text name="Loading">
 			<font>6</font>
-			<justify> &center; </justify>
+			<justify>&center;</justify>
 			<string>PlzSndBy</string>
 			<wrapwidth>120</wrapwidth>
 			<x>
 				<copy src="sibling(s2)" trait="x"/>
 				<add src="sibling(s1)" trait="width"/>
-				<add>35</add>
+				<add>20</add>
 			</x>
 			<y>
 				<copy><copy src="sibling(bg)" trait="height"/><div>2</div></copy>
 				<sub><copy src="me" trait="height"/><div>2</div></sub>
-				<add>0</add>
+				<add>5</add>
 			</y>
-			<zoom>70</zoom>
+			<zoom>85</zoom>
 		</text>
 	</rect>
 
