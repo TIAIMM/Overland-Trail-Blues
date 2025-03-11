@@ -1,0 +1,470 @@
+<_colorized><copy src="io" trait="_MAPMOCleanMenuBackgroundsColorized"/></_colorized>
+<_faded><copy src="io" trait="_MAPMOUITweaksFadedEdges"/></_faded>
+<image name="LineT1">
+  <alpha><copy src="parent" trait="alpha"/></alpha>
+  <brightness><copy src="me" trait="alpha"/></brightness>
+  <depth>1</depth>
+  <filename>interface\shared\solid.dds</filename>
+  <height><copy src="globals" trait="_line_thickness"/></height>
+  <systemcolor><copy src="io" trait="systemcolor"/></systemcolor>
+  <texatlas>interface\interfaceshared.tai</texatlas>
+  <visible>
+    <copy>0</copy>
+    <add><copy>&true;</copy><onlyif><copy src="parent" trait="_type"/><eq>1</eq></onlyif></add>
+    <add><copy>&true;</copy><onlyif><copy src="parent" trait="_type"/><eq>3</eq></onlyif></add>
+  </visible>
+  <width><copy src="parent" trait="width"/><add><copy src="me" trait="height"/><mult>2</mult></add></width>
+  <x><copy>0</copy><sub src="me" trait="height"/></x>
+  <y><copy>0</copy><sub src="me" trait="height"/></y>
+  <zoom>&scale;</zoom>
+</image>
+<image name="LineT1B">
+  <alpha><copy src="parent" trait="alpha"/></alpha>
+  <brightness><copy src="me" trait="alpha"/></brightness>
+  <depth><copy src="sibling(LineT1)" trait="depth"/></depth>
+  <filename><copy src="sibling(LineT1)" trait="filename"/></filename>
+  <height><copy src="sibling(LineT1)" trait="height"/></height>
+  <systemcolor><copy src="sibling(LineT1)" trait="systemcolor"/></systemcolor>
+  <texatlas><copy src="sibling(LineT1)" trait="texatlas"/></texatlas>
+  <visible>
+    <copy>0</copy>
+    <add><copy>&true;</copy><onlyif><copy src="parent" trait="_type"/><eq>2</eq></onlyif></add>
+  </visible>
+  <width><copy src="sibling(LineT1)" trait="width"/><mult>0.05</mult></width>
+  <x><copy src="sibling(LineT1)" trait="x"/></x>
+  <y><copy src="sibling(LineT1)" trait="y"/></y>
+  <zoom><copy src="sibling(LineT1)" trait="zoom"/></zoom>
+</image>
+<image name="LineT2B">
+  <alpha><copy src="parent" trait="alpha"/></alpha>
+  <brightness><copy src="me" trait="alpha"/></brightness>
+  <depth><copy src="sibling(LineT1)" trait="depth"/></depth>
+  <filename><copy src="sibling(LineT1)" trait="filename"/></filename>
+  <height><copy src="sibling(LineT1)" trait="height"/></height>
+  <systemcolor><copy src="sibling(LineT1)" trait="systemcolor"/></systemcolor>
+  <texatlas><copy src="sibling(LineT1)" trait="texatlas"/></texatlas>
+  <visible>
+    <copy>0</copy>
+    <add><copy>&true;</copy><onlyif><copy src="parent" trait="_type"/><eq>2</eq></onlyif></add>
+  </visible>
+  <width>
+    <copy src="sibling(LineT1)" trait="width"/>
+    <sub src="sibling(LineT1B)" trait="width"/>
+    <sub src="sibling(TextTop)" trait="width"/>
+    <sub>10</sub>
+  </width>
+  <x>
+    <copy src="sibling(LineT1)" trait="x"/>
+    <add src="sibling(LineT1B)" trait="width"/>
+    <add src="sibling(TextTop)" trait="width"/>
+    <add>10</add>
+  </x>
+  <y><copy src="sibling(LineT1)" trait="y"/></y>
+  <zoom><copy src="sibling(LineT1)" trait="zoom"/></zoom>
+</image>
+<image name="LineT1C">
+  <alpha><copy src="parent" trait="alpha"/></alpha>
+  <brightness><copy src="me" trait="alpha"/></brightness>
+  <depth><copy src="sibling(LineT1)" trait="depth"/></depth>
+  <filename>interface\shared\line\fade_to_right.dds</filename>
+  <height><copy src="sibling(LineT1)" trait="height"/></height>
+  <systemcolor><copy src="sibling(LineT1)" trait="systemcolor"/></systemcolor>
+  <texatlas><copy src="sibling(LineT1)" trait="texatlas"/></texatlas>
+  <visible>
+    <copy>0</copy>
+    <add><copy>&true;</copy><onlyif><copy src="parent" trait="_type"/><eq>4</eq></onlyif></add>
+  </visible>
+  <width><copy src="sibling(LineT1)" trait="width"/><mult>0.25</mult></width>
+  <x><copy src="sibling(LineT1)" trait="x"/></x>
+  <y><copy src="sibling(LineT1)" trait="y"/></y>
+  <zoom><copy src="sibling(LineT1)" trait="zoom"/></zoom>
+</image>
+<image name="LineT2C">
+  <alpha><copy src="parent" trait="alpha"/></alpha>
+  <brightness><copy src="me" trait="alpha"/></brightness>
+  <depth><copy src="sibling(LineT1)" trait="depth"/></depth>
+  <filename>interface\shared\line\fade_to_right.dds</filename>
+  <height><copy src="sibling(LineT1)" trait="height"/></height>
+  <rotateangle>3.14159</rotateangle>
+  <rotateaxisx><copy src="me" trait="width"/><div>2</div></rotateaxisx>
+  <rotateaxisy><copy src="me" trait="height"/><div>2</div></rotateaxisy>
+  <systemcolor><copy src="sibling(LineT1)" trait="systemcolor"/></systemcolor>
+  <texatlas><copy src="sibling(LineT1)" trait="texatlas"/></texatlas>
+  <visible>
+    <copy>0</copy>
+    <add><copy>&true;</copy><onlyif><copy src="parent" trait="_type"/><eq>4</eq></onlyif></add>
+  </visible>
+  <width><copy src="sibling(LineT1)" trait="width"/><mult>0.25</mult></width>
+  <x><copy src="parent" trait="width"/><add src="sibling(LineT1)" trait="height"/><sub src="me" trait="width"/></x>
+  <y><copy src="sibling(LineT1)" trait="y"/></y>
+  <zoom><copy src="sibling(LineT1)" trait="zoom"/></zoom>
+</image>
+<image name="LineB1">
+  <alpha><copy src="parent" trait="alpha"/></alpha>
+  <brightness><copy src="me" trait="alpha"/></brightness>
+  <depth><copy src="sibling(LineT1)" trait="depth"/></depth>
+  <filename><copy src="sibling(LineT1)" trait="filename"/></filename>
+  <height><copy src="sibling(LineT1)" trait="height"/></height>
+  <systemcolor><copy src="sibling(LineT1)" trait="systemcolor"/></systemcolor>
+  <texatlas><copy src="sibling(LineT1)" trait="texatlas"/></texatlas>
+  <visible>
+    <copy>0</copy>
+    <add><copy>&true;</copy><onlyif><copy src="parent" trait="_type"/><eq>1</eq></onlyif></add>
+    <add><copy>&true;</copy><onlyif><copy src="parent" trait="_type"/><eq>3</eq></onlyif></add>
+  </visible>
+  <width><copy src="sibling(LineT1)" trait="width"/></width>
+  <x><copy src="sibling(LineT1)" trait="x"/></x>
+  <y><copy src="parent" trait="height"/></y>
+  <zoom><copy src="sibling(LineT1)" trait="zoom"/></zoom>
+</image>
+<image name="LineB1B">
+  <alpha><copy src="parent" trait="alpha"/></alpha>
+  <brightness><copy src="me" trait="alpha"/></brightness>
+  <depth><copy src="sibling(LineT1)" trait="depth"/></depth>
+  <filename><copy src="sibling(LineT1)" trait="filename"/></filename>
+  <height><copy src="sibling(LineT1)" trait="height"/></height>
+  <systemcolor><copy src="sibling(LineT1)" trait="systemcolor"/></systemcolor>
+  <texatlas><copy src="sibling(LineT1)" trait="texatlas"/></texatlas>
+  <visible>
+    <copy>0</copy>
+    <add><copy>&true;</copy><onlyif><copy src="parent" trait="_type"/><eq>2</eq></onlyif></add>
+  </visible>
+  <width><copy src="sibling(LineT1B)" trait="width"/></width>
+  <x><copy src="sibling(LineT1)" trait="x"/></x>
+  <y><copy src="sibling(LineB1)" trait="y"/></y>
+  <zoom><copy src="sibling(LineT1)" trait="zoom"/></zoom>
+</image>
+<image name="LineB2B">
+  <alpha><copy src="parent" trait="alpha"/></alpha>
+  <brightness><copy src="me" trait="alpha"/></brightness>
+  <depth><copy src="sibling(LineT1)" trait="depth"/></depth>
+  <filename><copy src="sibling(LineT1)" trait="filename"/></filename>
+  <height><copy src="sibling(LineT1)" trait="height"/></height>
+  <systemcolor><copy src="sibling(LineT1)" trait="systemcolor"/></systemcolor>
+  <texatlas><copy src="sibling(LineT1)" trait="texatlas"/></texatlas>
+  <visible>
+    <copy>0</copy>
+    <add><copy>&true;</copy><onlyif><copy src="parent" trait="_type"/><eq>2</eq></onlyif></add>
+  </visible>
+  <width>
+    <copy src="sibling(LineB1)" trait="width"/>
+    <sub src="sibling(LineB1B)" trait="width"/>
+    <sub src="sibling(Icon)" trait="width"/>
+    <sub src="sibling(TextBottom)" trait="width"/>
+    <sub>10</sub>
+  </width>
+  <x>
+    <copy src="sibling(LineB1)" trait="x"/>
+    <add src="sibling(LineB1B)" trait="width"/>
+    <add src="sibling(Icon)" trait="width"/>
+    <add src="sibling(TextBottom)" trait="width"/>
+    <add>10</add>
+  </x>
+  <y><copy src="sibling(LineB1)" trait="y"/></y>
+  <zoom><copy src="sibling(LineT1)" trait="zoom"/></zoom>
+</image>
+<image name="LineB1C">
+  <alpha><copy src="parent" trait="alpha"/></alpha>
+  <brightness><copy src="me" trait="alpha"/></brightness>
+  <depth><copy src="sibling(LineT1)" trait="depth"/></depth>
+  <filename><copy src="sibling(LineT1C)" trait="filename"/></filename>
+  <height><copy src="sibling(LineT1)" trait="height"/></height>
+  <systemcolor><copy src="sibling(LineT1)" trait="systemcolor"/></systemcolor>
+  <texatlas><copy src="sibling(LineT1)" trait="texatlas"/></texatlas>
+  <visible>
+    <copy>0</copy>
+    <add><copy>&true;</copy><onlyif><copy src="parent" trait="_type"/><eq>4</eq></onlyif></add>
+  </visible>
+  <width><copy src="sibling(LineT1C)" trait="width"/></width>
+  <x><copy src="sibling(LineT1)" trait="x"/></x>
+  <y><copy src="parent" trait="height"/></y>
+  <zoom><copy src="sibling(LineT1)" trait="zoom"/></zoom>
+</image>
+<image name="LineB2C">
+  <alpha><copy src="parent" trait="alpha"/></alpha>
+  <brightness><copy src="me" trait="alpha"/></brightness>
+  <depth><copy src="sibling(LineT1)" trait="depth"/></depth>
+  <filename><copy src="sibling(LineT2C)" trait="filename"/></filename>
+  <height><copy src="sibling(LineT1)" trait="height"/></height>
+  <rotateangle><copy src="sibling(LineT2C)" trait="rotateangle"/></rotateangle>
+  <rotateaxisx><copy src="sibling(LineT2C)" trait="rotateaxisx"/></rotateaxisx>
+  <rotateaxisy><copy src="sibling(LineT2C)" trait="rotateaxisy"/></rotateaxisy>
+  <systemcolor><copy src="sibling(LineT1)" trait="systemcolor"/></systemcolor>
+  <texatlas><copy src="sibling(LineT1)" trait="texatlas"/></texatlas>
+  <visible>
+    <copy>0</copy>
+    <add><copy>&true;</copy><onlyif><copy src="parent" trait="_type"/><eq>4</eq></onlyif></add>
+  </visible>
+  <width><copy src="sibling(LineT2C)" trait="width"/></width>
+  <x><copy src="sibling(LineT2C)" trait="x"/></x>
+  <y><copy src="parent" trait="height"/></y>
+  <zoom><copy src="sibling(LineT1)" trait="zoom"/></zoom>
+</image>
+<image name="LineL1">
+  <alpha><copy src="parent" trait="alpha"/></alpha>
+  <brightness><copy src="me" trait="alpha"/></brightness>
+  <depth><copy src="sibling(LineT1)" trait="depth"/></depth>
+  <filename>interface\shared\line\fade_to_bottom.dds</filename>
+  <height><copy src="parent" trait="height"/><mult>0.25</mult></height>
+  <systemcolor><copy src="sibling(LineT1)" trait="systemcolor"/></systemcolor>
+  <texatlas><copy src="sibling(LineT1)" trait="texatlas"/></texatlas>
+  <visible>
+    <copy>0</copy>
+    <add><copy>&true;</copy><onlyif><copy src="parent" trait="_type"/><eq>1</eq></onlyif></add>
+    <add><copy>&true;</copy><onlyif><copy src="parent" trait="_type"/><eq>2</eq></onlyif></add>
+  </visible>
+  <width><copy src="sibling(LineT1)" trait="height"/></width>
+  <x><copy src="sibling(LineT1)" trait="x"/></x>
+  <zoom><copy src="sibling(LineT1)" trait="zoom"/></zoom>
+</image>
+<image name="LineL2">
+  <alpha><copy src="parent" trait="alpha"/></alpha>
+  <brightness><copy src="me" trait="alpha"/></brightness>
+  <depth><copy src="sibling(LineT1)" trait="depth"/></depth>
+  <filename>interface\shared\line\fade_to_top.dds</filename>
+  <height><copy src="sibling(LineL1)" trait="height"/></height>
+  <systemcolor><copy src="sibling(LineT1)" trait="systemcolor"/></systemcolor>
+  <texatlas><copy src="sibling(LineT1)" trait="texatlas"/></texatlas>
+  <visible>
+    <copy>0</copy>
+    <add><copy>&true;</copy><onlyif><copy src="parent" trait="_type"/><eq>1</eq></onlyif></add>
+    <add><copy>&true;</copy><onlyif><copy src="parent" trait="_type"/><eq>2</eq></onlyif></add>
+  </visible>
+  <width><copy src="sibling(LineT1)" trait="height"/></width>
+  <x><copy src="sibling(LineL1)" trait="x"/></x>
+  <y><copy src="parent" trait="height"/><sub src="me" trait="height"/></y>
+  <zoom><copy src="sibling(LineT1)" trait="zoom"/></zoom>
+</image>
+<image name="LineL1B">
+  <alpha><copy src="parent" trait="alpha"/></alpha>
+  <brightness><copy src="me" trait="alpha"/></brightness>
+  <depth><copy src="sibling(LineT1)" trait="depth"/></depth>
+  <filename><copy src="sibling(LineT1)" trait="filename"/></filename>
+  <height><copy src="parent" trait="height"/></height>
+  <systemcolor><copy src="sibling(LineT1)" trait="systemcolor"/></systemcolor>
+  <texatlas><copy src="sibling(LineT1)" trait="texatlas"/></texatlas>
+  <visible>
+    <copy>0</copy>
+    <add><copy>&true;</copy><onlyif><copy src="parent" trait="_type"/><eq>3</eq></onlyif></add>
+    <add><copy>&true;</copy><onlyif><copy src="parent" trait="_type"/><eq>4</eq></onlyif></add>
+  </visible>
+  <width><copy src="sibling(LineT1)" trait="height"/></width>
+  <x><copy src="sibling(LineT1)" trait="x"/></x>
+  <zoom><copy src="sibling(LineT1)" trait="zoom"/></zoom>
+</image>
+<image name="LineR1">
+  <alpha><copy src="parent" trait="alpha"/></alpha>
+  <brightness><copy src="me" trait="alpha"/></brightness>
+  <depth><copy src="sibling(LineT1)" trait="depth"/></depth>
+  <filename><copy src="sibling(LineL1)" trait="filename"/></filename>
+  <height><copy src="sibling(LineL1)" trait="height"/></height>
+  <systemcolor><copy src="sibling(LineT1)" trait="systemcolor"/></systemcolor>
+  <texatlas><copy src="sibling(LineT1)" trait="texatlas"/></texatlas>
+  <visible>
+    <copy>0</copy>
+    <add><copy>&true;</copy><onlyif><copy src="parent" trait="_type"/><eq>1</eq></onlyif></add>
+    <add><copy>&true;</copy><onlyif><copy src="parent" trait="_type"/><eq>2</eq></onlyif></add>
+  </visible>
+  <width><copy src="sibling(LineT1)" trait="height"/></width>
+  <x><copy src="parent" trait="width"/></x>
+  <zoom><copy src="sibling(LineT1)" trait="zoom"/></zoom>
+</image>
+<image name="LineR2">
+  <alpha><copy src="parent" trait="alpha"/></alpha>
+  <brightness><copy src="me" trait="alpha"/></brightness>
+  <depth><copy src="sibling(LineT1)" trait="depth"/></depth>
+  <filename><copy src="sibling(LineL2)" trait="filename"/></filename>
+  <height><copy src="sibling(LineL1)" trait="height"/></height>
+  <systemcolor><copy src="sibling(LineT1)" trait="systemcolor"/></systemcolor>
+  <texatlas><copy src="sibling(LineT1)" trait="texatlas"/></texatlas>
+  <visible>
+    <copy>0</copy>
+    <add><copy>&true;</copy><onlyif><copy src="parent" trait="_type"/><eq>1</eq></onlyif></add>
+    <add><copy>&true;</copy><onlyif><copy src="parent" trait="_type"/><eq>2</eq></onlyif></add>
+  </visible>
+  <width><copy src="sibling(LineT1)" trait="height"/></width>
+  <x><copy src="sibling(LineR1)" trait="x"/></x>
+  <y><copy src="sibling(LineL2)" trait="y"/></y>
+  <zoom><copy src="sibling(LineT1)" trait="zoom"/></zoom>
+</image>
+<image name="LineR1B">
+  <alpha><copy src="parent" trait="alpha"/></alpha>
+  <brightness><copy src="me" trait="alpha"/></brightness>
+  <depth><copy src="sibling(LineT1)" trait="depth"/></depth>
+  <filename><copy src="sibling(LineT1)" trait="filename"/></filename>
+  <height><copy src="sibling(LineL1B)" trait="height"/><add><copy src="sibling(LineT1)" trait="height"/><mult>2</mult></add></height>
+  <systemcolor><copy src="sibling(LineT1)" trait="systemcolor"/></systemcolor>
+  <texatlas><copy src="sibling(LineT1)" trait="texatlas"/></texatlas>
+  <visible>
+    <copy>0</copy>
+    <add><copy>&true;</copy><onlyif><copy src="parent" trait="_type"/><eq>3</eq></onlyif></add>
+    <add><copy>&true;</copy><onlyif><copy src="parent" trait="_type"/><eq>4</eq></onlyif></add>
+  </visible>
+  <width><copy src="sibling(LineT1)" trait="height"/></width>
+  <x><copy src="parent" trait="width"/></x>
+  <y><copy>0</copy><sub src="sibling(LineT1)" trait="height"/></y>
+  <zoom><copy src="sibling(LineT1)" trait="zoom"/></zoom>
+</image>
+<image name="Icon">
+  <alpha><copy src="parent" trait="alpha"/></alpha>
+  <brightness><copy src="me" trait="alpha"/></brightness>
+  <depth><copy src="sibling(LineT1)" trait="depth"/></depth>
+  <filename><copy src="parent" trait="_icon"/></filename>
+  <height><copy src="sibling(TextBottom)" trait="height"/></height>
+  <visible>
+    <copy>0</copy>
+    <add><copy>&true;</copy><onlyif><copy src="parent" trait="_type"/><eq>2</eq></onlyif></add>
+  </visible>
+  <width><copy src="me" trait="height"/></width>
+  <x><copy src="sibling(TextTop)" trait="x"/></x>
+  <y><copy src="sibling(LineB1)" trait="y"/><sub><copy src="me" trait="height"/><div>2.3</div></sub></y>
+  <zoom><copy src="sibling(LineT1)" trait="zoom"/></zoom>
+</image>
+<text name="TextTop">
+  <alpha><copy src="parent" trait="alpha"/></alpha>
+  <brightness><copy src="me" trait="alpha"/></brightness>
+  <depth><copy src="sibling(LineT1)" trait="depth"/></depth>
+  <font>8</font>
+  <string><copy src="parent" trait="_text_top"/></string>
+  <visible>
+    <copy>0</copy>
+    <add><copy>&true;</copy><onlyif><copy src="parent" trait="_type"/><eq>2</eq></onlyif></add>
+  </visible>
+  <x><copy src="sibling(LineT1)" trait="x"/><add src="sibling(LineT1B)" trait="width"/></x>
+  <y><copy src="sibling(LineT1)" trait="y"/><sub><copy src="me" trait="height"/><div>4</div></sub></y>
+  <zoom>75</zoom>
+</text>
+<text name="TextBottom">
+  <alpha><copy src="parent" trait="alpha"/></alpha>
+  <brightness><copy src="me" trait="alpha"/></brightness>
+  <depth><copy src="sibling(LineT1)" trait="depth"/></depth>
+  <font><copy src="sibling(TextTop)" trait="font"/></font>
+  <string><copy src="parent" trait="_text_bottom"/></string>
+  <visible>
+    <copy>0</copy>
+    <add><copy>&true;</copy><onlyif><copy src="parent" trait="_type"/><eq>2</eq></onlyif></add>
+  </visible>
+  <x><copy src="sibling(Icon)" trait="x"/><add src="sibling(Icon)" trait="width"/></x>
+  <y><copy src="sibling(LineB1)" trait="y"/><sub><copy src="me" trait="height"/><div>8</div></sub></y>
+  <zoom><copy src="sibling(TextTop)" trait="zoom"/></zoom>
+</text>
+<hotrect name="Background">
+  <alpha><copy src="parent" trait="alpha"/><div>2</div></alpha>
+  <brightness><copy>55</copy><onlyif src="parent" trait="_colorized"/></brightness>
+  <depth>-1</depth>
+  <height><copy src="parent" trait="height"/><add><copy src="sibling(LineT1)" trait="height"/><mult>2</mult></add></height>
+  <systemcolor><copy src="sibling(LineT1)" trait="systemcolor"/></systemcolor>
+  <width><copy src="parent" trait="width"/><add><copy src="sibling(LineT1)" trait="height"/><mult>2</mult></add></width>
+  <x><copy src="sibling(LineT1)" trait="x"/></x>
+  <y><copy src="sibling(LineT1)" trait="y"/></y>
+</hotrect>
+<image name="FuzzyL">
+  <alpha><copy src="sibling(Background)" trait="alpha"/></alpha>
+  <brightness><copy src="sibling(Background)" trait="brightness"/></brightness>
+  <depth><copy src="sibling(Background)" trait="depth"/></depth>
+  <filename>mapmo\fuzzy.dds</filename>
+  <height>5</height>
+  <rotateangle><copy src="sibling(LineT2C)" trait="rotateangle"/><div>2</div></rotateangle>
+  <systemcolor><copy src="Sibling(Background)" trait="systemcolor"/></systemcolor>
+  <visible><copy src="parent" trait="_faded"/></visible>
+  <width><copy src="sibling(Background)" trait="height"/></width>
+  <x><copy src="sibling(Background)" trait="x"/><sub src="me" trait="height"/></x>
+  <y><copy src="sibling(Background)" trait="y"/><add src="sibling(Background)" trait="height"/></y>
+  <zoom>&scale;</zoom>
+</image>
+<image name="FuzzyR">
+  <alpha><copy src="sibling(Background)" trait="alpha"/></alpha>
+  <brightness><copy src="sibling(Background)" trait="brightness"/></brightness>
+  <depth><copy src="sibling(Background)" trait="depth"/></depth>
+  <filename><copy src="sibling(FuzzyL)" trait="filename"/></filename>
+  <height><copy src="sibling(FuzzyL)" trait="height"/></height>
+  <rotateangle><copy src="sibling(LineT2C)" trait="rotateangle"/><div>-2</div></rotateangle>
+  <systemcolor><copy src="Sibling(Background)" trait="systemcolor"/></systemcolor>
+  <visible><copy src="Sibling(FuzzyL)" trait="visible"/></visible>
+  <width><copy src="sibling(Background)" trait="height"/></width>
+  <x><copy src="sibling(Background)" trait="x"/><add src="sibling(Background)" trait="width"/><add src="me" trait="height"/></x>
+  <y><copy src="sibling(Background)" trait="y"/></y>
+  <zoom><copy src="sibling(FuzzyL)" trait="zoom"/></zoom>
+</image>
+<image name="FuzzyT">
+  <alpha><copy src="sibling(Background)" trait="alpha"/></alpha>
+  <brightness><copy src="sibling(Background)" trait="brightness"/></brightness>
+  <depth><copy src="sibling(Background)" trait="depth"/></depth>
+  <filename><copy src="sibling(FuzzyL)" trait="filename"/></filename>
+  <height><copy src="sibling(FuzzyL)" trait="height"/></height>
+  <systemcolor><copy src="Sibling(Background)" trait="systemcolor"/></systemcolor>
+  <visible><copy src="Sibling(FuzzyL)" trait="visible"/></visible>
+  <width><copy src="sibling(Background)" trait="width"/></width>
+  <x><copy src="sibling(Background)" trait="x"/></x>
+  <y><copy src="sibling(Background)" trait="y"/><sub src="me" trait="height"/></y>
+  <zoom><copy src="sibling(FuzzyL)" trait="zoom"/></zoom>
+</image>
+<image name="FuzzyB">
+  <alpha><copy src="sibling(Background)" trait="alpha"/></alpha>
+  <brightness><copy src="sibling(Background)" trait="brightness"/></brightness>
+  <depth><copy src="sibling(Background)" trait="depth"/></depth>
+  <filename><copy src="sibling(FuzzyL)" trait="filename"/></filename>
+  <height><copy src="sibling(FuzzyL)" trait="height"/></height>
+  <rotateangle><copy src="sibling(LineT2C)" trait="rotateangle"/></rotateangle>
+  <systemcolor><copy src="Sibling(Background)" trait="systemcolor"/></systemcolor>
+  <visible><copy src="Sibling(FuzzyL)" trait="visible"/></visible>
+  <width><copy src="sibling(Background)" trait="width"/></width>
+  <x><copy src="sibling(Background)" trait="x"/><add src="sibling(Background)" trait="width"/></x>
+  <y><copy src="sibling(Background)" trait="y"/><add src="sibling(Background)" trait="height"/><add src="me" trait="height"/></y>
+  <zoom><copy src="sibling(FuzzyL)" trait="zoom"/></zoom>
+</image>
+<image name="FuzzyTL">
+  <alpha><copy src="sibling(Background)" trait="alpha"/></alpha>
+  <brightness><copy src="sibling(Background)" trait="brightness"/></brightness>
+  <depth><copy src="sibling(Background)" trait="depth"/></depth>
+  <filename>mapmo\fuzzy_corner.dds</filename>
+  <height><copy src="sibling(FuzzyL)" trait="height"/></height>
+  <systemcolor><copy src="Sibling(Background)" trait="systemcolor"/></systemcolor>
+  <visible><copy src="Sibling(FuzzyL)" trait="visible"/></visible>
+  <width><copy src="me" trait="height"/></width>
+  <x><copy src="sibling(Background)" trait="x"/><sub src="me" trait="width"/></x>
+  <y><copy src="sibling(Background)" trait="y"/><sub src="me" trait="height"/></y>
+  <zoom><copy src="sibling(FuzzyL)" trait="zoom"/></zoom>
+</image>
+<image name="FuzzyTR">
+  <alpha><copy src="sibling(Background)" trait="alpha"/></alpha>
+  <brightness><copy src="sibling(Background)" trait="brightness"/></brightness>
+  <depth><copy src="sibling(Background)" trait="depth"/></depth>
+  <filename><copy src="sibling(FuzzyTL)" trait="filename"/></filename>
+  <height><copy src="sibling(FuzzyL)" trait="height"/></height>
+  <rotateangle><copy src="sibling(LineT2C)" trait="rotateangle"/><div>-2</div></rotateangle>
+  <systemcolor><copy src="Sibling(Background)" trait="systemcolor"/></systemcolor>
+  <visible><copy src="Sibling(FuzzyL)" trait="visible"/></visible>
+  <width><copy src="me" trait="height"/></width>
+  <x><copy src="sibling(Background)" trait="x"/><add src="sibling(Background)" trait="width"/><add src="me" trait="width"/></x>
+  <y><copy src="sibling(Background)" trait="y"/><sub src="me" trait="height"/></y>
+  <zoom><copy src="sibling(FuzzyL)" trait="zoom"/></zoom>
+</image>
+<image name="FuzzyBL">
+  <alpha><copy src="sibling(Background)" trait="alpha"/></alpha>
+  <brightness><copy src="sibling(Background)" trait="brightness"/></brightness>
+  <depth><copy src="sibling(Background)" trait="depth"/></depth>
+  <filename><copy src="sibling(FuzzyTL)" trait="filename"/></filename>
+  <height><copy src="sibling(FuzzyL)" trait="height"/></height>
+  <rotateangle><copy src="sibling(LineT2C)" trait="rotateangle"/><div>2</div></rotateangle>
+  <systemcolor><copy src="Sibling(Background)" trait="systemcolor"/></systemcolor>
+  <visible><copy src="Sibling(FuzzyL)" trait="visible"/></visible>
+  <width><copy src="me" trait="height"/></width>
+  <x><copy src="sibling(FuzzyTL)" trait="x"/></x>
+  <y><copy src="sibling(FuzzyB)" trait="y"/></y>
+  <zoom><copy src="sibling(FuzzyL)" trait="zoom"/></zoom>
+</image>
+<image name="FuzzyBR">
+  <alpha><copy src="sibling(Background)" trait="alpha"/></alpha>
+  <brightness><copy src="sibling(Background)" trait="brightness"/></brightness>
+  <depth><copy src="sibling(Background)" trait="depth"/></depth>
+  <filename><copy src="sibling(FuzzyTL)" trait="filename"/></filename>
+  <height><copy src="sibling(FuzzyL)" trait="height"/></height>
+  <rotateangle><copy src="sibling(LineT2C)" trait="rotateangle"/></rotateangle>
+  <systemcolor><copy src="Sibling(Background)" trait="systemcolor"/></systemcolor>
+  <visible><copy src="Sibling(FuzzyL)" trait="visible"/></visible>
+  <width><copy src="me" trait="height"/></width>
+  <x><copy src="sibling(FuzzyTR)" trait="x"/></x>
+  <y><copy src="sibling(FuzzyB)" trait="y"/></y>
+  <zoom><copy src="sibling(FuzzyL)" trait="zoom"/></zoom>
+</image>

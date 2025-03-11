@@ -1,0 +1,287 @@
+<!-- main_menu.xml -->
+<menu name="MainMenu">
+	<class> &MainMenu; </class>
+	<stackingtype> &no_click_past; </stackingtype>
+	<visible> &true; </visible>
+	<alpha>	0 </alpha>
+	<x> 0 </x>
+	<y> 0 </y>
+	<depth> 1 </depth>
+	<locus> &true; </locus>
+	
+	
+	<_ShowLogo> &true; </_ShowLogo>				<!-- is the logo visible set by code -->
+	<_ShowButtons> &true; </_ShowButtons>		<!-- are the buttons visible set by code -->
+	<_ShowStart> &true; </_ShowStart>			<!-- is Press Start visible set by code -->
+	<_TitleAlpha> 255 </_TitleAlpha>			<!-- alpha value set by animated code -->
+
+	
+	
+	<rect name="NOGLOW_BRANCH">
+		<id> &noglow_branch; </id>
+		
+		<image name="backdrop">
+			<id> 8 </id>
+			<visible> &false; </visible>
+			<filename> Interface\Main\background.dds </filename>
+			<x> 0 </x>
+			<y> 0 </y>
+			<depth> -10 </depth>
+			<width> <copy src="screen()" trait="width"/> </width>
+			<height> <copy src="screen()" trait="height"/> </height>
+			<systemcolor> -1 </systemcolor>
+			<brightness> -1 </brightness>
+			<zoom> -1 </zoom>
+			<locus> &true; </locus>
+		</image>
+		
+	</rect>
+	<hotrect name="GLOW_BRANCH">
+		<id> &glow_branch; </id>
+		
+		
+		<image name="oblivion_logo">
+			<visible> <copy src="io()" trait="_ShowLogo"/> </visible>
+			<filename> Interface\shared\title.dds </filename>
+			<zoom> -1 </zoom>
+			<width> 256 </width>
+			<height> 64 </height>
+			<x> 200 </x>
+			<y>
+				<copy src="screen()" trait="height"/>
+				<sub src="me()" trait="height"/>
+				<div> 2 </div>
+				<sub> 100 </sub>
+			</y>
+			<alpha> <copy src="io()" trait="_TitleAlpha"/> </alpha>
+			<locus> &true; </locus>
+		</image>
+		
+		
+		<text name="press_start">
+			<visible>
+				<copy src="io()" trait="_ShowStart"/>
+				<and> &xbox; </and>
+			</visible>
+			<x>
+				<copy src="screen()" trait="width"/>
+				<sub src="me()" trait="width"/>
+				<sub> 500 </sub>
+			</x>
+			<y>
+				<copy src="screen()" trait="height"/>
+				<sub src="me()" trait="height"/>
+				<div> 2 </div>
+				<sub> 100 </sub>
+			</y>
+			<depth> 2 </depth>
+			<string> [ PRESS START ] </string>
+			<systemcolor> &hudmain; </systemcolor>
+			<brightness> 0 </brightness>
+			<font> 2 </font>
+			<_VUI+OutlineIntensity>3 </_VUI+OutlineIntensity>
+			<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+		</text>
+		<include src="VUI+\outline.xml"/>
+		
+		
+		<hotrect name="noblend1">
+			<width> <copy src="main_button_layout" trait="width"/> <add> 20 </add> </width>
+			<height> <copy src="main_button_layout" trait="height"/> <add> 20 </add> </height>
+			<x> <copy src="main_button_layout" trait="x"/> <sub> 290 </sub> </x>
+			<y> <copy src="main_button_layout" trait="y"/> <sub> 10 </sub></y>
+			<depth> -1 </depth>
+			<systemcolor> &hudmain;<!--All menus now pipboy color--> </systemcolor>
+			<brightness> 255 </brightness>
+			<alpha> 0 </alpha>
+			<setnoblend> &true; </setnoblend>
+		</hotrect>
+			
+		
+		<hotrect name="main_button_layout">
+			<visible> <copy src="io()" trait="_ShowButtons"/> </visible>
+			<width> 200 </width>
+			<height>
+				<copy src="me()" trait="_spacing"/>
+				<mul src="me()" trait="childcount"/>
+			</height>
+			<x>
+				<copy src="screen()" trait="width"/>
+				<sub src="screen()" trait="cropx"/>
+				<sub src="screen()" trait="cropx"/>
+				<min>
+					<copy src="screen()" trait="width"/>
+					<sub> 100 </sub>
+				</min>
+			</x>
+			<y>
+				<copy src="screen()" trait="height"/>
+				<sub src="me()" trait="height"/>
+				<div> 2 </div>
+			</y>
+			<locus> &true; </locus>
+			<_starty> 0 </_starty>
+			<_spacing> 60 </_spacing>
+			
+			
+			
+			<image name="oblivion_logo">
+				<visible> <copy src="io()" trait="_ShowLogo"/> </visible>
+				<filename> Interface\shared\title.dds </filename>
+				<zoom> -1 </zoom>
+				<width> 256 </width>
+				<height> 64 </height>
+				<x> -200 </x>
+				<y> 380 </y>
+				<alpha> <copy src="io()" trait="_TitleAlpha"/> </alpha>
+				<locus> &true; </locus>
+				<systemcolor> &hudmain;<!--All menus now pipboy color--> </systemcolor>
+			</image>
+			
+			
+				
+			<image name="main_continue">
+				<include src="button_basic.xml"/>
+				<id> 2 </id>
+				<_string> &-sContinue; </_string>
+				<x>
+					<copy> 0 </copy>
+					<sub src="me()" trait="width"/>
+				</x>
+				<y> <copy src="parent()" trait="_starty"/> </y>
+				<systemcolor> &hudmain;<!--All menus now pipboy color--> </systemcolor>
+				<clicksound> 1 </clicksound>
+				
+				<xdefault> 2 </xdefault>
+				<xup> <ref src="main_quit" trait="mouseover"/> </xup>
+				<xdown> <ref src="main_new" trait="mouseover"/> </xdown>
+			</image>
+			
+			
+			<image name="main_new">
+				<include src="button_basic.xml"/>
+				<id> 3 </id>
+				<_string> &-sNew; </_string>
+				<x>
+					<copy> 0 </copy>
+					<sub src="me()" trait="width"/>
+				</x>
+				<y>
+					<copy> 1 </copy>
+					<mul src="parent()" trait="_spacing"/>
+					<add src="parent()" trait="_starty"/>
+				</y>
+				<systemcolor> &hudmain;<!--All menus now pipboy color--> </systemcolor>
+				<clicksound> 1 </clicksound>
+				
+				<xdefault> 1 </xdefault>
+				<xup> <ref src="main_continue" trait="mouseover"/> </xup>
+				<xdown> <ref src="main_load" trait="mouseover"/> </xdown>
+			</image>
+			
+			
+			<image name="main_load">
+				<include src="button_basic.xml"/>
+				<id> 4 </id>
+				<_string> &-sLoad; </_string>
+				<x>
+					<copy> 0 </copy>
+					<sub src="me()" trait="width"/>
+				</x>
+				<y>
+					<copy> 2 </copy>
+					<mul src="parent()" trait="_spacing"/>
+					<add src="parent()" trait="_starty"/>
+				</y>
+				<systemcolor> &hudmain;<!--All menus now pipboy color--> </systemcolor>
+				<clicksound> 1 </clicksound>
+				
+				<xdefault> 1 </xdefault>
+				<xup> <ref src="main_new" trait="mouseover"/> </xup>
+				<xdown> <ref src="main_settings" trait="mouseover"/> </xdown>
+			</image>
+			
+			
+			<image name="main_settings">
+				<include src="button_basic.xml"/>
+				<id> 5 </id>
+				<_string> &-sSettings; </_string>
+				<x>
+					<copy> 0 </copy>
+					<sub src="me()" trait="width"/>
+				</x>
+				<y>
+					<copy> 3 </copy>
+					<mul src="parent()" trait="_spacing"/>
+					<add src="parent()" trait="_starty"/>
+				</y>
+				<systemcolor> &hudmain;<!--All menus now pipboy color--> </systemcolor>
+				<clicksound> 1 </clicksound>
+				
+				<xdefault> 1 </xdefault>
+				<xup> <ref src="main_load" trait="mouseover"/> </xup>
+				<xdown> <ref src="main_crew" trait="mouseover"/> </xdown>
+			</image>
+			
+			
+			<image name="main_crew">
+				<include src="button_basic.xml"/>
+				<id> 6 </id>
+				<_string> &-sCrew; </_string>
+				<x>
+					<copy> 0 </copy>
+					<sub src="me()" trait="width"/>
+				</x>
+				<y>
+					<copy> 4 </copy>
+					<mul src="parent()" trait="_spacing"/>
+					<add src="parent()" trait="_starty"/>
+				</y>
+				<systemcolor> &hudmain;<!--All menus now pipboy color--> </systemcolor>
+				<clicksound> 1 </clicksound>
+				
+				<xdefault> 1 </xdefault>
+				<xup> <ref src="main_settings" trait="mouseover"/> </xup>
+				<xdown> <ref src="main_quit" trait="mouseover"/> </xdown>
+			</image>
+			
+			
+			<image name="main_quit">
+				<include src="button_basic.xml"/>
+				<id> 7 </id>
+				<_string> &-sQuit; </_string>
+				<x>
+					<copy> 0 </copy>
+					<sub src="me()" trait="width"/>
+				</x>
+				<y>
+					<copy> 5 </copy>
+					<mul src="parent()" trait="_spacing"/>
+					<add src="parent()" trait="_starty"/>
+				</y>
+				<systemcolor> &hudmain;<!--All menus now pipboy color--> </systemcolor>
+				<clicksound> 1 </clicksound>
+				
+				<xdefault> 1 </xdefault>
+				<xup> <ref src="main_crew" trait="mouseover"/> </xup>
+				<xdown> <ref src="main_continue" trait="mouseover"/> </xdown>
+			</image>
+		</rect>
+		
+		
+		
+		<text name="version">
+			<id> 9 </id>
+			<font> 3 </font>
+			<zoom> 75 </zoom>
+			<visible> <not> &xenon; </not> </visible>
+			<depth> 10 </depth>
+			<x> 10 </x>
+			<y> 935 </y>
+			<string> Version </string>
+			<_VUI+OutlineIntensity>3 </_VUI+OutlineIntensity>
+			<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+		</text>
+		<include src="VUI+\outline.xml"/>
+	</hotrect>
+</menu>

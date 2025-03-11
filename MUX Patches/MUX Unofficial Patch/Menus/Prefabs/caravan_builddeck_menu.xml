@@ -1,0 +1,327 @@
+<!-- Caravan Deck Building prefab
+This is part of the Caravan menu; judging from the comments on the original code, the developers didn't have the time to finish this
+COPYRIGHT BY OBSIDIAN; MODIFIED FEB 2022 BY AXONIS FOR VANILLA UI PLUS
+* Removed non-functional development leftovers
+* Restored the Exit button that still works with no bet loss on this menu
+* Fixed rectangles on Add, Remove and Play buttons
+* Relocated Add and Remove buttons next to the cards they affect
+* Relocated the Randomize, Play and Exit buttons to the corners of the screen away from the scrollbar
+* Merged total cards with caravan deck size
+* Increased the thickness of the scrollbar for better usability and to match the looks of other similar UI elements in New Vegas
+* Dynamically set the size of the scrollbar, based on the total cards
+* Added a navigation tip for controller users
+* Set the key label on the Add/Remove buttons to match their single A key mapping (see caravan_menu.xml)
+-->
+
+<rect name="CDM_MainRect">
+	<id> 1 </id>
+	<x>
+		<copy src="screen" trait="width"/>
+		<sub src="me" trait="width"/>
+		<div> 2 </div>
+	</x>
+	<y>
+		<copy src="screen" trait="height"/>
+		<sub src="me" trait="height"/>
+		<div> 2 </div>
+	</y>
+	<width>
+		<copy src="screen" trait="width"/>
+		<sub>
+			<copy src="screen" trait="cropx"/>
+			<mul> 4 </mul>
+		</sub>
+	</width>
+	<height>
+		<copy src="screen" trait="height"/>
+		<sub>
+			<copy src="screen" trait="cropy"/>
+			<mul> 4 </mul>
+		</sub>
+	</height>
+	<locus> 1 </locus>
+	<systemcolor> <copy src="io" trait="systemcolor" /> </systemcolor>
+	<depth> 2 </depth>
+
+	<rect name="CDM_InfoRect">
+		<x> 40 </x>
+		<y> 25 </y>
+		<width> 300 </width> <!--VUI+ defines the width of the Cards on Deck and All Cards displays -->
+		<height>
+			<copy src="parent" trait="height"/>
+			<sub src="me" trait="y" />
+		</height>
+		<locus> 1 </locus>
+
+		<!-- number of cards in the player's deck -->
+		<rect name="CDM_CardsInDeckDisplay">
+			<id>8</id>
+			<width>
+				<copy src="child(VUI+Slash)" trait="x"/>
+				<add src="child(VUI+Slash)" trait="width"/>
+			</width>
+			<locus> 1 </locus>
+
+			<rect name="CDM_CardsInDeckTitle">
+	<include src="VUI+\outline_rect.xml"/>
+				<id> 42 </id>
+				<font> 7 </font>
+				<string>&-sCardsInDeckText;</string>
+			<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+
+			<rect name="VUI+MissingColon">
+	<include src="VUI+\outline_rect.xml"/>
+				<string>:</string>
+				<x> <copy src="sibling" trait="width" /> </x>
+				<font> <copy src="sibling" trait="font" /> </font>
+			<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+
+			<rect name="CDM_CardsInDeckValue">
+	<include src="VUI+\outline_rect.xml"/>
+				<string> <copy src="parent" trait="_Value"/> </string>
+				<x>
+					<copy src="sibling" trait="x" />
+					<add src="sibling" trait="width" />
+					<add> 10 </add>
+				</x>
+				<font> <copy src="sibling" trait="font" /> </font>
+			<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+
+			<rect name="VUI+Slash">
+	<include src="VUI+\outline_rect.xml"/>
+				<string> / </string>
+				<x>
+					<copy src="sibling" trait="x" />
+					<add> 5 </add>
+					<add src="sibling" trait="width" />
+				</x>
+				<font> <copy src="sibling" trait="font" /> </font>
+			<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+		</rect>
+
+		<!-- Total number of cards on the player -->
+		<!--VUI+ only value is shown, aligned with the player's caravan deck size -->
+		<rect name="CDM_TotalCardsDisplay">
+			<id>9</id>
+			<x>
+				<copy src="sibling" trait="x" />
+				<add src="sibling" trait="width" />
+				<add> 5 </add>
+			</x>
+			<y> <copy src="sibling" trait="y" /> </y>
+			<locus> 1 </locus>
+
+			<rect name="CDM_TotalCardsTitle">
+	<include src="VUI+\outline_rect.xml"/> <id> 43 </id> <visible> 0 </visible> <_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+
+			<rect name="CDM_TotalCardsValue">
+	<include src="VUI+\outline_rect.xml"/>
+				<font> 7 </font>
+				<string> <copy src="parent" trait="_Value"/> </string>
+			<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+		</rect>
+	</rect>
+
+	<rect name="CDM_ButtonRect">
+		<x>
+			<copy src="parent" trait="width"/>
+			<sub> 40 </sub> <!--VUI+ same with CBM_ButtonRect -->
+		</x>
+		<y> 25 </y>
+		<height> <copy src="parent" trait="height"/> <sub src="me" trait="y" /> </height>
+		<locus> 1 </locus>
+
+		<!--Randomize Deck Button -->
+		<rect name="VUI+UnHardCode">
+			<!--VUI+ removed hardcoded x position to align it; button's x is set to 150 for the same reason --> 
+			<locus> 1 </locus>
+			<width> <copy src="child(CDM_CaravanDeckButton)" trait="width" /> </width>
+			<x> <copy> 0 </copy> <sub src="me" trait="width" /> </x>
+			<hotrect name="CDM_CaravanDeckButton">
+				<include src="text_box.xml"/>
+	<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+				<id>10</id>
+				<y> -13 </y>
+				<_glow> 1 </_glow>
+				<_verbuf> 9 </_verbuf>
+				<x> 150 </x>
+				<_xbox_button> &xbuttonrb; </_xbox_button>
+			</hotrect>
+		</rect>
+		
+		<!--VUI+ remove non-functional "all cards" and "navigate" buttons -->
+		<rect name="CDM_AllCardsButton"> <id>11</id> <visible> 0 </visible> </rect>
+		<rect name="CDM_NavigateButton"> <id> 39 </id> <visible> 0 </visible> </rect>
+
+		<!-- Play Caravan Button -->
+		<hotrect name="CDM_PlayButton">
+			<include src="text_box.xml"/>
+	<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+			<id>14</id>
+			<y>
+				<copy src="parent" trait="height"/>
+				<sub src="me" trait="height" />
+			</y>
+			<string>&-sPlayCaravanText;</string>
+			<justify>&right;</justify>
+			<_glow> 1 </_glow>
+			<_verbuf> 9 </_verbuf>
+			<_xbox_button> &xbuttonY; </_xbox_button>
+			<_PCButtonText> &-sPCMenuHintF; </_PCButtonText>
+		</hotrect>
+
+		<!--VUI+ restore the Exit button that still applies during deck building -->
+		<hotrect name="CBM_ExitButton">
+			<id> 38 </id>
+			<include src="text_box.xml"/>
+	<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+			<y> <copy src="sibling" trait="y"/> </y>
+			<x>
+				<!--VUI+ align with the card quantity string from the top left -->
+				<copy> 40 </copy>
+				<sub src="parent" trait="x" />
+			</x>
+			<string>&-sExit;</string>
+			<justify> &left; </justify>
+			<_glow> 1 </_glow>
+			<_verbuf> 9 </_verbuf>
+			<_xbox_button> &xbuttonB; </_xbox_button>
+			<_PCButtonText> &-sPCMenuHintR; </_PCButtonText>
+		</hotrect>
+	</rect>
+
+	<!-- ===== SCROLLBAR, ADD AND REMOVE BUTTONS ===== -->
+	<!--VUI+ Everything is based on the scrollbar y location -->
+	<hotrect name="CDM_Scrollbar">
+		<include src="scrollbar_horiz.xml"/>
+		<id> 15 </id>
+		<depth> 4 </depth>
+		<user0> 52 </user0>
+		<xdefault> 1 </xdefault>
+		<repeathorizontal> 1 </repeathorizontal>
+		<_y>
+			<copy src="parent" trait="height"/>
+			<div>2</div>
+			<sub>57</sub> <!--VUI+ set a bit higher to match the crack of the planks in the background -->
+		</_y>
+		<_width>
+			<copy src="CDM_TotalCardsDisplay" trait="_Value"/> <!--VUI+ scrollbar size is based on total deck -->
+			<add>30</add>
+			<mul> 7 </mul>
+			<min> 1200 </min>
+			<max> 500 </max>
+		</_width>
+		<_number_of_items> <copy src="me" trait="user0"/> </_number_of_items>
+		<_number_of_visible_items> 1 </_number_of_visible_items>
+		<_wheelmoved> <copy src="parent" trait="wheelmoved"/> </_wheelmoved>
+		<_show_always> 1 </_show_always>
+		<_has_arrows> 1 </_has_arrows>
+		<_step_size> 1 </_step_size>
+		<_jump_size> 6 </_jump_size>
+		<_scale_marker_image> 0 </_scale_marker_image> <!--VUI+ the slider shouldn't be like a peanut -->
+		<_marker_width> <copy src="me" trait="_width" /> <mul> 0.1 </mul> </_marker_width> <!--VUI+ slider size is based on scrollbar size -->
+		<_marker_height> 42 </_marker_height>
+		<_marker_offset>-5</_marker_offset> <!--VUI+ vertical alignment -->
+		<x>
+			<copy src="parent" trait="width" />
+			<sub src="me" trait="width" />
+			<div> 2 </div>
+		</x>
+	</hotrect>
+
+	<!--VUI+ The scrollbar line isn't a standard element but it helps determine the total cards qty -->
+	<image name="CDM_MeterImage">
+		<filename> <copy src="sibling(CDM_Scrollbar)" trait="_marker_image" /> </filename> <!--VUI+ use the scrollbar's texture with rounded edges -->
+		<x> <copy src="sibling(CDM_Scrollbar)" trait="x"/> </x>
+		<y>
+			<copy src="sibling(CDM_Scrollbar)" trait="y"/>
+			<add>6</add>
+		</y>
+		<width>
+			<copy src="sibling(CDM_Scrollbar)" trait="width"/>
+		</width>
+		<height> 20 </height> <!--VUI+ increase the thickness of the meter image -->
+		<zoom> &scale; </zoom>
+		<alpha>200</alpha>
+	</image>
+
+	<hotrect name="CDM_RemoveButton">
+		<include src="text_box.xml"/>
+	<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+		<id>13</id>
+		<_x>
+			<copy src="parent" trait="width"/> <!--VUI+ set on center -->
+			<div> 2 </div>
+			<sub> 15 </sub>
+		</_x>
+		<y>
+			<copy src="sibling(CDM_MeterImage)" trait="y"/>
+			<sub> 75 </sub>
+		</y> <!--VUI+ set under the current caravan card, above the horizontal scrollbar -->
+		<string>&-sRemoveText;</string>
+		<justify> &center; </justify>
+		<_glow> 1 </_glow>
+		<_verbuf> 9 </_verbuf>
+		<_xbox_button> &xbuttonA; </_xbox_button> <!--VUI+ same key for add/remove -->
+		<_PCButtonText> &-sPCMenuHintA; </_PCButtonText>
+	</hotrect>
+
+	<!-- Add Button -->
+	<hotrect name="CDM_AddButton">
+		<include src="text_box.xml"/>
+	<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+		<id>12</id>
+		<_x>
+			<copy src="parent" trait="width"/> <!--VUI+ set on center -->
+			<div> 2 </div>
+			<sub> 15 </sub>
+		</_x>
+		<y>
+			<!--VUI+ set above the current player's card, under the horizontal scrollbar -->
+			<copy src="sibling(CDM_MeterImage)" trait="y"/>
+			<add> 55 </add>
+		</y>
+		<string>&-sAddText;</string>
+		<!-- Set in code -->
+		<justify> &center; </justify>
+		<_glow> 1 </_glow>
+		<_verbuf> 9 </_verbuf>
+		<_xbox_button> &xbuttonA; </_xbox_button>
+		<_PCButtonText> &-sPCMenuHintA; </_PCButtonText> <!--VUI+ same key for add/remove -->
+	</hotrect>
+
+	<hotrect name="VUI+CaravanControllerTip">
+		<include src="text_box.xml"/>
+	<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+		<justify> &center; </justify>
+		<string> &-sNavigate; </string>
+		<x>
+			<copy src="parent" trait="width"/>
+			<div> 2 </div>
+			<sub> 90 </sub>
+		</x>
+		<y> <copy src="parent" trait="height" /> <sub> 30 </sub> </y>
+		<_xbox_button> &xbuttonl; </_xbox_button>
+		<_button_placement> &right; </_button_placement>
+		<_glow> 1 </_glow>
+		<visible> <copy src="globals" trait="_Has360Controller"/> </visible>
+	</hotrect>
+</rect>

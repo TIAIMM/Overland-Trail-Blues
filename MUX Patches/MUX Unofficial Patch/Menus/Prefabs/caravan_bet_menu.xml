@@ -1,0 +1,272 @@
+<!-- Caravan Bet prefab
+This is part of the Caravan menu
+COPYRIGHT BY OBSIDIAN; MODIFIED FEB 2022 BY AXONIS FOR VANILLA UI PLUS
+* Based on the Black Jack menu
+* Disable targeting of the Accept button if it's meant to be disabled
+-->
+
+<rect name="CBM_MainRect">
+	<id> 0 </id>
+	<x>
+		<copy src="screen" trait="width"/>
+		<sub src="me" trait="width"/>
+		<div> 2 </div>
+	</x>
+	<y>
+		<copy src="screen" trait="height"/>
+		<sub src="me" trait="height"/>
+		<div> 2 </div>
+	</y>
+	<width>
+		<copy src="screen" trait="width"/>
+		<sub>
+			<copy src="screen" trait="cropx"/>
+			<mul> 4 </mul>
+		</sub>
+	</width>
+	<height>
+		<copy src="screen" trait="height"/>
+		<sub>
+			<copy src="screen" trait="cropy"/>
+			<mul> 4 </mul>
+		</sub>
+	</height>
+	<locus> 1 </locus>
+	<systemcolor> <copy src="io" trait="systemcolor" /> </systemcolor>
+	<depth> 2 </depth>
+
+	<rect name="CBM_InfoRect">
+		<x> 10 </x>
+		<y>
+			<copy src="parent" trait="height"/>
+			<sub src="me" trait="height"/>
+			<sub> 10 </sub>
+		</y>
+		<_width> <!--VUI+ use a custom tag because width is affected by hardcoding -->
+			<!--VUI+ width of the bottom border should be based on the longest info string; thankfully, <max> tags are allowed to cascade -->
+			<copy src="child(CBM_NPCBetDisplay)" trait="width" />
+			<max src="child(CBM_PlayerBetDisplay)" trait="width" />
+			<max src="child(CBM_TotalFundsDisplay)" trait="width" />
+			<add> 40 </add>
+		</_width>
+		<height>
+			<copy src="me" trait="childcount" />
+			<sub> 2 </sub>
+			<mul src="child(CBM_NPCBetDisplay)" trait="height" />
+			<add> 20 </add>
+		</height>
+		<locus> 1 </locus>
+
+		<!--VUI+ use standard prefabs for the left bracket -->
+		<image name="CBM_LeftBorder">
+			<include src="vertical_fade_line.xml"/>
+			<_bottom_to_top> 1 </_bottom_to_top>
+			<y> 0 </y>
+			<height> <copy src="parent" trait="height"/> </height>
+		</image>
+
+		<image name="CBM_BottomBorder">
+			<include src="fade_line.xml"/>
+			<_linetype> &right; </_linetype>
+			<_length> <copy src="parent" trait="_width"/> </_length>
+			<y> <copy src="parent" trait="height" /> </y>
+		</image>
+
+		<rect name="CBM_NPCBetDisplay">
+			<id> 4 </id>
+			<x> 15 </x>
+			<y> 18 </y>
+			<width>
+				<copy src="child(VUI+NPCBetValue)" trait="x" />
+				<add src="child(VUI+NPCBetValue)" trait="width" />
+			</width>
+			<height> <copy src="child(CBM_NPCBetTitle)" trait="height" /> </height>
+			<locus> 1 </locus>
+
+			<rect name="CBM_NPCBetTitle">
+	<include src="VUI+\outline_rect.xml"/>
+				<font> 7 </font>
+				<string> <copy src="parent" trait="string"/> </string>
+			<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+
+			<rect name="VUI+MissingColon">
+	<include src="VUI+\outline_rect.xml"/> <!--VUI+ add a colon to match how it looks in similar menus -->
+				<x> <copy src="sibling" trait="width" /> </x>
+				<font> 7 </font>
+				<string>:</string>
+			<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+
+			<rect name="VUI+NPCBetValue">
+	<include src="VUI+\outline_rect.xml"/> <!--VUI+ clone the bet value next to the color plus two spaces -->
+				<x>
+					<copy src="sibling" trait="width" />
+					<mul> 3 </mul>
+					<add src="sibling" trait="x" />
+				</x>
+				<font> 7 </font>
+				<string> <copy src="parent" trait="_Value"/> </string>
+			<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+
+			<rect name="CBM_NPCBetValue"> </rect> <!--VUI+ hardcoded x fails on Quartermaster Mayes -->
+		</rect>
+
+		<rect name="CBM_PlayerBetDisplay">
+			<id> 5 </id>
+			<x> <copy src="sibling" trait="x" /> </x>
+			<y>
+				<copy src="sibling" trait="y" />
+				<add src="sibling" trait="height"/>
+			</y>
+			<width>
+				<copy src="child(CBM_PlayerBetValue)" trait="x" />
+				<add src="child(CBM_PlayerBetValue)" trait="width" />
+			</width>
+			<height> <copy src="sibling" trait="height" /> </height>
+			<locus> 1 </locus>
+
+			<rect name="CBM_PlayerBetTitle">
+	<include src="VUI+\outline_rect.xml"/>
+				<id> 40 </id>
+				<font> 7 </font>
+				<string>&-sCurrentAnteText;</string>
+			<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+
+			<rect name="CBM_PlayerBetValue">
+	<include src="VUI+\outline_rect.xml"/>
+				<font> 7 </font>
+				<string> <copy src="parent" trait="_Value"/> </string>
+				<x> <copy src="sibling(CBM_PlayerBetTitle)" trait="width"/> </x>
+			<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+		</rect>
+
+		<rect name="CBM_TotalFundsDisplay">
+			<id> 6 </id>
+			<x> <copy src="sibling" trait="x" /> </x>
+			<y>
+				<copy src="sibling" trait="y" />
+				<add src="sibling" trait="height"/>
+			</y>
+			<width>
+				<copy src="child(CBM_TotalFundsValue)" trait="x" />
+				<add src="child(CBM_TotalFundsValue)" trait="width" />
+			</width>
+			<height> <copy src="sibling" trait="height" /> </height>
+			<locus> 1 </locus>
+
+			<rect name="CBM_TotalFundsTitle">
+	<include src="VUI+\outline_rect.xml"/>
+				<id> 41 </id>
+				<font> 7 </font>
+				<string>&-sTotalFundsText; </string>
+			<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+
+			<rect name="CBM_TotalFundsValue">
+	<include src="VUI+\outline_rect.xml"/>
+				<font> 7 </font>
+				<string> <copy src="parent" trait="_Value"/> </string>
+				<x> <copy src="sibling(CBM_TotalFundsTitle)" trait="width"/> </x>
+			<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+		</rect>
+	</rect>
+
+	<rect name="CBM_ButtonRect">
+		<x>
+			<copy src="parent" trait="width"/>
+			<sub> 40 </sub>
+		</x>
+		<y>
+			<copy src="parent" trait="height"/>
+			<sub src="me" trait="height"/>
+		</y>
+		<height>
+			<copy src="me" trait="childcount" />
+			<mul src="child(CBM_AutoMatchButton)" trait="height" />
+		</height>
+		<locus> 1 </locus>
+		<depth> 6 </depth>
+
+		<hotrect name="CBM_AutoMatchButton">
+			<id> 37 </id>
+			<include src="text_box.xml"/>
+	<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+			<string>&-sAutoMatchText;</string>
+			<justify> &right; </justify>
+			<_glow> 1 </_glow>
+			<_verbuf> 9 </_verbuf>
+			<_xbox_button> &xbuttonA; </_xbox_button>
+			<_PCButtonText> &-sPCMenuHintW; </_PCButtonText>
+		</hotrect>
+
+		<hotrect name="CBM_RaiseButton">
+			<id> 36 </id>
+			<include src="text_box.xml"/>
+	<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+			<_y>
+				<copy src="sibling" trait="_y"/>
+				<add src="sibling" trait="height"/>
+			</_y>
+			<string>&-sRaiseText;</string>
+			<justify> &right; </justify>
+			<_glow> 1 </_glow>
+			<_verbuf> 9 </_verbuf>
+			<_xbox_button> &xbuttonX; </_xbox_button>
+			<_PCButtonText> &-sPCMenuHintA; </_PCButtonText>
+		</hotrect>
+
+		<hotrect name="CBM_AcceptButton">
+			<include src="text_box.xml"/>
+	<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+			<id>7</id>
+			<_y>
+				<copy src="sibling" trait="_y"/>
+				<add src="sibling" trait="height"/>
+			</_y>
+			<string>&-sAcceptText;</string>
+			<justify> &right; </justify>
+			<_glow> 1 </_glow>
+			<_verbuf> 9 </_verbuf>
+			<_xbox_button> &xbuttonY; </_xbox_button>
+			<_PCButtonText> &-sPCMenuHintF; </_PCButtonText>
+			<target>
+				<!--VUI+ the developers are managing the alpha opacity of the text buttons through code instead of using the target trait-->
+				<copy src="child(button_text)" trait="alpha" />
+				<gt> 200 </gt>
+			 </target>
+			 <_line_alpha> 127 </_line_alpha> <!--VUI+ the above fix could create a circular reference on the text_box code -->
+		</hotrect>
+
+		<hotrect name="CBM_ExitButton">
+			<id> 38 </id>
+			<include src="text_box.xml"/>
+	<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+			<_y>
+				<copy src="sibling" trait="_y"/>
+				<add src="sibling" trait="height"/>
+			</_y>
+			<string>&-sExit;</string>
+			<justify> &right; </justify>
+			<_glow> 1 </_glow>
+			<_verbuf> 9 </_verbuf>
+			<_xbox_button> &xbuttonB; </_xbox_button>
+			<_PCButtonText> &-sPCMenuHintR; </_PCButtonText>
+		</hotrect>
+	</rect>
+</rect>

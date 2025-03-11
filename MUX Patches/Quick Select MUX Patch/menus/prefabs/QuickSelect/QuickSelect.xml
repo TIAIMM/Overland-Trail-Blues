@@ -1,0 +1,887 @@
+<!-- <rect name="QSDebug">
+	<include src="VUI+\outline_rect.xml"/> -->
+	<!-- <visible>1</visible> -->
+	<!-- <depth>99</depth> -->
+	<!-- <alpha>255</alpha> -->
+	<!-- <systemcolor>&true;</systemcolor> -->
+	
+	<!-- <font>1</font> -->
+	<!-- <wrapwidth>600</wrapwidth> -->
+	<!-- <string>Item Name</string> -->
+	<!-- <justify>&left;</justify> -->
+	
+	<!-- <x>100</x> -->
+	<!-- <y>100</y> -->
+<!-- <_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect> -->
+
+<rect name="QuickSelect">
+	<_showMenu>0</_showMenu>
+	<_showFilter>0</_showFilter>
+	<_num>0</_num>
+	<_sel>0</_sel>
+	<_selAnim>0</_selAnim>
+	<_spaceBetweenBoxes>20</_spaceBetweenBoxes>
+	<_selectKey>Mousewheel)</_selectKey>
+	<_dropKey>MMB)</_dropKey>
+	<_cancelKey>RMB)</_cancelKey>
+	<_filterKey>Space)</_filterKey>
+	<_controller>&xbox;</_controller>
+	<_itemName>N/A</_itemName>
+	<_itemInfo> </_itemInfo>
+	<_yUIShow>0</_yUIShow>
+	<_showLeftArrow>0</_showLeftArrow>
+	<_showRightArrow>0</_showRightArrow>
+	
+	<!-- TODO : remove unused buttons -->
+	<!-- <_buttonPath_4> glow_general_button_l.dds </_buttonPath_4> -->
+	<!-- <_buttonPath_8> glow_general_button_r.dds </_buttonPath_8> -->
+	<!-- <_buttonPath_32> glow_general_button_back.dds </_buttonPath_32> -->
+	<!-- <_buttonPath_64> glow_general_button_ls.dds </_buttonPath_64> -->
+	<!-- <_buttonPath_128> glow_general_button_rs.dds </_buttonPath_128> -->
+	<!-- <_buttonPath_256> glow_general_button_lb.dds </_buttonPath_256> -->
+	<!-- <_buttonPath_512> glow_general_button_rb.dds </_buttonPath_512> -->
+	<!-- <_buttonPath_4096> glow_general_button_a.dds </_buttonPath_4096> -->
+	<!-- <_buttonPath_8192> glow_general_button_b.dds </_buttonPath_8192> -->
+	<!-- <_buttonPath_16384> glow_general_button_x.dds </_buttonPath_16384> -->
+	<!-- <_buttonPath_32768> glow_general_button_y.dds </_buttonPath_32768> -->
+	
+	<!-- --------------------------------------------------------Item name-------------------------------------------------------- -->
+	<rect name="ItemNameRect">
+		<visible><copy src="parent()" trait="_showMenu" /></visible>
+		<_yUIShow><copy src="parent()" trait="_yUIShow" /><_yUIShow>
+		<_itemName><copy src="parent()" trait="_itemName" /><_itemName>
+		
+		<_spaceBetweenIcon>9</_spaceBetweenIcon>
+
+		<!-- It breaks if I dont include a box. And I don't know why -->
+		<include src="box.xml"/>
+		<_line_alpha>0</_line_alpha>
+		
+		<locus>&true;</locus>
+		<width>
+			<add src="child(ItemName)" trait="width"/>
+			<add>
+				<copy src="child(ItemIcon)" trait="width"/>
+				<add src="me()" trait="_spaceBetweenIcon"/>
+				<onlyif src="me()" trait="_yUIShow"/>
+			</add>
+		</width> 
+		<height><copy src="child(ItemIcon)" trait="height"/></height> 
+		<x><copy src="screen()" trait="width"/><sub src="me()" trait="width"/><div>2</div></x>
+		<y><copy src="screen()" trait="height"/><add src="me()" trait="height"/><div>2</div><add>75</add></y>
+		
+		<rect name="ItemName">
+	<include src="VUI+\outline_rect.xml"/>
+			<visible>1</visible>
+			<depth>99</depth>
+			<alpha>255</alpha>
+			<systemcolor>&true;</systemcolor>
+			
+			<font>1</font>
+			<wrapwidth>600</wrapwidth>
+			<string><copy src="parent()" trait="_itemName" /></string>
+			<justify>&left;</justify>
+			
+			<x>
+				<copy src="sibling(ItemIcon)" trait="width"/>
+				<add src="parent()" trait="_spaceBetweenIcon"/>
+				<onlyif src="parent()" trait="_yUIShow"/>
+			</x>
+			<y>5</y>
+		<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+		
+		<!-- ySI Icon! -->
+		<image name="ItemIcon">
+			<visible><copy src="parent()" trait="_yUIShow"/></visible>
+			<depth>99</depth>
+			<alpha>255</alpha>
+			
+			<systemcolor><copy src="sibling(ItemName)" trait="systemcolor" /></systemcolor>
+			<red> 255 </red>
+			<green> 255 </green>
+			<blue> 255 </blue>
+			
+			<filename></filename>
+			<zoom>&scale;</zoom>
+			
+			<width>32</width> 
+			<height>32</height> 
+		</image>
+	</rect>
+	
+	<rect name="FilterRect">
+		<visible><copy src="parent()" trait="_showMenu" /><and src="parent()" trait="_showFilter" /></visible>
+
+		<_yUIShow><copy src="parent()" trait="_yUIShow" /><_yUIShow>
+		<_filter_text>All</_filter_text>
+		<_filter_ycon>interface\icons\Apparel_Other_Backpack.dds</_filter_ycon>
+		<_controller><copy src="parent()" trait="_controller"/></_controller>
+		
+		<locus>&true;</locus>
+		<x><copy src="screen()" trait="width"/><sub src="me()" trait="width"/><div>2</div></x>
+		<y><copy src="screen()" trait="height"/><add src="me()" trait="height"/><div>2</div><sub src="child(FilterBox)" trait="height"/><sub>100</sub></y>
+		<width>225</width>
+		<height><copy src="child(FilterBox)" trait="height"/></height> 
+		
+		<rect name="FilterBox">
+			<visible><copy src="parent()" trait="visible"/></visible>
+			<depth>1</depth>
+			<include src="box.xml"/>
+			<_line_alpha>255<_line_alpha>
+	
+			<height><copy src="sibling(FilterIcon)" trait="height"/><add>10</add></height> 
+		</rect>
+		
+		<image name="FilterBG">
+			<filename> Interface\Shared\Background\solid_black.dds </filename>
+			<depth>-1</depth>
+			<visible><copy src="parent()" trait="visible"/></visible>
+			<alpha>165</alpha>
+			<zoom>&scale;</zoom>
+			<width><copy src="sibling(FilterBox)" trait="width"/><add>10</add></width> 
+			<height><copy src="sibling(FilterBox)" trait="height"/><add>10</add></height>
+			<x>-5</x>
+			<y>-5</y>
+		</image>
+	
+		<image name="FilterHighlight">
+			<filename>interface\shared\solid.dds</filename>
+			<depth>0</depth>
+			<visible>1</visible>
+			<alpha>0</alpha>
+			<zoom>&scale;</zoom>
+			<width><copy src="sibling(FilterBox)" trait="width"/></width> 
+			<height><copy src="sibling(FilterBox)" trait="height"/></height> 
+		</image>
+		
+		<rect name="FilterText">
+	<include src="VUI+\outline_rect.xml"/>
+			<visible>1</visible>
+			<depth>99</depth>
+			<alpha>255</alpha>
+			<systemcolor>&true;</systemcolor>
+			
+			<font>1</font>
+			<wrapwidth>600</wrapwidth>
+			<string><copy src="parent()" trait="_filter_text"/></string>
+			<justify>&right;</justify>
+			
+			<x><add src="sibling(FilterBox)" trait="width"/><sub>10</sub></x>
+			<y>10</y>
+		<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+		
+		<image name="FilterIcon">
+			<visible>1</visible>
+			<depth>99</depth>
+			<alpha>255</alpha>
+			
+			<systemcolor>-1</systemcolor>
+			<red> 255 </red>
+			<green> 255 </green>
+			<blue> 255 </blue>
+			
+			<filename><copy src="parent()" trait="_filter_ycon"/></filename>
+			<zoom>&scale;</zoom>
+			
+			<x>5</x>
+			<y>5</y>
+			<width>32</width> 
+			<height>32</height> 
+		</image>
+	</rect>
+	
+	<!-- Item info -->
+	<!-- <rect name="ItemInfoRect"> -->
+		<!-- <visible><copy src="parent()" trait="_showMenu" /></visible> -->
+		<!-- <_yUIShow><copy src="parent()" trait="_yUIShow" /><_yUIShow> <!-- why? --> -->
+		<!-- <_itemInfo><copy src="parent()" trait="_itemInfo" /><_itemInfo> -->
+		
+		<!-- <locus>&true;</locus> -->
+		<!-- <width><copy src="child(ItemInfo)" trait="width"/></width>  -->
+		<!-- <height><copy src="child(ItemInfo)" trait="height"/></height>  -->
+		<!-- <x><copy src="screen()" trait="width"/><div>2</div></x> -->
+		<!-- <y><copy src="screen()" trait="height"/><div>2</div><add>135</add></y> -->
+		
+		<!-- <rect name="ItemInfo">
+	<include src="VUI+\outline_rect.xml"/> -->
+			<!-- <visible>1</visible> -->
+			<!-- <depth>99</depth> -->
+			<!-- <alpha>255</alpha> -->
+			<!-- <systemcolor>&true;</systemcolor> -->
+			
+			<!-- <font>3</font> -->
+			<!-- <wrapwidth>600</wrapwidth> -->
+			<!-- <string><copy src="parent()" trait="_itemInfo" /></string> -->
+			<!-- <justify>&center;</justify> -->
+		<!-- <_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect> -->
+	<!-- </rect> -->
+	
+	<!-- --------------------------------------------------------Buttons-------------------------------------------------------- -->
+	<rect name="QuickSelectButtonRect">
+		<visible><copy src="parent()" trait="_showMenu" /></visible>
+		<depth>6</depth>
+		<systemcolor>&true;</systemcolor>
+		
+		<locus>&true;</locus>
+		<width>
+			<copy src="child(QSSelect)" trait="width"/>
+			<add src="me()" trait="_spaceBetweenButtons"/>
+			<add src="child(QSDrop)" trait="width"/>
+			<add src="me()" trait="_spaceBetweenButtons"/>
+			<add src="child(QSCancel)" trait="width"/>
+			<add>
+				<copy src="me()" trait="_spaceBetweenButtons"/>
+				<add src="child(QSFilter)" trait="width"/>
+				<onlyif src="me()" trait="_showFilter"/>
+			</add>
+		</width>
+		<x><copy src="screen()" trait="width"/><sub src="me()" trait="width"/><div>2</div></x>
+		<y><copy src="screen()" trait="height"/><div>2</div><add>150</add></y>
+		
+		<_spaceBetweenButtons>75</_spaceBetweenButtons>
+		<_controller><copy src="parent()" trait="_controller"/></_controller>
+		<_showFilter><copy src="parent()" trait="_showFilter" /></_showFilter>
+		
+		<!-- <hotrect name="QuickSelectFav"> -->
+			<!-- <include src="text_box.xml"/> -->
+			<!-- <font>3</font> -->
+			<!-- <_xbox_button>&xbuttonx;</_xbox_button> -->
+			<!-- <_PCButtonText>E)</_PCButtonText> -->
+			<!-- <justify>&center;</justify> -->
+			<!-- <string>Favorite</string> -->
+			<!-- <target>0</target> -->
+			<!-- <systemcolor>&true;</systemcolor> -->
+			<!-- <_horbuf>30</_horbuf> -->
+		<!-- </hotrect> -->
+		
+		<rect name="QSSelect">
+			<_xkey>
+				<copy src="child(QSSelectKey)" trait="width"/>
+				<add> 5 </add>
+			</_xkey>
+			<_xbutton>
+				<copy src="child(QSSelectImage)" trait="width"/>
+				<mul> 0.75 </mul>
+				<add> 5 </add>
+			</_xbutton>
+			
+			<width>
+				<copy src="child(QSSelectText)" trait="width"/>
+				<add>
+					<copy src="me()" trait="_xbutton"/>
+					<onlyif src="me()" trait="_controller"/>
+				</add>
+				<add>
+					<copy src="me()" trait="_xkey"/>
+					<onlyifnot src="me()" trait="_controller"/>
+				</add>
+			</width>
+			<locus> &true; </locus>
+			
+			<_controller><copy src="parent()" trait="_controller"/></_controller>
+
+			<systemcolor>&true;</systemcolor>
+			<alpha> 255 </alpha>
+			
+			<rect name="QSSelectText">
+	<include src="VUI+\outline_rect.xml"/>
+				<string>Select</string>
+				<justify>&left;</justify>
+				<font>3</font>
+				<depth>2</depth>
+				<systemcolor>&true;</systemcolor>
+
+				<x>
+					<copy>0</copy>
+					<add>
+						<copy src="parent()" trait="_xbutton"/>
+						<onlyif src="parent()" trait="_controller"/>
+					</add>
+					<add>
+						<copy src="parent()" trait="_xkey"/>
+						<onlyifnot src="parent()" trait="_controller"/>
+					</add>
+				</x>
+			<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+
+			<rect name="QSSelectKey">
+	<include src="VUI+\outline_rect.xml"/>
+				<visible> 
+					<copy>1</copy>
+					<onlyifnot src="parent()" trait="_controller"/>
+				</visible>
+				<string><copy src="QuickSelect" trait="_selectKey"/></string>
+				<font>3</font>
+				<depth> 2 </depth>
+				<systemcolor>&true;</systemcolor>
+			<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+			
+			<image name="QSSelectImage">
+				<visible><copy src="parent()" trait="_controller"/></visible>
+				<filename>glow_general_button_rs.dds</filename>
+				<texatlas> Interface\InterfaceShared.tai </texatlas>
+				<zoom> &scale; </zoom>
+				<depth> 2 </depth>
+				<systemcolor>&true;</systemcolor>
+				<width> <copy src="sibling(QSSelectText)" trait="height"/> <mul> 2 </mul> </width>
+				<height> <copy src="sibling(QSSelectText)" trait="height"/> <mul> 2 </mul> </height>
+				<y>
+					<copy> 0 </copy>
+					<sub src="me()" trait="height"/>
+					<mul> 0.25 </mul>
+					<sub>7.5</sub>
+				</y>
+			</image>
+		</rect>
+		
+		<rect name="QSDrop">
+			<_xkey>
+				<copy src="child(QSDropKey)" trait="width"/>
+				<add> 5 </add>
+			</_xkey>
+			<_xbutton>
+				<copy src="child(QSDropImage)" trait="width"/>
+				<mul> 0.75 </mul>
+				<add> 5 </add>
+			</_xbutton>
+			
+			<width>
+				<copy src="child(QSDropText)" trait="width"/>
+				<add>
+					<copy src="me()" trait="_xbutton"/>
+					<onlyif src="me()" trait="_controller"/>
+				</add>
+				<add>
+					<copy src="me()" trait="_xkey"/>
+					<onlyifnot src="me()" trait="_controller"/>
+				</add>
+			</width>		
+			<x>
+				<copy src="sibling(QSSelect)" trait="x"/>
+				<add src="sibling(QSSelect)" trait="width"/>
+				<add src="parent()" trait="_spaceBetweenButtons"/>
+			</x>
+			<locus> &true; </locus>
+			
+			<_controller><copy src="parent()" trait="_controller"/></_controller>
+
+			<systemcolor>&true;</systemcolor>
+			<alpha> 255 </alpha>
+			
+			<rect name="QSDropText">
+	<include src="VUI+\outline_rect.xml"/>
+				<string>Drop</string>
+				<justify>&left;</justify>
+				<font>3</font>
+				<depth>2</depth>
+				<systemcolor>&true;</systemcolor>
+
+				<x>
+					<copy>0</copy>
+					<add>
+						<copy src="parent()" trait="_xbutton"/>
+						<onlyif src="parent()" trait="_controller"/>
+					</add>
+					<add>
+						<copy src="parent()" trait="_xkey"/>
+						<onlyifnot src="parent()" trait="_controller"/>
+					</add>
+				</x>
+			<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+
+			<rect name="QSDropKey">
+	<include src="VUI+\outline_rect.xml"/>
+				<visible> 
+					<copy>1</copy>
+					<onlyifnot src="parent()" trait="_controller"/>
+				</visible>
+				<string><copy src="QuickSelect" trait="_dropKey"/></string>
+				<font>3</font>
+				<depth> 2 </depth>
+				<systemcolor>&true;</systemcolor>
+			<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+			
+			<image name="QSDropImage">
+				<visible><copy src="parent()" trait="_controller"/></visible>
+				<filename>glow_general_button_x.dds</filename>
+				<texatlas> Interface\InterfaceShared.tai </texatlas>
+				<zoom> &scale; </zoom>
+				<depth> 2 </depth>
+				<systemcolor>&true;</systemcolor>
+				<width> <copy src="sibling(QSDropText)" trait="height"/> <mul> 2 </mul> </width>
+				<height> <copy src="sibling(QSDropText)" trait="height"/> <mul> 2 </mul> </height>
+				<y>
+					<copy> 0 </copy>
+					<sub src="me()" trait="height"/>
+					<mul> 0.25 </mul>
+					<sub>7.5</sub>
+				</y>
+			</image>
+		</rect>
+		
+		<rect name="QSFilter">
+			<visible><copy src="parent()" trait="_showFilter"/></visible>
+
+			<_xkey>
+				<copy src="child(QSFilterKey)" trait="width"/>
+				<add> 5 </add>
+			</_xkey>
+			<_xbutton>
+				<copy src="child(QSFilterImage)" trait="width"/>
+				<mul> 0.75 </mul>
+				<add> 5 </add>
+			</_xbutton>
+			
+			<width>
+				<copy src="child(QSFilterText)" trait="width"/>
+				<add>
+					<copy src="me()" trait="_xbutton"/>
+					<onlyif src="me()" trait="_controller"/>
+				</add>
+				<add>
+					<copy src="me()" trait="_xkey"/>
+					<onlyifnot src="me()" trait="_controller"/>
+				</add>
+			</width>		
+			<x>
+				<copy src="sibling(QSDrop)" trait="x"/>
+				<add src="sibling(QSDrop)" trait="width"/>
+				<add src="parent()" trait="_spaceBetweenButtons"/>
+			</x>
+			<locus> &true; </locus>
+			
+			<_controller><copy src="parent()" trait="_controller"/></_controller>
+
+			<systemcolor>&true;</systemcolor>
+			<alpha> 255 </alpha>
+			
+			<rect name="QSFilterText">
+	<include src="VUI+\outline_rect.xml"/>
+				<string>Filter</string>
+				<justify>&left;</justify>
+				<font>3</font>
+				<depth>2</depth>
+				<systemcolor>&true;</systemcolor>
+
+				<x>
+					<copy>0</copy>
+					<add>
+						<copy src="parent()" trait="_xbutton"/>
+						<onlyif src="parent()" trait="_controller"/>
+					</add>
+					<add>
+						<copy src="parent()" trait="_xkey"/>
+						<onlyifnot src="parent()" trait="_controller"/>
+					</add>
+				</x>
+			<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+
+			<rect name="QSFilterKey">
+	<include src="VUI+\outline_rect.xml"/>
+				<visible> 
+					<copy>1</copy>
+					<onlyifnot src="parent()" trait="_controller"/>
+				</visible>
+				<string><copy src="QuickSelect" trait="_filterKey"/></string>
+				<font>3</font>
+				<depth> 2 </depth>
+				<systemcolor>&true;</systemcolor>
+			<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+			
+			<image name="QSFilterImage">
+				<visible><copy src="parent()" trait="_controller"/></visible>
+				<filename>glow_general_button_y.dds</filename>
+				<texatlas> Interface\InterfaceShared.tai </texatlas>
+				<zoom> &scale; </zoom>
+				<depth> 2 </depth>
+				<systemcolor>&true;</systemcolor>
+				<width> <copy src="sibling(QSFilterText)" trait="height"/> <mul> 2 </mul> </width>
+				<height> <copy src="sibling(QSFilterText)" trait="height"/> <mul> 2 </mul> </height>
+				<y>
+					<copy> 0 </copy>
+					<sub src="me()" trait="height"/>
+					<mul> 0.25 </mul>
+					<sub>7.5</sub>
+				</y>
+			</image>
+		</rect>
+			
+		<rect name="QSCancel">	
+			<_xkey>
+				<copy src="child(QSCancelKey)" trait="width"/>
+				<add> 5 </add>
+			</_xkey>
+			<_xbutton>
+				<copy src="child(QSCancelImage)" trait="width"/>
+				<mul> 0.75 </mul>
+				<add> 5 </add>
+			</_xbutton>
+			
+			<width>
+				<copy src="child(QSCancelText)" trait="width"/>
+				<add>
+					<copy src="me()" trait="_xbutton"/>
+					<onlyif src="me()" trait="_controller"/>
+				</add>
+				<add>
+					<copy src="me()" trait="_xkey"/>
+					<onlyifnot src="me()" trait="_controller"/>
+				</add>
+			</width>		
+			<x>
+				<copy src="parent()" trait="_spaceBetweenButtons"/>
+				<add>
+					<copy src="sibling(QSFilter)" trait="x"/>
+					<add src="sibling(QSFilter)" trait="width"/>
+					<onlyif src="parent()" trait="_showFilter"/>
+				</add>
+				<add>
+					<copy src="sibling(QSDrop)" trait="x"/>
+					<add src="sibling(QSDrop)" trait="width"/>
+					<onlyifnot src="parent()" trait="_showFilter"/>
+				</add>
+			</x>
+			<locus> &true; </locus>
+			
+			<_controller><copy src="parent()" trait="_controller"/></_controller>
+
+			<systemcolor>&true;</systemcolor>
+			<alpha> 255 </alpha>
+			
+			<rect name="QSCancelText">
+	<include src="VUI+\outline_rect.xml"/>			
+				<string>Cancel</string>
+				<justify>&left;</justify>
+				<font>3</font>
+				<depth>2</depth>
+				<systemcolor>&true;</systemcolor>
+
+				<x>
+					<copy>0</copy>
+					<add>
+						<copy src="parent()" trait="_xbutton"/>
+						<onlyif src="parent()" trait="_controller"/>
+					</add>
+					<add>
+						<copy src="parent()" trait="_xkey"/>
+						<onlyifnot src="parent()" trait="_controller"/>
+					</add>
+				</x>
+			<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+
+			<rect name="QSCancelKey">
+	<include src="VUI+\outline_rect.xml"/>
+				<visible> 
+					<copy>1</copy>
+					<onlyifnot src="parent()" trait="_controller"/>
+				</visible>
+				<string><copy src="QuickSelect" trait="_cancelKey"/></string>
+				<font>3</font>
+				<depth> 2 </depth>
+				<systemcolor>&true;</systemcolor>
+			<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+			
+			<image name="QSCancelImage">
+				<visible><copy src="parent()" trait="_controller"/></visible>
+				<filename>glow_general_button_b.dds</filename>
+				<texatlas> Interface\InterfaceShared.tai </texatlas>
+				<zoom> &scale; </zoom>
+				<depth> 2 </depth>
+				<systemcolor>&true;</systemcolor>
+				<width> <copy src="sibling(QSCancelText)" trait="height"/> <mul> 2 </mul> </width>
+				<height> <copy src="sibling(QSCancelText)" trait="height"/> <mul> 2 </mul> </height>
+				<y>
+					<copy> 0 </copy>
+					<sub src="me()" trait="height"/>
+					<mul> 0.25 </mul>
+					<sub>7.5</sub>
+				</y>
+			</image>
+		</rect>
+	</rect>
+	
+	<rect name="QuickSelectArrowsRect">
+		<visible><copy src="parent()" trait="_showMenu" /></visible>
+		<width><copy src="screen()" trait="width"/></width> 
+		<height><copy src="child(ArrowLeft)" trait="height"/></height> 
+		<x>0</x>
+		<y><copy src="screen()" trait="height"/><sub src="me()" trait="height"/><div>2</div></y>
+		
+		<_showLeftArrow><copy src="parent()" trait="_showLeftArrow"/></_showLeftArrow>
+		<_showRightArrow><copy src="parent()" trait="_showRightArrow"/></_showRightArrow>
+		
+		<image name="ArrowLeft">
+			<visible><copy src="parent()" trait="_showLeftArrow"/></visible>
+			<filename>interface\barter\glow_barter_arrow_sell.dds</filename>
+			
+			<depth>99</depth>
+			<alpha>255</alpha>
+			<systemcolor>&true;</systemcolor>
+			<zoom>&scale;</zoom>
+			
+			<locus>&true;</locus> 
+			<width>64</width> 
+			<height>125</height> 
+			<x><copy src="parent(QuickSelectArrowsRect)" trait="x"/></x>
+			<y><copy src="parent(QuickSelectArrowsRect)" trait="y"/></y>
+		</image>
+
+		<image name="ArrowRight">
+			<visible><copy src="parent()" trait="_showRightArrow"/></visible>
+			<filename>interface\barter\glow_barter_arrow_buy.dds</filename>
+			
+			<depth>99</depth>
+			<alpha>255</alpha>
+			<systemcolor>&true;</systemcolor>
+			<zoom>&scale;</zoom>
+			
+			<locus>&true;</locus> 
+			<width>64</width> 
+			<height>125</height> 
+			<x><copy src="parent(QuickSelectArrowsRect)" trait="width"/><sub src="me()" trait="width"/></x>
+			<y><copy src="parent(QuickSelectArrowsRect)" trait="y"/></y>
+		</image>
+	</rect>
+</rect>
+
+<!-- --------------------------------------------------------Tempaltes-------------------------------------------------------- -->
+
+<template name="SquareTemplate">
+	<rect name="SquareRect">
+		
+		<_ID>0</_ID>
+		
+		<image name="SquareEmpty">
+			<filename>interface\shared\marker\square_small.dds</filename>
+			<depth>1</depth>
+			<visible>1</visible>
+			<alpha>192</alpha>
+			<zoom> &scale; </zoom>
+			<width>8</width> 
+			<height>8</height> 
+			<x>
+				<copy src="screen()" trait="width"/><div>2</div>
+				<sub>
+					<copy src="me()" trait="width"/>
+					<mul>
+						<copy src="QuickSelect" trait="_num"/>
+						<add>1</add>
+					</mul>
+					<div>2</div>
+				</sub>
+				<add>
+					<copy src="parent(SquareRect)" trait="_ID"/>
+					<add>1</add>
+					<mul src="me()" trait="width"/>
+				</add>
+				<add>1</add>
+			</x>
+			<y><copy src="screen()" trait="height"/><div>2</div><add>75</add></y>
+		</image>
+		
+		<image name="SquareFilled">
+			<filename>interface\shared\marker\square_filled_small.dds</filename>
+			<depth>2</depth>
+			<visible>
+				<copy>1</copy>
+				<onlyif>
+					<copy src="QuickSelect" trait="_sel"/> 
+					<eq src="parent(SquareRect)" trait="_ID"/>
+				</onlyif>
+			</visible>
+			<alpha>255</alpha>
+			<zoom> &scale; </zoom>
+			<width><copy src="sibling(SquareEmpty)" trait="width"/></width> 
+			<height><copy src="sibling(SquareEmpty)" trait="height"/></height> 
+			<x><copy src="sibling(SquareEmpty)" trait="x"/></x>
+			<y><copy src="sibling(SquareEmpty)" trait="y"/></y>
+		</image>
+	</rect>
+</template>
+
+<template name="ItemTemplate">
+	<rect name="ItemRect">
+		
+		<_ID>0</_ID>
+		<_name></_name>
+		<_ySi></_ySi>
+		<_info></_info>
+		<_isEqu>0</isEqu>
+		<_alphaMul>1</_alphaMul>
+		
+		<_WepModFlags>0</_WepModFlags>
+		
+		<_visible>1</_visible>
+		
+		<rect name="NameTemp">
+	<include src="VUI+\outline_rect.xml"/>
+			<visible>0</visible>
+			<string>
+				<copy src="parent(ItemRect)" trait="_name"/>
+				<copy src="parent(ItemRect)" trait="_ySi"/>
+				<copy src="parent(ItemRect)" trait="_info"/>
+			</string>
+		<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+		
+		<rect name="ItemBox">
+			<visible><copy src="parent()" trait="_visible"/></visible>
+			<depth>1</depth>
+			<include src="box.xml"/>
+			<_line_alpha><copy>255</copy><mul src="parent(ItemRect)" trait="_alphaMul"/><_line_alpha>
+			<width>125</width> 
+			<height>50</height> <!-- Height is increased to 125 via code -->
+			<x>
+				<copy src="screen()" trait="width"/><sub src="me()" trait="width"/><div>2</div>
+				<add>
+					<copy src="parent(ItemRect)" trait="_ID"/>
+					<sub  src="QuickSelect" trait="_selAnim" />
+					<mul>
+						<copy src="me()" trait="width"/>
+						<add src="QuickSelect" trait="_spaceBetweenBoxes"/>
+					</mul>
+				</add>
+			</x>
+			<y><copy src="screen()" trait="height"/><sub src="me()" trait="height"/><div>2</div></y>
+		</rect>
+		<image name="ItemBG">
+			<filename>Interface\Shared\Background\fuzzy.dds</filename>
+			<depth>-1</depth>
+			<visible><copy src="parent()" trait="_visible"/></visible>
+			<alpha><copy>165</copy><mul src="parent(ItemRect)" trait="_alphaMul"/></alpha>
+			<zoom>&scale;</zoom>
+			<width><copy src="sibling(ItemBox)" trait="width"/><add>26</add></width> 
+			<height><copy src="sibling(ItemBox)" trait="height"/><add>26</add></height> 
+			<x><copy src="sibling(ItemBox)" trait="x"/><sub>13</sub></x>
+			<y><copy src="sibling(ItemBox)" trait="y"/><sub>13</sub></y>
+		</image>
+		<image name="ItemImage">
+			<filename>interface\shared\marker\square.dds</filename>
+			<depth>1</depth>
+			<visible><copy src="parent()" trait="_visible"/></visible>
+			<alpha><copy>192</copy><mul src="parent(ItemRect)" trait="_alphaMul"/></alpha>
+			<zoom>&scale;</zoom>
+			<width><copy src="sibling(ItemBox)" trait="width"/></width> 
+			<height><copy src="sibling(ItemBox)" trait="height"/></height> 
+			<x><copy src="sibling(ItemBox)" trait="x"/></x>
+			<y><copy src="sibling(ItemBox)" trait="y"/></y>
+		</image>
+		<rect name="ItemMods">
+	<include src="VUI+\outline_rect.xml"/>
+			<visible>
+				<copy>1</copy>
+				<onlyif>
+					<copy src="parent(ItemRect)" trait="_WepModFlags"/>
+					<gt>0<gt/>
+				</onlyif>
+			</visible>
+			<depth>99</depth>
+			<alpha><copy>255</copy><mul src="parent(ItemRect)" trait="_alphaMul"/></alpha>
+			<systemcolor>&true;</systemcolor>
+			
+			<font>3</font>
+			<wrapwidth>600</wrapwidth>
+			<string>+</string>
+			<justify>&right;</justify>
+			
+			<x><copy src="sibling(ItemBox)" trait="x"/><add src="sibling(ItemBox)" trait="width"/><sub>8</sub></x>
+			<y><copy src="sibling(ItemBox)" trait="y"/><add>8</add></y>
+		<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+		<rect name="ItemQuantity">
+	<include src="VUI+\outline_rect.xml"/>
+			<visible><copy src="parent()" trait="_visible"/></visible>
+			<depth>99</depth>
+			<alpha><copy>255</copy><mul src="parent(ItemRect)" trait="_alphaMul"/></alpha>
+			<systemcolor>&true;</systemcolor>
+			
+			<font>3</font>
+			<wrapwidth>600</wrapwidth>
+			<string></string>
+			<justify>&right;</justify>
+			
+			<x><copy src="sibling(ItemBox)" trait="x"/><add src="sibling(ItemBox)" trait="width"/><sub>10</sub></x>
+			<y><copy src="sibling(ItemBox)" trait="y"/><add src="sibling(ItemBox)" trait="height"/><sub>25</sub></y>
+		<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+		<image name="ItemHighlight">
+			<filename>interface\shared\solid.dds</filename>
+			<depth>0</depth>
+			<visible>
+				<copy>1</copy>
+				<onlyif>
+					<copy src="QuickSelect" trait="_sel"/> 
+					<eq src="parent(ItemRect)" trait="_ID"/>
+				</onlyif>
+			</visible>
+			<alpha>64</alpha>
+			<zoom>&scale;</zoom>
+			<width><copy src="sibling(ItemBox)" trait="width"/></width> 
+			<height><copy src="sibling(ItemBox)" trait="height"/></height> 
+			<x><copy src="sibling(ItemBox)" trait="x"/></x>
+			<y><copy src="sibling(ItemBox)" trait="y"/></y>
+		</image>
+		<image name="ItemEmptySquare">
+			<filename>interface\shared\marker\square.dds</filename>
+			<depth>1</depth>
+			<visible>
+				<copy>1</copy>
+				<onlyif>
+					<copy src="QuickSelect" trait="_sel"/> 
+					<eq src="parent(ItemRect)" trait="_ID"/>
+				</onlyif>
+			</visible>
+			<alpha>255</alpha>
+			<zoom> &scale; </zoom>
+			<width>20</width> 
+			<height>20</height> 
+			<x><copy src="sibling(ItemBox)" trait="x"/><add>10</add></x>
+			<y><copy src="sibling(ItemBox)" trait="y"/><add>10</add></y>
+		</image>
+		<image name="ItemFilledSquare">
+			<filename>interface\shared\marker\square_filled.dds</filename>
+			<depth>2</depth>
+			<visible>
+				<copy>1</copy>
+				<onlyif>
+					<copy src="parent(ItemRect)" trait="_isEqu"/> 
+					<eq>1</eq>
+				</onlyif>
+			</visible>
+			<alpha><copy>255</copy><mul src="parent(ItemRect)" trait="_alphaMul"/></alpha>
+			<zoom>&scale;</zoom>
+			<width>20</width> 
+			<height>20</height> 
+			<x><copy src="sibling(ItemBox)" trait="x"/><add>10</add></x>
+			<y><copy src="sibling(ItemBox)" trait="y"/><add>10</add></y>
+		</image>
+		
+	</rect>
+</template>

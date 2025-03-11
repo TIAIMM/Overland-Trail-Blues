@@ -1,0 +1,237 @@
+<!-- List Box prefab
+Provides the scrollbar and the highlight box to be used in addition to list_box_template items included in the parent hotrect
+COPYRIGHT BY ZENIMAX; MODIFIED SEPTEMBER 2022 BY AXONIS FOR VANILLA UI PLUS
+* Added overwrite diagnostics
+* Added a small default space between the scrollbar arrow and the box border
+* Slightly increased background brightness of the highlighted option
+* Changed "lb_scrollbar" to hotrect; fixes the icon/recipe locking bug at the recipe menu
+* Added several options to control the scrollbar without requiring to rewrite the template
+* Fixed the clipping bottom border of the lowest item
+* Wiped out the hardcoded style changes on skill-check failed dialog topics on New Vegas
+* Addded traits to propagate Smooth Scrolling, Shadow Offset, Visibility, Offset Position and Height properties to the scrollbar
+* Added a trait to control highlight when the list isn't focused
+-->
+
+<locus> 1 </locus>
+<wheelable> 1 </wheelable>
+<wheelmoved> 0 </wheelmoved>
+<clipwindow> 1 </clipwindow>
+
+<!-- INPUTS (override in XML) -->
+<id> &generic; </id> <!-- REQUIRED OVERRIDE (cpp must have a pointer to pass when initializing list box) -->
+<width></width> <!-- REQUIRED OVERRIDE -->
+<height></height> <!-- recommended override -->
+<_item_offset> 4 </_item_offset> <!-- How far to offset the highlight box and template items from the scrollbar. VUI+ 4 pixels should be enough -->
+<_number_of_visible_items> 0 </_number_of_visible_items> <!-- The number of visible items per screen. If this trait is set, the <height> and <_scroll_delta> traits will be overwritten in code to compensate -->
+<_enabled> 1 </_enabled> <!-- Enables/disables clickability of scroll bar, hides/unhides highlight box. IMPORTANT NOTE: You do not ever want to have more than one list box enabled at a time per menu. -->
+<!-- To force visibility of the scrollbar, override _scrollbar_vis as follows: -->
+<!-- true = always shown -->
+<!-- false = never shown -->
+<!-- default = shown when list items' height exceed the list height -->
+<_scrollbar_vis> -1 </_scrollbar_vis>
+<_scrollbar_pos> &left; </_scrollbar_pos>
+<_VUI+Scrollbar> 1 </_VUI+Scrollbar> <!--VUI+ unlike _scrollbar_vis, this doesn't affect the dimensions of the list -->
+<_VUI+ScrollbarOffsetX> 0 </_VUI+ScrollbarOffsetX> <!--VUI+ tweak the x of the scrollbar (probably with a negative value) -->
+<_VUI+ScrollbarOffsetY> 0 </_VUI+ScrollbarOffsetY> <!--VUI+ tweak the y of the scrollbar -->
+<_VUI+ScrollbarOffsetHeight> <copy src="globals" trait="_line_thickness" /> <mul> -1 </mul> </_VUI+ScrollbarOffsetHeight> <!--VUI+ same as above for height; default compensates the clipping fix -->
+<_VUI+SmoothScrolling> 0 </_VUI+SmoothScrolling> <!--VUI+ applies only to scrollbar dragging -->
+<_VUI+ShadowOffset> -1.5 </_VUI+ShadowOffset> <!--VUI+ some left-aligned scrollbars border protrude out of the black background; a small shadow will make them easier to discern -->
+<_VUI+Focus> 1 </_VUI+Focus> <!--VUI+ allows lb_highlight_box and highlighting -->
+<!--VUI+ font doesn't do anything here but it's propagated into the templated list elements -->
+<font>
+	<copy src="globals" trait="_VUI+ListFont" />
+	<onlyifnot src="io" trait="font" />
+	<add src="io" trait="font" /> <!--VUI+ prefer the menu's default font if set -->
+</font>
+<_VerticalSpacing>
+	<copy src="me" trait="font" />
+	<copy src="globals" trait="_VUI+FontV_" />
+</_VerticalSpacing>
+<_line_alpha> 255 </_line_alpha> <!-- Override alpha values for highlight box -->
+<_fill_alpha>
+	<copy src="globals" trait="_VUI+Highlighting" />
+	<mul> 2.5 </mul> <!--VUI+ more opacity on the highlight box -->
+</_fill_alpha>
+
+<!-- Automatically set in code: Do not override! -->
+<!-- Y-value of highlight box -->
+<_highlight_y> -1 </_highlight_y>
+<!-- number of filtered items -->
+<_num_filtered> 0 </_num_filtered>
+<!-- height of selected item -->
+<_selected_height> 0 </_selected_height>
+<!-- Height of one "scroll unit" -->
+<_scroll_delta> 26 </_scroll_delta>
+<!--VUI+ height of a single unwrapped item -->
+<_item_min_height>
+	<copy src="me" trait="font" />
+	<copy src="globals" trait="_VUI+FontH_" />
+	<add src="me" trait="_VerticalSpacing" />
+</_item_min_height>
+
+<hotrect name="lb_highlight_box">
+	<include src="box.xml"/>
+	<_line_alpha>
+		<copy src="parent" trait="_line_alpha"/>
+		<sub>
+			<!--VUI+ lists usually lost their highlight when they aren't focused, but in those few exceptions it's best to retain it because it usually denotes a memorized list location -->
+			<copy src="parent" trait="_line_alpha"/>
+			<div> 2 </div>
+			<onlyifnot src="parent" trait="_VUI+Focus" />
+		</sub>
+	</_line_alpha>
+	<alpha> <copy src="parent" trait="_fill_alpha"/> </alpha>
+	<clips> <copy src="parent" trait="clipwindow"/> </clips>
+	<visible>
+		<copy src="me" trait="y"/>
+		<add src="parent" trait="_selected_height"/>
+		<gte> 0 </gte>
+		<and src="parent" trait="_enabled"/>
+		<and src="sibling(lb_scrollbar)" trait="_number_of_items"/>
+	</visible>
+	<x>
+		<copy src="sibling(lb_scrollbar)" trait="x"/>
+		<add src="sibling(lb_scrollbar)" trait="width"/>
+		<onlyif src="parent" trait="_scrollbar_vis"/> <!-- true(2) or -1(default) meaning visibility is calculated-->
+		<add src="parent" trait="_item_offset"/>
+		<onlyif>
+			<copy src="parent" trait="_scrollbar_pos"/>
+			<eq> &left; </eq> <!-- Position of highlight defaults to zero when scrollbar is on right. -->
+		</onlyif> <!-- Item offset will instead be applied from left edge of scrollbar -->
+		<sub src="parent" trait="_VUI+ScrollbarOffsetX" />
+	</x>
+	<y> <copy src="parent" trait="_highlight_y"/> </y>
+	<width>
+		<copy src="parent" trait="width"/>
+		<sub src="me" trait="x"/>
+		<sub>
+			<copy src="sibling(lb_scrollbar)" trait="width"/>
+			<add src="parent" trait="_item_offset"/>
+			<onlyif>
+				<copy src="parent" trait="_scrollbar_pos"/>
+				<eq> &right; </eq>
+			</onlyif>
+		</sub>
+		<sub src="screen" trait="resolutionconverter"/> <!--VUI+ fixes incorrect clipping without affecting the computers (unlocked terminal) menu -->
+	</width>
+	<height>
+		<copy src="parent" trait="_selected_height"/>
+		<sub src="screen" trait="resolutionconverter"/> <!--VUI+ subtract one real pixel (because the engine has a bugged clipping method) -->
+	</height>
+</hotrect>
+
+<hotrect name="lb_scrollbar">
+	<include src="scrollbar_vert.xml"/>
+	<_VUI+SmoothScrolling> <copy src="parent" trait="_VUI+SmoothScrolling" /> </_VUI+SmoothScrolling>
+	<_VUI+ShadowOffset> <copy src="parent" trait="_VUI+ShadowOffset" /> </_VUI+ShadowOffset>
+	<_x>
+		<copy src="parent" trait="width"/>
+		<sub src="me" trait="width"/>
+		<onlyif>
+			<copy src="parent" trait="_scrollbar_pos"/>
+			<eq> &right; </eq>
+		</onlyif>
+		<add src="parent" trait="_VUI+ScrollbarOffsetX" />
+	</_x>
+	<_y> <copy src="parent" trait="_VUI+ScrollbarOffsetY" /> </_y>
+	<_height>
+		<copy src="parent" trait="height"/>
+		<add src="parent" trait="_VUI+ScrollbarOffsetHeight" />
+	</_height>
+	<_wheelmoved> <copy src="parent" trait="wheelmoved"/> </_wheelmoved>
+	<_enabled> <copy src="parent" trait="_enabled"/> </_enabled>
+	<!-- # items / # visible items computed based on _total_list_height and _scroll_delta -- VUI+ actually, _total_list_height doesn't exist but you can calculate it by multiplying (childcount-2)*_scroll_delta -->
+	<_number_of_items> 1 </_number_of_items> <!-- Set in code -->
+	<_number_of_visible_items> 1 </_number_of_visible_items>
+	<!-- 36378: Jump size should be a "page" worth of items -->
+	<_jump_size>
+		<copy src="parent" trait="height"/>
+		<div src="parent" trait="_scroll_delta"/>
+		<floor> 0 </floor>
+	</_jump_size>
+	<visible>
+		<copy src="me" trait="_number_of_items"/>
+		<gt src="me" trait="_number_of_visible_items"/>
+		<onlyif>
+			<copy src="parent" trait="_scrollbar_vis"/>
+			<eq> -1 </eq>
+		</onlyif>
+		<or>
+			<copy src="parent" trait="_scrollbar_vis"/>
+			<eq> 1 </eq>
+		</or>
+		<and src="parent" trait="_VUI+Scrollbar" />
+		<or src="child(VUI+Warning)" trait="visible" />
+	</visible>
+	<_marker_alpha>
+		<copy src="parent" trait="_line_alpha"/>
+		<mul> 0.9 </mul> <!--VUI+ reduce the slider's brightness to enhance the VUI+Highlighting feature -->
+	</_marker_alpha>
+
+	<hotrect name="VUI+Warning">
+		<x>
+			<copy> -800 </copy>
+			<onlyif>
+				<copy src="io" trait="class" /> <eq> &StartMenu; </eq>
+				<or> <copy src="grandparent" trait="_scrollbar_pos"/> <eq> &right; </eq> </or>
+			</onlyif>
+		</x>
+		<width> 450 </width>
+		<height>
+			<copy src="child(warning)" trait="height" />
+			<add> 15 </add>
+		</height>
+		<locus> 1 </locus>
+		<brightness> 0 </brightness>
+		<alpha> 255 </alpha>
+		<depth>
+			<copy src="grandparent" trait="depth" />
+			<add> 5 </add>
+		</depth>
+		<visible>
+			<!-- show only on the usual suspects -->
+			<copy src="io" trait="class" /> <eq> &ContainerMenu; </eq>
+			<or> <copy src="io" trait="class" /> <eq> &RecipeMenu; </eq> </or>
+			<or> <copy src="io" trait="class" /> <eq> &InventoryMenu; </eq> </or>
+			<or> <copy src="io" trait="class" /> <eq> &MapMenu; </eq> </or>
+			<or> <copy src="io" trait="class" /> <eq> &StatsMenu; </eq> </or>
+			<or> <copy src="io" trait="class" /> <eq> &StartMenu; </eq> </or>
+			<!-- if it doesn't contain an expected VUI+ trait -->
+			<and>
+				<not>
+					<copy src="io" trait="_VUI+ContainerHeight" />
+					<or src="io" trait="_VUI+PipWidth" />
+					<or> <copy src="io" trait="_VUI+" /> <gte> 946 </gte> </or>
+				</not>
+				<or>
+					<copy src="io" trait="class" /> <eq> &StatsMenu; </eq>
+					<and> <not src="io" trait="_paperdoll_pipboy_scale" /> </and>
+				</or>
+			</and>
+		</visible>
+
+		<text name="warning">
+			<x> 15 </x>
+			<y> 15 </y>
+			<wrapwidth>
+				<copy src="parent" trait="width" />
+				<sub> 30 </sub>
+			</wrapwidth>
+			<font> 3 </font>
+			<systemcolor> &nosystemcolor </systemcolor>
+			<depth> 1 </depth>
+			<string>Vanilla UI Plus has detected an installation error. If you are using MO2, simply drag this mod (not the plugin) under conflicting mods and make sure you have installed UIO!</string>
+		</text>
+
+		<hotrect name="border">
+			<brightness> 255 </brightness>
+			<alpha> 255 </alpha>
+			<x> -5 </x>
+			<y> -5 </y>
+			<width> <copy src="parent" trait="width" /> <add> 10 </add> </width>
+			<height> <copy src="parent" trait="height" /> <add> 10 </add> </height>
+			<depth> -0.1 </depth>
+			<systemcolor> &hudalt; </systemcolor>
+		</hotrect>
+	</hotrect>
+</hotrect>

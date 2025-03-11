@@ -1,0 +1,52 @@
+﻿<!--<rect name="info_piece">-->
+	<visible>&false;</visible>
+	<width>
+		<copy>0</copy>
+		<add src="child(description)" trait="width"/>
+		<add src="child(value)" trait="width"/>
+		<add src="me()" trait="_SpacerMiddle"/>
+		<add src="me()" trait="_SpacerFront"/>
+	</width>
+	<height>
+		<copy src="child(value)" trait="y"/>
+		<add src="child(value)" trait="height"/>
+		<sub src="child(description)" trait="y"/>
+	</height>
+	<_DescriptionString></_DescriptionString>
+	<_ValueString></_ValueString>
+	<_SpacerMiddle>5</_SpacerMiddle>
+	<_SpacerFront>15</_SpacerFront>
+	<locus>&true;</locus>
+	<rect name="description">
+	<include src="VUI+\outline_rect.xml"/>
+		<include src="text.xml"/>
+		<font>3</font>
+		<justify>&right;</justify>
+		<x>
+			<copy src="sibling(value)" trait="x"/>
+			<sub>
+				<copy src="sibling(value)" trait="width"/>
+			</sub>
+			<sub src="parent()" trait="_Spacer"/>
+		</x>
+		<string><copy src="parent()" trait="_DescriptionString"/></string>
+	<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+	<rect name="value">
+	<include src="VUI+\outline_rect.xml"/>
+		<include src="text.xml"/>
+		<font>2</font>
+		<justify>&right;</justify>
+		<y>
+			<copy>0</copy>
+			<add>
+				<copy src="sibling(description)" trait="height"/>
+				<div>2</div>
+			</add>
+		</y>
+		<string><copy src="parent()" trait="_ValueString"/></string>
+	<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+<!--</rect>-->

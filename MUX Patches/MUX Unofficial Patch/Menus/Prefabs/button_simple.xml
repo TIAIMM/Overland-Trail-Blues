@@ -1,0 +1,24 @@
+<!-- button_simple.xml -->
+<!-- rect name="button_simple" -->
+	<locus>&true;</locus>
+	<string>TEMP</string>
+	<_selected>&true;</_selected>
+	<rect name="button_border">
+<include src="text_box.xml"/>
+		<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+		<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+		<width><copy src="parent()" trait="width"/></width>
+		<height><copy src="parent()" trait="height"/></height>
+		<_box_visible>
+			<copy>1</copy>
+			<sub src="parent()" trait="mouseover"/>
+      <add>
+        <copy>1</copy>
+        <sub src="parent()" trait="_selected"/>
+      </add>
+		</_box_visible>
+	</rect>
+	<image name="selected_box">
+<include src="selection_box.xml"/>
+	</image>
+<!-- /rect -->

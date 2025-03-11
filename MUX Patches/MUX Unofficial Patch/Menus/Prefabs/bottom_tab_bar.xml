@@ -1,0 +1,386 @@
+<!-- bottom_tab_bar -->
+<!--<rect name="bottom_tab_bar">-->
+
+	<!-- INPUTS -->
+	<_width> </_width>
+	<_x> </_x>
+	<_y> </_y>
+	<_has_tabs> &true; </_has_tabs>
+	<_button_text_1> </_button_text_1>
+	<_button_text_2> </_button_text_2>
+	<_button_text_3> </_button_text_3>
+	<_button_text_4> </_button_text_4>
+	<_button_text_5> </_button_text_5>
+	<_current_tab_poke> </_current_tab_poke>	<!-- poke traits are set, then immediately cleared, in the code -->
+	<_current_tab_adjust> </_current_tab_adjust>
+	
+	<!-- OUTPUTS -->
+	<!--<_current_tab> (see below)-->
+
+
+	<locus> &true; </locus>
+	<width>
+		<copy src="me()" trait="_width"/>
+		<sub> 22 </sub>
+	</width>
+	<height> 1 </height>
+	<x> <copy src="me()" trait="_x"/> </x>
+	<y>
+		<copy src="me()" trait="_y"/>
+		<add> 20 </add>
+	</y>
+	<_current_tab> <!-- OUTPUT -->
+		<add> 0 </add>
+		<add>
+			<copy> -1000 </copy>
+			<onlyif>
+				<copy src="me()" trait="_current_tab_calc"/>
+				<gt> 0 </gt>
+			</onlyif>
+		</add>
+		<max> 0 </max>
+		<add src="me()" trait="_current_tab_calc"/>
+		<add>
+			<copy> -1000 </copy>
+			<onlyif>
+				<copy src="me()" trait="_current_tab_poke"/>
+				<gt> 0 </gt>
+			</onlyif>
+		</add>
+		<max> 0 </max>
+		<add src="me()" trait="_current_tab_poke"/>
+		<add src="me()" trait="_current_tab_adjust"/>
+		<sub> 1 </sub>
+		<mod> 5 </mod>
+		<add> 1 </add>
+	</_current_tab>
+	<_current_tab_calc>
+		<copy src="button_target_1" trait="clicked"/>
+		<add>
+			<copy src="button_target_2" trait="clicked"/>
+			<mul> 2 </mul>
+		</add>
+		<add>
+			<copy src="button_target_3" trait="clicked"/>
+			<mul> 3 </mul>
+		</add>
+		<add>
+			<copy src="button_target_4" trait="clicked"/>
+			<mul> 4 </mul>
+		</add>
+		<add>
+			<copy src="button_target_5" trait="clicked"/>
+			<mul> 5 </mul>
+		</add>
+	</_current_tab_calc>
+			
+			
+	<image name="left_vert">
+		<filename> Interface\Shared\Line\fade_to_top.dds </filename>
+		<zoom> &scale; </zoom>
+		<width> <copy src="globals()" trait="_line_thickness"/> </width>
+		<height> 60 </height>
+		<x> 0 </x>
+		<y> -53 </y>
+	</image>
+	
+	<image name="right_vert">
+		<filename> Interface\Shared\Line\fade_to_top.dds </filename>
+		<zoom> &scale; </zoom>
+		<width> <copy src="globals()" trait="_line_thickness"/> </width>
+		<height> 60 </height>
+		<x>
+			<copy src="parent()" trait="_width"/>
+			<sub src="globals()" trait="_line_thickness"/>
+		</x>
+		<y> -53 </y>
+	</image>
+	
+	
+
+	<!-- Tab Divider Lines -->
+	<image name="bottom_hor_1">
+		<include src="line.xml"/>
+		<_length>
+			<copy src="sibling(button_target_1)" trait="_x"/>
+			<sub src="sibling(left_vert)" trait="x"/>
+		</_length>
+		<x> 0 </x>
+		<y> 5 </y>
+	</image>
+	
+	<image name="bottom_hor_2">
+		<include src="line.xml"/>
+		<_length>
+			<copy src="sibling(button_target_2)" trait="_x"/>
+			<sub src="sibling(button_target_1)" trait="_x"/>
+			<sub src="sibling(button_target_1)" trait="_width"/>
+		</_length>
+		<x>
+			<copy src="sibling(button_target_1)" trait="_x"/>
+			<add src="sibling(button_target_1)" trait="_width"/>
+		</x>
+		<y> 5 </y>
+	</image>
+	
+	<image name="bottom_hor_3">
+		<include src="line.xml"/>
+		<_length>
+			<copy src="sibling(button_target_3)" trait="_x"/>
+			<sub src="sibling(button_target_2)" trait="_x"/>
+			<sub src="sibling(button_target_2)" trait="_width"/>
+		</_length>
+		<x>
+			<copy src="sibling(button_target_2)" trait="_x"/>
+			<add src="sibling(button_target_2)" trait="_width"/>
+		</x>
+		<y> 5 </y>
+	</image>
+	
+	<image name="bottom_hor_4">
+		<include src="line.xml"/>
+		<_length>
+			<copy src="sibling(button_target_4)" trait="_x"/>
+			<sub src="sibling(button_target_3)" trait="_x"/>
+			<sub src="sibling(button_target_3)" trait="_width"/>
+		</_length>
+		<x>
+			<copy src="sibling(button_target_3)" trait="_x"/>
+			<add src="sibling(button_target_3)" trait="_width"/>
+		</x>
+		<y> 5 </y>
+	</image>
+	
+	<image name="bottom_hor_5">
+		<include src="line.xml"/>
+		<_length>
+			<copy src="sibling(button_target_5)" trait="_x"/>
+			<sub src="sibling(button_target_4)" trait="_x"/>
+			<sub src="sibling(button_target_4)" trait="_width"/>
+		</_length>
+		<x>
+			<copy src="sibling(button_target_4)" trait="_x"/>
+			<add src="sibling(button_target_4)" trait="_width"/>
+		</x>
+		<y> 5 </y>
+	</image>
+	
+	<image name="bottom_hor_6">
+		<include src="line.xml"/>
+		<_length>
+			<copy src="sibling(right_vert)" trait="x"/>
+			<sub src="sibling(button_target_5)" trait="_x"/>
+			<sub src="sibling(button_target_5)" trait="_width"/>
+			<add src="globals()" trait="_line_thickness"/>
+		</_length>
+		<x>
+			<copy src="sibling(button_target_5)" trait="_x"/>
+			<add src="sibling(button_target_5)" trait="_width"/>
+		</x>
+		<y> 5 </y>
+	</image>
+	
+	<!-- Tab Target Boxes -->
+	<image name="button_target_1">
+		<include src="tab_box.xml"/>
+		<visible> <copy src="parent()" trait="_has_tabs"/> </visible>
+		<_width>
+			<copy src="sibling(button_text_1)" trait="width"/>
+			<add> 40 </add>
+		</_width>
+		<_height> 53 </_height>
+		<_x>
+			<copy src="button_text_1" trait="x"/>
+			<sub> 20 </sub>
+		</_x>
+		<_y> -20 </_y>
+		<depth> 2 </depth>
+		<_current_tab> <copy src="parent()" trait="_current_tab"/> </_current_tab>
+		<_my_tab> 1 </_my_tab>
+	</image>
+	
+	<image name="button_target_2">
+		<include src="tab_box.xml"/>
+		<visible> <copy src="parent()" trait="_has_tabs"/> </visible>
+		<_width>
+			<copy src="sibling(button_text_2)" trait="width"/>
+			<add> 40 </add>
+		</_width>
+		<_height> 53 </_height>
+		<_x>
+			<copy src="button_text_2" trait="x"/>
+			<sub> 20 </sub>
+		</_x>
+		<_y> -20 </_y>
+		<depth> 2 </depth>
+		<_current_tab> <copy src="parent()" trait="_current_tab"/> </_current_tab>
+		<_my_tab> 2 </_my_tab>
+	</image>
+	
+	<image name="button_target_3">
+		<include src="tab_box.xml"/>
+		<visible> <copy src="parent()" trait="_has_tabs"/> </visible>
+		<_width>
+			<copy src="sibling(button_text_3)" trait="width"/>
+			<add> 40 </add>
+		</_width>
+		<_height> 53 </_height>
+		<_x>
+			<copy src="button_text_3" trait="x"/>
+			<sub> 20 </sub>
+		</_x>
+		<_y> -20 </_y>
+		<depth> 2 </depth>
+		<_current_tab> <copy src="parent()" trait="_current_tab"/> </_current_tab>
+		<_my_tab> 3 </_my_tab>
+	</image>
+	
+	<image name="button_target_4">
+		<include src="tab_box.xml"/>
+		<visible> <copy src="parent()" trait="_has_tabs"/> </visible>
+		<_width>
+			<copy src="sibling(button_text_4)" trait="width"/>
+			<add> 40 </add>
+		</_width>
+		<_height> 53 </_height>
+		<_x>
+			<copy src="button_text_4" trait="x"/>
+			<sub> 20 </sub>
+		</_x>
+		<_y> -20 </_y>
+		<depth> 2 </depth>
+		<_current_tab> <copy src="parent()" trait="_current_tab"/> </_current_tab>
+		<_my_tab> 4 </_my_tab>
+	</image>
+	
+	<image name="button_target_5">
+		<include src="tab_box.xml"/>
+		<visible> <copy src="parent()" trait="_has_tabs"/> </visible>
+		<_width>
+			<copy src="sibling(button_text_5)" trait="width"/>
+			<add> 40 </add>
+		</_width>
+		<_height> 53 </_height>
+		<_x>
+			<copy src="button_text_5" trait="x"/>
+			<sub> 20 </sub>
+		</_x>
+		<_y> -20 </_y>
+		<depth> 2 </depth>
+		<_current_tab> <copy src="parent()" trait="_current_tab"/> </_current_tab>
+		<_my_tab> 5 </_my_tab>
+	</image>
+
+
+	<!-- Tab Target Texts -->
+	<rect name="button_text_1">
+	<include src="VUI+\outline_rect.xml"/>
+		<visible> <copy src="parent()" trait="_has_tabs"/> </visible>
+		<string> <copy src="parent()" trait="_button_text_1"/> </string>
+		<font> 2 </font>
+		<x>
+			<copy src="parent()" trait="_width"/>
+			<add> 150 </add>
+			<div> 6 </div>
+			<mul> 1 </mul>
+			<sub>
+				<copy src="me()" trait="width"/>
+				<div> 2 </div>
+			</sub>
+			<sub> 75 </sub>
+		</x>
+		<y> 0 </y>
+		<depth> 3 </depth>
+	<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+	
+	<rect name="button_text_2">
+	<include src="VUI+\outline_rect.xml"/>
+		<visible> <copy src="parent()" trait="_has_tabs"/> </visible>
+		<string> <copy src="parent()" trait="_button_text_2"/> </string>
+		<font> 2 </font>
+		<x>
+			<copy src="parent()" trait="_width"/>
+			<add> 150 </add>
+			<div> 6 </div>
+			<mul> 2 </mul>
+			<sub>
+				<copy src="me()" trait="width"/>
+				<div> 2 </div>
+			</sub>
+			<sub> 75 </sub>
+		</x>
+		<y> 0 </y>
+		<depth> 3 </depth>
+	<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+	
+	<rect name="button_text_3">
+	<include src="VUI+\outline_rect.xml"/>
+		<visible> <copy src="parent()" trait="_has_tabs"/> </visible>
+		<string> <copy src="parent()" trait="_button_text_3"/> </string>
+		<font> 2 </font>
+		<x>
+			<copy src="parent()" trait="_width"/>
+			<add> 150 </add>
+			<div> 6 </div>
+			<mul> 3 </mul>
+			<sub>
+				<copy src="me()" trait="width"/>
+				<div> 2 </div>
+			</sub>
+			<sub> 75 </sub>
+		</x>
+		<y> 0 </y>
+		<depth> 3 </depth>
+	<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+	
+	<rect name="button_text_4">
+	<include src="VUI+\outline_rect.xml"/>
+		<visible> <copy src="parent()" trait="_has_tabs"/> </visible>
+		<string> <copy src="parent()" trait="_button_text_4"/> </string>
+		<font> 2 </font>
+		<x>
+			<copy src="parent()" trait="_width"/>
+			<add> 150 </add>
+			<div> 6 </div>
+			<mul> 4 </mul>
+			<sub>
+				<copy src="me()" trait="width"/>
+				<div> 2 </div>
+			</sub>
+			<sub> 75 </sub>
+		</x>
+		<y> 0 </y>
+		<depth> 3 </depth>
+	<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+	
+	<rect name="button_text_5">
+	<include src="VUI+\outline_rect.xml"/>
+		<visible> <copy src="parent()" trait="_has_tabs"/> </visible>
+		<string> <copy src="parent()" trait="_button_text_5"/> </string>
+		<font> 2 </font>
+		<x>
+			<copy src="parent()" trait="_width"/>
+			<add> 150 </add>
+			<div> 6 </div>
+			<mul> 5 </mul>
+			<sub>
+				<copy src="me()" trait="width"/>
+				<div> 2 </div>
+			</sub>
+			<sub> 75 </sub>
+		</x>
+		<y> 0 </y>
+		<depth> 3 </depth>
+	<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+	
+<!--</rect>-->

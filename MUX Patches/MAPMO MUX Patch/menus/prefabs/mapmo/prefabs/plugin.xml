@@ -1,0 +1,37 @@
+<alpha><copy src="sibling(Icon)" trait="alpha"/></alpha>
+<locus>&true;</locus>
+<visible><copy src="sibling(Icon)" trait="mouseover"/><add src="parent" trait="_controllershow"/><add src="me" trait="_warning"/></visible>
+<x><copy src="sibling(FNVVersion)" trait="x"/></x>
+<y>
+  <copy>0</copy>
+  <sub><copy src="child(PluginName)" trait="height"/><mult src="me" trait="_index"/></sub></y>
+<zoom>75</zoom>
+<text name="PluginName">
+  <alpha><copy src="parent" trait="alpha"/><div>1.25</div></alpha>
+  <brightness><copy src="me" trait="alpha"/></brightness>
+  <font>3</font>
+  <justify>&left;</justify>
+  <string><copy src="parent" trait="_name"/></string>
+  <systemcolor>
+    <copy>0</copy>
+    <add><copy src="MAPMO" trait="systemcolor"/><onlyifnot src="parent" trait="_warning"/></add>
+    <add><copy>&hudalt;</copy><onlyif src="parent" trait="_warning"/></add>
+  </systemcolor>
+  <zoom><copy src="parent" trait="zoom"/></zoom>
+  <_VUI+OutlineIntensity>3 </_VUI+OutlineIntensity>
+  <_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</text>
+<include src="VUI+\outline.xml"/>
+<text name="PluginVersion">
+  <alpha><copy src="parent" trait="alpha"/></alpha>
+  <brightness><copy src="me" trait="alpha"/></brightness>
+  <font><copy src="sibling(PluginName)" trait="font"/></font>
+  <justify><copy src="sibling(PluginName)" trait="justify"/></justify>
+  <string><copy src="parent" trait="_version"/></string>
+  <systemcolor><copy src="sibling(PluginName)" trait="systemcolor"/></systemcolor>
+  <x><copy>10</copy><add src="sibling(PluginName)" trait="width"/></x>
+  <zoom><copy src="sibling(PluginName)" trait="zoom"/></zoom>
+  <_VUI+OutlineIntensity>3 </_VUI+OutlineIntensity>
+  <_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</text>
+<include src="VUI+\outline.xml"/>

@@ -1,0 +1,271 @@
+<rect name="3DGrenade">
+
+	<!-- ### Configuration Traits ### -->
+	<_IconScale> 1 </_IconScale>	<!-- Icon scale -->
+	<_Timer> 0 </_Timer>			<!-- Fuse timer -->
+	<_DistMax> 0 </_DistMax>		<!-- Maximum visibility distance -->
+	<_DistMode> 0 </_DistMode>		<!-- Max distance calculation mode -->
+	<_DropShadow> 1 </_DropShadow>	<!-- Icon drop shadow -->
+	<_Icon> Interface\Stentorious\3DGrenade\ySI.dds </_Icon>
+
+	<!-- ### Script Traits ### -->
+	<_visible> 1 </_visible>		<!-- General visibility flag -->
+	<_visible_pa> 1 </_visible_pa>	<!-- Power armor visibility flag -->
+	<_PlrAV6> 0 </_PlrAV6>			<!-- Player perception -->
+	<_AlphaPulse> 0 </_AlphaPulse>	<!-- Icon alpha pulse -->
+
+	<visible>
+		<copy src="ReticleCenter" trait="visible" />
+		<or src="AmmoTypeLabel" trait="visible" />
+		<or src="ActionPoints" trait="visible" />
+		<or src="HitPoints" trait="visible" />
+		<and src="me()" trait="_visible" />
+		<and src="me()" trait="_visible_pa" />
+	</visible>
+
+	<!-- Calculate distance to start icon fade in -->
+	<_Dist>
+		<copy> 0 </copy>
+		<add src="me()" trait="_DistMax" />
+		<onlyifnot src="me()" trait="_DistMode" />
+		<add>
+			<copy src="me()" trait="_DistMax" />
+			<div> 1680 </div>
+			<mul>
+				<log src="me()" trait="_PlrAV6" />
+				<div> <log> 4 </log> </div>
+				<mul> 1000 </mul>
+				<add> 1100 </add>
+				<div> 1.65 </div>
+			</mul>
+			<onlyif src="me()" trait="_DistMode" />
+		</add>
+	</_Dist>
+
+	<_Width>
+		<copy> 32 </copy>
+		<mul>
+			<copy src="io()" trait="_duiscale_65" />
+			<onlyif src="io()" trait="_DUIF3" />
+			<add>
+				<copy> 1 </copy>
+				<onlyifnot src="io()" trait="_DUIF3" />
+			</add>
+		</mul>
+		<mul src="me()" trait="_IconScale" />
+	</_Width>
+	<_Font>
+		<copy> 3 </copy>
+		<add>
+			<copy> 1 </copy>
+			<onlyif src="io()" trait="_DUIF3" />
+		</add>
+	</_Font>
+	<_FontY>
+		<copy> 0 </copy>
+		<add> 7.6 </add>
+		<onlyifnot src="io()" trait="_DUIF3" />
+		<mul src="me()" trait="_IconScale" />
+	</_FontY>
+	<_xMax>
+		<copy src="me()" trait="_Width" />
+		<div> 2 </div>
+		<add> 5 </add>
+	</_xMax>
+	<_xMin>
+		<copy src="screen()" trait="width" />
+		<sub src="me()" trait="_xMax" />
+	</_xMin>
+	<_yMax>
+		<copy> 5 </copy>
+		<add src="child(DummyText)" trait="height" />
+		<add src="me()" trait="_Width" />
+	</_yMax>
+	<_yMin>
+		<copy src="screen()" trait="height" />
+		<sub> 5 </sub>
+	</_yMin>
+
+	<rect name="DummyText">
+	<include src="VUI+\outline_rect.xml"/>
+		<visible> 0 </visible>
+		<alpha> 0 </alpha>
+		<zoom>
+			<copy> 80 </copy>
+			<mul src="parent()" trait="_IconScale" />
+		</zoom>
+		<font> <copy src="parent()" trait="_Font" /> </font>
+		<justify> &center; </justify>
+		<string> 9.9 </string>
+	<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+
+</rect>
+
+<template name="3DGrenade_Rect_Template">
+	<rect name="3DGrenade_Rect_Template"></rect>
+</template>
+
+<template name="3DGrenade_Icon_Template">
+	<rect name="3DGrenade_Icon_Template">
+
+		<visible>
+			<copy src="me()" trait="_Dist" />
+			<lte src="grandparent()" trait="_Dist" />
+		</visible>
+		<locus> &true; </locus>
+		<x>
+			<copy src="me()" trait="_x" />
+			<mul src="screen()" trait="width" />
+			<max src="grandparent()" trait="_xMax" />
+			<min src="grandparent()" trait="_xMin" />
+		</x>
+		<y>
+			<copy src="me()" trait="_y" />
+			<mul src="screen()" trait="height" />
+			<max src="grandparent()" trait="_yMax" />
+			<min src="grandparent()" trait="_yMin" />
+		</y>
+
+		<!-- ### Script Traits ### -->
+		<_x> -1 </_x>							<!-- W2S X position -->
+		<_y> -1 </_y>							<!-- W2S Y position -->
+		<_Timer> 0 </_Timer>					<!-- Remaining detonation timer -->
+		<_Dist> 0 </_Dist>						<!-- Distance from player -->
+		<_DistDMG> 0 </_DistDMG>				<!-- Explosion damage radius -->
+		<_IconColor> 1 </_IconColor>			<!-- Icon systemcolor -->
+
+		<!-- Calculate icon alpha -->
+		<_alpha>
+			<copy> 255 </copy>
+			<sub>
+				<copy src="me()" trait="_Dist" />
+				<pow> 4 </pow>
+				<div>
+					<copy src="grandparent()" trait="_Dist"/>
+					<pow> 4 </pow>
+				</div>
+				<mul> 255 </mul>
+			</sub>
+			<max> 0 </max>
+			<min> 255 </min>
+		</_alpha>
+
+		<image name="Icon">
+			<alpha> <copy src="parent()" trait="_alpha" /> </alpha>
+			<locus> &true; </locus>
+			<depth> -11 </depth>
+			<x>
+				<copy src="me()" trait="width" />
+				<div> -2 </div>
+			</x>
+			<y>
+				<copy src="me()" trait="height" />
+				<div> -1 </div>
+			</y>
+			<width> <copy src="3DGrenade" trait="_Width" /> </width>
+			<height> <copy src="me()" trait="width" /> </height>
+			<zoom> &scale; </zoom>
+			<systemcolor>
+				<copy> 0 </copy>
+				<add>
+					<copy src="parent()" trait="_IconColor" />
+					<onlyifnot>
+						<copy src="parent()" trait="_Dist" />
+						<lte src="parent()" trait="_DistDMG" />
+					</onlyifnot>
+				</add>
+				<add>
+					<copy> 2 </copy>
+					<onlyif>
+						<copy src="parent()" trait="_Dist" />
+						<lte src="parent()" trait="_DistDMG" />
+					</onlyif>
+				</add>
+			</systemcolor>
+			<brightness>
+				<copy> 255 </copy>
+				<mul>
+					<copy> 1 </copy>
+					<sub>
+						<copy src="3DGrenade" trait="_AlphaPulse" />
+						<onlyif>
+							<copy src="me()" trait="systemcolor" />
+							<eq> 2 </eq>
+						</onlyif>
+					</sub>
+				</mul>
+			</brightness>
+			<filename> <copy src="3DGrenade" trait="_Icon" /> </filename>
+
+			<image name="DropShadow">
+				<visible> <copy src="3DGrenade" trait="_DropShadow" /> </visible>
+				<alpha>
+					<copy src="parent()" trait="alpha" />
+					<div> 2 </div>
+				</alpha>
+				<depth> -1 </depth>
+				<x> <copy src="3DGrenade" trait="_IconScale" /> </x>
+				<y> <copy src="me()" trait="x" /> </y>
+				<height> <copy src="parent()" trait="height" /> </height>
+				<width> <copy src="parent()" trait="width" /> </width>
+				<zoom> &scale; </zoom>
+				<systemcolor> 0 </systemcolor>
+				<red> 0 </red>
+				<green> 0 </green>
+				<blue> 0 </blue>
+				<filename> <copy src="parent()" trait="filename" /> </filename>
+			</image>
+
+		</image>
+
+		<rect name="Timer">
+	<include src="VUI+\outline_rect.xml"/>
+			<visible> <copy src="3DGrenade" trait="_Timer" /> </visible>
+			<alpha> <copy src="parent()" trait="_alpha" /> </alpha>
+			<depth> -10 </depth>
+			<x>
+				<copy> 0 </copy>
+				<add>
+					<copy src="me()" trait="width" />
+					<div> 2 </div>
+					<sub src="parent()" trait="x" />
+					<max> 0 </max>
+				</add>
+				<sub>
+					<copy src="me()" trait="width" />
+					<div> 2 </div>
+					<sub src="screen()" trait="width" />
+					<add src="parent()" trait="x" />
+					<max> 0 </max>
+				</sub>
+			</x>
+			<y>
+				<copy src="3DGrenade" trait="_FontY" />
+				<sub src="me()" trait="height" />
+				<sub src="sibling(Icon)" trait="height" />
+			</y>
+			<zoom>
+				<copy> 80 </copy>
+				<mul src="3DGrenade" trait="_IconScale" />
+			</zoom>
+			<systemcolor>
+				<copy> 1 </copy>
+				<add>
+					<copy> 1 </copy>
+					<onlyif>
+						<copy src="parent()" trait="_Dist" />
+						<lte src="parent()" trait="_DistDMG" />
+					</onlyif>
+				</add>
+			</systemcolor>
+			<font> <copy src="3DGrenade" trait="_Font" /> </font>
+			<justify> &center; </justify>
+			<string> <copy src="parent()" trait="_Timer" /> </string>
+		<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+
+	</rect>
+</template>

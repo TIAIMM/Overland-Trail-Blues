@@ -1,0 +1,374 @@
+
+	<xbuttonb> <ref src="save_button_return" trait="clicked"/> </xbuttonb>
+	<_item_height> 72 </_item_height> <!-- height in pixels that a save game item text is -->
+
+	<_IsSaveMenu> &true; <_IsSaveMenu>
+	<_IsLoadMenu> &true; <_IsLoadMenu>
+	<_ItemText> </_ItemText>
+	
+	<_DeleteText> Delete </_DeleteText>
+	<_ReturnText> Return </_ReturnText>
+
+  <rect name="NOGLOW_BRANCH">
+    <id> &noglow_branch; </id>
+
+    <image name="save_background">
+      <filename> Interface\Shared\Background\fuzzy.dds </filename>
+      <width> 1120 </width>
+      <height> 700 </height>
+      <zoom> &scale; </zoom>
+      <x>
+        <copy src="screen()" trait="width"/>
+        <sub src="me()" trait="width"/>
+        <div> 2 </div>
+      </x>
+      <y>
+        <copy src="screen()" trait="height"/>
+        <sub src="me()" trait="height"/>
+        <div> 2 </div>
+      </y>
+      <alpha> 200 </alpha>
+    </image>
+  </rect>
+
+
+  <rect name="GLOW_BRANCH">
+    <id> &glow_branch; </id>
+
+    <hotrect name="save_layout">
+      <x> <copy src="save_background" trait="x"/> </x>
+      <y> <copy src="save_background" trait="y"/> </y>
+      <width> <copy src="save_background" trait="width"/> </width>
+      <height> <copy src="save_background" trait="height"/> </height>
+      <locus> &true; </locus>
+      <wheelable> &true; </wheelable>
+      <wheelmoved> 0 </wheelmoved>
+
+      
+      <rect name="save_instructions">
+	<include src="VUI+\outline_rect.xml"/>
+        <visible> <not> &xbox; </not> </visible>
+        <string>
+			<copy src="io()" trait="_IsSaveMenu"/>
+			<sub> 1 </sub>
+			<mul> 2 </mul>
+			<add src="io()" trait="_IsLoadMenu"/>
+			<copy src="me()" trait="_prompt_"/>
+        </string>
+        <justify> &center; </justify>
+        <x>
+          <copy src="parent()" trait="width"/>
+          <div> 2 </div>
+        </x>
+        <y> 70 </y>
+        <depth> 2 </depth>
+        <font> 3 </font>
+        <_prompt_1> <copy src="globals()" trait="_loadmenuinstructions"/> </_prompt_1>
+        <_prompt_2> <copy src="globals()" trait="_loadmenuinstructions"/> </_prompt_2>
+        <_prompt_3> <copy src="globals()" trait="_savemenuinstructions"/> </_prompt_3>
+        <_prompt_4> <copy src="globals()" trait="_loadmenuinstructions"/> </_prompt_4>
+      <_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+
+
+      <rect name="save_list">
+        <clipwindow> &true; </clipwindow>
+        <depth> 8 </depth>
+        <locus> &true; </locus>
+        <height>
+          <copy src="io()" trait="_item_height"/>
+          <mul> 7 </mul>
+        </height>
+        <width> 350 </width>
+        <x> 160 </x>
+        <y> 110 </y>
+
+
+        <image name="save_scroll_bar">
+<include src="scrollbar_vert.xml"/>
+          <!--INPUTS-->
+          <_height>
+            <copy src="parent()" trait="height"/>
+          </_height>
+          <_x>
+            <copy> 0 </copy>
+            <sub src="me()" trait="width"/>
+            <sub> 2 </sub>
+          </_x>
+          <_y> 0 </_y>
+          <_number_of_items>
+            <copy src="save_list_contents" trait="childcount"/>
+          </_number_of_items>
+          <_number_of_visible_items> 7 </_number_of_visible_items>
+          <_wheelmoved>
+            <copy src="save_layout" trait="wheelmoved"/>
+          </_wheelmoved>
+        </image>
+        
+
+        <rect name="save_list_contents">
+          <id> 1 </id>
+          <locus> &true; </locus>
+          <width>
+            <copy src="parent()" trait="width"/>
+          </width>
+          <height>
+            <copy src="me()" trait="childcount"/>
+            <mul src="io()" trait="_item_height"/>
+          </height>
+          <x> 0 </x>
+          <y>
+            <copy> 0 </copy>
+            <sub src="save_scroll_bar" trait="_current_value"/>
+            <mul src="io()" trait="_item_height"/>
+          </y>
+          <clips> &true; </clips>
+
+          <!-- This is a list pane, and is not a focus itself, but when the child elements don't know how to handle
+				       an input command, they defer to their parent. The following directions are for those times. -->
+          <target> &false; </target>
+          <xdefault> 2 </xdefault>
+          <xlist> &xlist; </xlist>
+          <!--xup> &last; </xup>
+				  <xdown> &first; </xdown-->
+          <xright>
+            <ref src="save_button_return" trait="mouseover" />
+          </xright>
+          <xleft>
+            <ref src="save_button_return" trait="mouseover" />
+          </xleft>
+          <xscroll>
+            <ref src="save_scroll_bar" trait="_value_adjust_poke" />
+          </xscroll>
+        </rect>
+      </rect>
+
+      
+      <image name="save_picture_background">
+        <filename> Interface\Loading\loading_save_wide_frame.dds </filename>
+        <depth> 10 </depth>
+        <width> 458 </width>
+        <height> 262 </height>
+        <zoom> 116 </zoom>
+        <x>
+          <copy src="parent()" trait="width"/>
+          <div> 2 </div>
+          <add> -30 </add>
+        </x>
+        <y>	110 </y>
+        <locus> &true; </locus>
+      </image>
+      
+
+      <image name="save_picture">
+        <id> 2 </id>
+        <filename> Interface\Shared\empty.dds </filename>
+        <depth> 11 </depth>
+        <width>
+          <copy src="save_picture_background" trait="width"/>
+          <sub> 10 </sub>
+        </width>
+        <height>
+          <copy src="save_picture_background" trait="height"/>
+          <sub> 10 </sub>
+        </height>
+        <!--cropy> 100</cropy-->
+        <zoom> 177 </zoom>
+        <x>
+          <copy src="save_picture_background" trait="x"/>
+          <add> 5 </add>
+        </x>
+        <y>
+          <copy src="save_picture_background" trait="y"/>
+          <add> 5 </add>
+        </y>
+        <brightness> &uselocalcolor; </brightness>
+      </image>
+
+      <rect name="save_Text">
+	<include src="VUI+\outline_rect.xml"/>
+        <depth> 5 </depth>
+        <justify> &left; </justify>
+        <font> 2 </font>
+        <alpha> 200 </alpha>
+        <wrapwidth>
+          <copy src="parent()" trait="width" />
+          <sub> 600 </sub>
+        </wrapwidth>
+        <x>
+          <copy src="save_picture" trait="x"/>
+        </x>
+        <y>
+          <copy src="save_picture" trait="y"/>
+          <add>
+            <copy src="save_picture" trait="height"/>
+          </add>
+          <add> 30 </add>
+        </y>
+      <_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+
+
+      <!-- DELETE HINT =========================================================================-->
+      <image name="save_delete_icon">
+        <visible>
+          <copy>&xbox;</copy>
+          <and src="io()" trait="user0"/>
+        </visible>
+        <depth>3</depth>
+        <filename> Interface\Shared\Button\general_button_x.dds </filename>
+        <x> 618 </x>
+        <y>
+          <copy src="save_delete_text" trait="y"/>
+          <add>
+            <copy src="save_delete_text" trait="height"/>
+            <sub src="me()" trait="height"/>
+            <div>2</div>
+          </add>
+        </y>
+        <height>64</height>
+        <width>64</width>
+      </image>
+
+      <rect name="save_delete_text">
+	<include src="VUI+\outline_rect.xml"/>
+        <visible>
+          <copy src="save_delete_icon" trait="visible"/>
+        </visible>
+        <string>
+          <copy src="io()" trait="_DeleteText"/>
+        </string>
+        <red> 117 </red>
+        <green> 59 </green>
+        <blue> 33 </blue>
+        <alpha> 255 </alpha>
+        <depth> 3 </depth>
+        <x>
+          <copy src="save_delete_icon" trait="x"/>
+          <add src="save_delete_icon" trait="width"/>
+        </x>
+        <y>
+          <copy src="save_button_return" trait="y"/>
+        </y>
+      <_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+
+      <!-- BUTTON EXIT =========================================================================-->
+      <image name="save_button_return">
+        <include src="button_basic.xml"/>
+        <id> 3 </id>
+        <x>
+          <copy src="parent()" trait="width"/>
+          <sub src="me()" trait="width"/>
+          <sub> 130 </sub>
+        </x>
+        <y>
+          <copy src="parent()" trait="height"/>
+          <sub src="me()" trait="height"/>
+          <sub> 90 </sub>
+        </y>
+        <clicksound> 2 </clicksound>
+        <string>
+          <copy src="io()" trait="_ReturnText"/>
+        </string>
+
+        <user20> &xbuttonb; </user20>
+        <xdefault> &xboxhint; </xdefault>
+        <xleft>
+          <ref src="save_list_pane" trait="mouseover" />
+        </xleft>
+        <xright>
+          <ref src="save_list_pane" trait="mouseover" />
+        </xright>
+        <xup>
+          <ref src="save_list_pane" trait="mouseover" />
+        </xup>
+        <xdown>
+          <ref src="save_list_pane" trait="mouseover" />
+        </xdown>
+      </image>
+
+
+    </rect> <!-- END save_layout -->
+  </rect> <!-- END glow branch -->
+	
+	
+	<!-- TEMPLATE =========================================================================-->
+	<template name="save_game_template">
+		<hotrect name="SAVES">
+			<alpha> 0 </alpha>
+			<focusinset> 8 </focusinset>
+			<locus> &true; </locus>
+			<target> &true; </target>
+			<repeatvertical> &true; </repeatvertical>
+			<depth> 5 </depth>
+			<visible>
+				<copy src="me()" trait="y"/>
+				<gte> 0 </gte>
+				<and>
+					<copy src="me()" trait="y"/>
+					<add> 20 </add>
+					<lt src="parent()" trait="height"/>
+				</and>
+			</visible>
+			<x> 10 </x>
+			<y>
+				<copy src="me()" trait="listindex"/>
+				<mult src="me()" trait="height"/>
+			</y>
+			<height> <copy src="io()" trait="_item_height"/> </height>
+			<width>
+				<copy src="parent()" trait="width"/>
+				<sub> 15 </sub>
+			</width>
+			<clips> &true; </clips>
+			<listindex> 0 </listindex>
+			<user1> Save Game Image File Name</user1>
+			<user2> Save Game Name</user2>
+			<user3> SaveGameName </user3> <!-- save form id -->
+			<user10> &false; </user10>
+			
+			<!-- This element is a list item. If it gets an input command it doesn't know how to handle
+			     it will defer the command to its parent. The xlist trait set to true triggers this. -->
+			<xdefault> 1 </xdefault>
+			<xlist> &xitem; </xlist>
+			<xup> &prev; </xup>
+			<xdown> &next; </xdown>
+			<xscroll>
+				<copy src="me()" trait="listindex" />
+				<sub>
+					<copy src="save_scroll_bar" trait="_number_of_visible_items"/>
+					<div> 2 </div>
+					<ceil> 0 </ceil>
+				</sub>
+				<add> 1 </add>
+			</xscroll>
+			
+			<rect name="save_game_name">
+	<include src="VUI+\outline_rect.xml"/>
+				<depth> 1 </depth>
+				<string>
+					<copy src="parent()" trait="user3"/>
+				</string>
+        <font> 2 </font>
+				<wrapwidth> 380 </wrapwidth>
+				<clips> &true; </clips>
+				<x> 6 </x>
+				<y> 17 </y>
+			<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+
+      <rect name="save_game_focus_box">
+        <include src="box.xml"/>
+        <visible>
+          <copy src="parent()" trait="mouseover"/>
+          <eq> 1 </eq>
+        </visible>
+		<clips> &true; </clips>
+      </rect>
+		</hotrect>
+	</template>

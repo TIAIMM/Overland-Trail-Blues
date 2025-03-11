@@ -1,0 +1,87 @@
+<!-- HotKey prefab
+An element of the hot-key menu. Represents one hot-keyed item.
+COPYRIGHT BY ZENIMAX; MODIFIED JANUARY 2019 BY AXONIS FOR VANILLA UI PLUS
+* Set the number font to be inheritable from hotkeys.xml; defaults to the outlined one for the HUD
+* Aligned the numbers to the middle of the buttons
+* Hidden the numbers when using a controller
+-->
+<width> 60 </width>
+<height> 60 </height>
+<locus> 1 </locus>
+<font>
+	<copy> 7 </copy>
+	<onlyifnot src="parent" trait="font" />
+	<add src="parent" trait="font" />
+</font>
+<_HotKeyIcon></_HotKeyIcon>
+<_HotKeyNumber></_HotKeyNumber>
+<_HotKeyAssigned> 0 </_HotKeyAssigned>
+
+<hotrect name="HK_SelectionBox">
+	<include src="box.xml"/>
+
+	<width> <copy src="parent" trait="width"/> </width>
+	<height> <copy src="parent" trait="height"/> </height>
+	<_fill_alpha> 80 </_fill_alpha>
+	<visible>
+		<copy src="grandparent" trait="_SelectedHotkey"/>
+		<eq src="parent" trait="_HotKeyNumber"/>
+	</visible>
+	<depth> 1 </depth>
+</hotrect>
+
+<hotrect name="HK_Border">
+	<include src="box.xml"/>
+	<x> 5 </x>
+	<y> 5 </y>
+	<width>
+		<copy src="parent" trait="width"/>
+		<sub> 10 </sub>
+	</width>
+	<height>
+		<copy src="parent" trait="height"/>
+		<sub> 10 </sub>
+	</height>
+	<depth> 2 </depth>
+</hotrect>
+
+<image name="HK_Icon">
+	<filename> <copy src="parent" trait="_HotKeyIcon"/> </filename>
+
+	<x> 5 </x>
+	<y> 5 </y>
+	<width>
+		<copy src="parent" trait="width"/>
+		<sub> 10 </sub>
+	</width>
+	<height>
+		<copy src="parent" trait="height"/>
+		<sub> 10 </sub>
+	</height>
+	<zoom> &scale; </zoom>
+	<visible> <copy src="parent" trait="_HotKeyAssigned"/> </visible>
+	<depth> 2 </depth>
+</image>
+
+<rect name="HK_Number">
+	<include src="VUI+\outline_rect.xml"/>
+	<x> <copy src="parent" trait="width"/> <add> 2 </add> </x> <!--VUI+ add a little space between the icon and the number -->
+	<font> <copy src="parent" trait="font" /> </font>
+	<y>
+		<copy src="parent" trait="height"/>
+		<sub src="me" trait="height"/>
+		<div> 2 </div>
+		<add>
+			<copy src="me" trait="font" />
+			<copy src="globals" trait="_VUI+FontY_"/>
+		</add>
+	</y>
+	<string>
+		<copy src="parent" trait="_HotKeyNumber"/>
+		<add> 1 </add>
+	</string>
+	<depth> 2 </depth>
+	<visible> <not src="globals" trait="_Has360Controller"/> </visible> <!--VUI+ don't make controller users feel bad -->
+	<_VUI+OutlineIntensity>3 </_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>

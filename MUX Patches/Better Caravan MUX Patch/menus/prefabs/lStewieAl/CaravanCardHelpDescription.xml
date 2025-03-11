@@ -1,0 +1,27 @@
+<rect name="CardHelp">
+	<include src="VUI+\outline_rect.xml"/>
+	<user0></user0> <!-- 0 = deck building menu, 1 = game menu -->
+	<x>
+		<copy src="screen" trait="width"/>
+		<div>2</div>
+	</x>
+    <y>
+      <copy src="screen" trait="height"/>
+      <sub> 70 </sub>
+    </y>
+	
+	<wrapwidth> 800 </wrapwidth>
+	
+	<depth> 6 </depth>
+    <visible> 
+		<copy src="parent()" trait="visible"/>
+	</visible>
+	
+    <string></string>
+    <font>7</font>
+	<justify> &center; </justify>
+    <brightness> 255 </brightness>
+	<string></string>
+<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>

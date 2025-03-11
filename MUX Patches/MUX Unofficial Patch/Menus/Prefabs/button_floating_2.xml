@@ -1,0 +1,100 @@
+<!-- button_floating_2.xml -->
+<!-- rect name="button_floating_2" -->
+	<target>
+		<copy src="me()" trait="user1"/>
+	</target>
+	<string> <copy src="globals()" trait="_button"/> </string>
+	<width>
+		<copy src="child(button_text)" trait="width"/>
+		<add> 40 </add>
+	</width>
+	<height> 64 </height>
+	<depth> 5 </depth>
+	<x>
+		<copy src="me()" trait="_center_x"/>
+		<sub>
+			<copy src="child(button_text)" trait="width"/>
+			<add> 40 </add>
+			<div> 2 </div>
+		</sub>
+	</x>
+	<y>
+		<copy src="me()" trait="_top"/>
+	</y>
+	<locus> &true; </locus>
+	<clips> &false; </clips>
+	<user1> &true; </user1>		<!-- true=enabled, false=disabled -->
+	
+	
+	<rect name="button_text">
+	<include src="VUI+\outline_rect.xml"/>
+		<depth> 7 </depth>
+		<string> <copy src="parent()" trait="string"/> </string>
+		<font> 1 </font>
+		<justify> &center; </justify>
+		<clips>
+			<copy src="parent()" trait="clips"/>
+		</clips>
+		<red>
+			<copy> 50 </copy>
+			<add>
+				<copy> -50 </copy>
+				<onlyif src="me()" trait="_is_mouseover"/>
+			</add>
+			<onlyif src="parent()" trait="target"/>
+			<add>
+				<copy>128</copy>
+				<onlyifnot src="parent()" trait="target"/>
+			</add>
+		</red>
+		<green>
+			<copy> 200 </copy>
+			<add>
+				<copy> 55 </copy>
+				<onlyif src="me()" trait="_is_mouseover"/>
+			</add>
+			<onlyif src="parent()" trait="target"/>
+			<add>
+				<copy> 128 </copy>
+				<onlyifnot src="parent()" trait="target"/>
+			</add>
+		</green>
+		<blue>
+			<copy> 70 </copy>
+			<add>
+				<copy> -70 </copy>
+				<onlyif src="me()" trait="_is_mouseover"/>
+			</add>
+			<onlyif src="parent()" trait="target"/>
+			<add>
+				<copy>128</copy>
+				<onlyifnot src="parent()" trait="target"/>
+			</add>
+		</blue>
+		<alpha>
+			<copy>255</copy>
+			<onlyif src="parent()" trait="target"/>
+			<add>
+				<copy>196</copy>
+				<onlyifnot src="parent()" trait="target"/>
+			</add>
+		</alpha>
+		<x>
+			<copy src="parent()" trait="width"/>
+			<div> 2 </div>
+		</x>
+		<y>
+			<copy src="parent()" trait="height"/>
+			<sub src="me()" trait="height"/>
+			<div>2</div>
+		</y>
+		<_is_mouseover>
+			<copy src="parent()" trait="mouseover"/> <eq> 1 </eq>
+			<and>
+				<copy src="parent()" trait="target"/>
+			</and>
+		</_is_mouseover>
+	<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+<!-- /rect -->

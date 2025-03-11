@@ -1,0 +1,107 @@
+	<!-- page title with a line border along the left and right sides and a text block in the right corner -->
+	<!--<image name="top_corner_title">-->
+
+	<_x> 0 </_x>
+	<_y> 0 </_y>
+	<_width> 600 </_width>
+	<_title></_title>
+	<_label></_label>
+	<_label_visible> &true; </_label_visible>
+	<_value></_value>
+	<_value_visible> &true; </_value_visible>
+
+
+	<filename> Interface\Shared\Line\fade_to_bottom.dds </filename>
+	<zoom> &scale; </zoom>
+	<width> <copy src="globals()" trait="_line_thickness"/> </width>
+	<height> 60 </height>
+	<x> <copy src="me()" trait="_x"/> </x>
+	<y> <copy src="me()" trait="_y"/> </y>
+	<locus> &true; </locus>
+
+	<image name="top_left_hor_1">
+		<include src="line.xml"/>
+		<_length> 50 </_length>
+		<x> 0 </x>
+		<y> 0 </y>
+	</image>
+
+	<image name="top_right_hor_2">
+		<include src="line.xml"/>
+		<_length>
+			<copy src="parent()" trait="_width"/>
+			<sub src="sibling(page_title)" trait="x"/>
+			<sub src="sibling(page_title)" trait="width"/>
+			<sub> 20 </sub>
+			<sub src="globals()" trait="_line_thickness"/>
+		</_length>
+		<x>
+			<copy src="sibling(page_title)" trait="x" />
+			<add src="sibling(page_title)" trait="width" />
+			<add> 29.5 </add>
+		</x>
+		<y> 0 </y>
+	</image>
+
+	<image name="top_center_vert1">
+		<filename> Interface\Shared\Line\fade_to_bottom.dds </filename>
+		<zoom> &scale; </zoom>
+		<width> <copy src="globals()" trait="_line_thickness"/> </width>
+		<height> 60 </height>
+		<x>
+			<copy src="parent()" trait="_width" />
+			<add src="globals()" trait="_line_thickness"/>
+		</x>
+		<y> 0 </y>
+		<locus> &true; </locus>
+		<_label> <copy src="parent()" trait="_label" /> </_label>
+		<_value> <copy src="parent()" trait="_value" /> </_value>
+		<_label_visible> <copy src="parent()" trait="_label_visible" /> </_label_visible>
+		<_value_visible> <copy src="parent()" trait="_value_visible" /> </_value_visible>
+		
+		<rect name="top_label_text">
+	<include src="VUI+\outline_rect.xml"/>
+			<visible> <copy src="parent()" trait="_label_visible"/> </visible>
+			<string> <copy src="parent()" trait="_label"/> </string>
+			<font> 2 </font>
+			<justify> &right; </justify>
+			<x>
+				<copy> -15 </copy>
+				<onlyif src="parent()" trait="_value_visible"/>
+				<add src="sibling(top_value_text)" trait="x"/>
+				<sub src="sibling(top_value_text)" trait="width"/>
+			</x>
+			<y> 22 </y>
+		<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+			
+		<rect name="top_value_text">
+	<include src="VUI+\outline_rect.xml"/>
+			<visible> <copy src="parent()" trait="_value_visible"/> </visible>
+			<string> <copy src="parent()" trait="_value"/> </string>
+			<font> 2 </font>
+			<justify> &right; </justify>
+			<x>
+				<copy src="parent()" trait="width"/>
+				<sub> 15 </sub>
+			</x>
+			<y> 22 </y>
+		<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+	</image>
+	
+	<rect name="page_title">
+	<include src="VUI+\outline_rect.xml"/>
+		<string> <copy src="parent()" trait="_title" /> </string>
+		<font> 4 </font>
+		<x>
+			<copy src="sibling(top_left_hor_1)" trait="_x" />
+			<add src="sibling(top_left_hor_1)" trait="_length" />
+			<add> 29.5 </add>
+		</x>
+	<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+	<!--</image>-->

@@ -1,0 +1,354 @@
+<!-- load_menu.xml -->
+<menu name="LoadGameMenu">
+	<class> &LoadGameMenu; </class>
+	<stackingtype> &no_click_past; </stackingtype>
+	<alpha>	0 </alpha>
+	<explorefade> 0.25 </explorefade>
+	<locus> &true; </locus>
+	<menufade> 0.25 </menufade>
+	
+	<_ItemText></_ItemText>
+	
+	
+	<xbuttonB> <ref src="load_button_repair" trait="clicked"/> </xbuttonB>
+	
+	
+	<rect name="NOGLOW_BRANCH">
+		<id> &noglow_branch; </id>
+	</rect>
+	
+	
+	<rect name="GLOW_BRANCH">
+		<id> &glow_branch; </id>
+		
+		
+		<!--================================================================-->
+		<rect name="load_main_parent">
+			<id> &generic; </id>
+			<target> <not> &xbox; </not> </target>
+			<width> 860 </width>
+			<height> 576 </height>
+			<x>
+				<copy src="screen()" trait="width"/>
+				<sub src="me()" trait="width"/>
+				<div> 2 </div>
+			</x>
+			<y>
+				<copy src="screen()" trait="height"/>
+				<sub src="me()" trait="height"/>
+				<div> 2 </div>
+			</y>
+			<locus> &true; </locus>
+			<xdefault> 1 </xdefault>
+			<wheelable> &true; </wheelable>
+			<wheelmoved> 0 </wheelmoved>
+			
+			
+			<image name="lev_background_layout">
+				<filename> Interface\Shared\Background\large.dds </filename>
+				<width>
+					<copy src="parent()" trait="width"/>
+					<add> 120 </add>
+				</width>
+				<height>
+					<copy src="parent()" trait="height"/>
+					<add> 120 </add>
+				</height>
+				<x> -60 </x>
+				<y> -60 </y>
+				<zoom> &scale; </zoom>
+				<depth> -1 </depth>
+				<systemcolor> &hudmain; </systemcolor>
+				<alpha> 128 </alpha>
+				<brightness> 128 </brightness>
+			</image>
+			
+			
+			<!-- === BOTTOM BAR BLOCK =================================================== -->
+			<rect name="load_bottom_line">
+				<include src="bottom_bracket.xml"/>
+				<visible> <not src="io()" trait="_CalledFromInventory"/> </visible>
+				<width> 860 </width>
+				<y> 576 </y>
+			</rect>
+			
+			
+			<!-- === TOP BAR BLOCK =================================================== -->
+			<rect name="top_bar">
+				<x> 0 </x>
+				<y> 0 </y>
+				<depth> 2 </depth>
+				<locus> &true; </locus>
+				
+				<image name="top_corner_title">
+					<include src="top_corner_title.xml"/>
+					<_x> 0 </_x>
+					<_y> 0 </_y>
+					<_width> <copy src="load_main_parent" trait="width"/> </_width>
+					<_title> &-sLoadSavedGame; </_title>
+					<_label_visible> &false; </_label_visible>
+					<_value_visible> &false; </_value_visible>
+				</image>
+			</rect>
+				
+				
+				
+
+			<!-- === BUTTONS BLOCK =================================================== -->
+			<hotrect name="load_button_repair">
+				<include src="button_xbox_hint.xml"/>
+				<_string> &-sCancel; </_string>
+				<_xbox_button> &xbuttonB; </_xbox_button>
+				<_enabled> <not src="io()" trait="_IsRepairCostTooHigh"/> </_enabled>
+				
+				<id> &_CancelButton; </id>
+				<x>
+					<copy src="parent()" trait="width"/>
+					<sub src="me()" trait="width"/>
+					<add>
+						<copy src="globals()" trait="_gap_size"/>
+						<onlyif> &xbox; </onlyif>
+					</add>
+				</x>
+				<y> 50 </y>
+			</hotrect>
+			
+			
+			
+			<!-- === INFO BLOCK =================================================== -->
+			<rect name="load_info_block">
+				<width> 430 </width>
+				<height>
+					<copy src="parent()" trait="height"/>
+					<sub src="me()" trait="y"/>
+				</height>
+				<x>
+					<copy src="parent()" trait="width"/>
+					<sub src="me()" trait="width"/>
+				</x>
+				<y>
+					<copy src="load_button_repair" trait="y"/>
+					<add src="load_button_repair" trait="height"/>
+					<add src="globals()" trait="_gap_size"/>
+				</y>
+				<locus> &true; </locus>
+
+
+				<rect name="load_info_block_top_hor">
+					<include src="top_bracket.xml"/>
+					<width> <copy src="parent()" trait="width"/> </width>
+					<x> 0 </x>
+					<y> 0 </y>
+				</rect>
+      
+				<image name="load_picture">
+					<id> &_SavedPicture; </id>
+					<filename> Interface\Shared\empty.dds </filename>
+					<depth> 2 </depth>
+					<width>
+						<copy src="parent()" trait="width"/>
+						<sub src="globals()" trait="_line_thickness"/>
+						<sub src="globals()" trait="_line_thickness"/>
+					</width>
+					<height>
+						<copy src="me()" trait="width"/>
+						<mul> 0.5625 </mul>	<!-- 16:9 ratio -->
+						<floor> 0 </floor>
+					</height>
+					<zoom> 177 </zoom>
+					<x>
+						<copy src="parent()" trait="width"/>
+						<sub src="me()" trait="width"/>
+						<sub src="globals()" trait="_line_thickness"/>
+					</x>
+					<y> <copy src="globals()" trait="_line_thickness"/> </y>
+					<!--brightness> &uselocalcolor; </brightness-->
+				</image>
+
+				<rect name="load_bottom_line">
+					<include src="bottom_bracket.xml"/>
+					<width> <copy src="parent()" trait="width"/> </width>
+					<x> 0 </x>
+					<y> <copy src="load_picture" trait="height"/> </y>
+				</rect>
+				
+				<text name="load_info_block_text">
+					<font> 2 </font>
+					<string> <copy src="io()" trait="_ItemText"/> </string>
+					<x> 0 </x>
+					<y>
+						<copy src="parent()" trait="height"/>
+						<sub src="load_bottom_line" trait="y"/>
+						<sub src="me()" trait="height"/>
+						<div> 2 </div>
+						<add src="load_bottom_line" trait="y"/>
+					</y>
+					<_VUI+OutlineIntensity>3 </_VUI+OutlineIntensity>
+					<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+				</text>
+				<include src="VUI+\outline.xml"/>
+			</rect>
+			
+			
+				
+			
+			<!-- === MAIN LIST BLOCK =================================================== -->
+			<hotrect name="load_list">
+				<width> 425 </width>
+				<height> 500 </height>
+				<x> 15 </x>
+				<y> 55 </y>
+				<locus> true </locus>
+				<depth> 0 </depth>
+				<wheelable> &true; </wheelable>
+				<wheelmoved> 0 </wheelmoved>
+				
+				<image name="load_main_scrollbar_vert">
+					<include src="scrollbar_vert.xml"/>
+					<!--INPUTS-->
+					<_height> <copy src="load_list_window_frame" trait="height"/> </_height>
+					<_x> -15 </_x>
+					<_y> <copy src="load_list_window_frame" trait="y"/> </_y>
+					<_number_of_items>
+						<copy src="load_list_window_contents" trait="childcount"/>
+						<sub> 1 </sub>	<!-- only as long as lb_scrollbar exists -->
+						<sub src="load_list_window_contents" trait="_num_filtered"/>
+					</_number_of_items>
+					<_number_of_visible_items>
+						<copy src="load_list_window_frame" trait="_number_visible_items"/>
+					</_number_of_visible_items>
+					<_wheelmoved> <copy src="parent()" trait="wheelmoved"/> </_wheelmoved>
+				</image>
+				
+				<rect name="load_list_window_frame">
+					<depth> 1 </depth>
+					<width> 390 </width>
+					<height>
+						<copy src="me()" trait="_line_height"/>
+						<mul src="me()" trait="_number_visible_items"/>
+					</height>
+					<x> 20 </x>
+					<y> 55 </y>
+					<locus> &true; </locus>
+					<clipwindow> &true; </clipwindow>
+					<_line_height> 80 </_line_height>
+					<_number_visible_items> 6 </_number_visible_items>
+					
+					<hotrect name="load_list_window_contents">
+						<id> &_ListContents; </id>
+						<zoom> &scale; </zoom>
+						<locus> &true; </locus>
+						<height>
+							<copy src="me()" trait="childcount"/>
+							<sub> 1 </sub>	<!-- only as long as lb_scrollbar exists -->
+							<sub src="me()" trait="_num_filtered"/>
+							<mul src="parent()" trait="_line_height"/>
+						</height>
+						<width> <copy src="parent()" trait="width"/> </width>
+						<x> 0 </x>
+						<y>
+							<copy> 0 </copy>
+							<sub src="load_main_scrollbar_vert" trait="_current_percentage"/>
+							<mul>
+								<copy src="me()" trait="height"/>
+								<sub src="parent()" trait="height"/>
+							</mul>
+							<floor> 0 </floor>
+							<min> 0 </min>
+						</y>
+						<clips> &true; </clips>
+						<target> &false; </target>
+						<xdefault> 2 </xdefault>
+						<xlist> &xlist; </xlist>
+						<!--xup> &last; </xup>
+						<xdown> &first; </xdown-->
+						<xscroll> <ref src="load_main_scrollbar_vert" trait="_value_adjust_poke" /> </xscroll>
+						<_num_filtered> 0 </_num_filtered>	<!-- set by code -->
+						<_is_targetable>
+							<copy src="io()" trait="_MenuState"/>
+							<eq> 1 </eq>
+							<and> &xbox; </and>
+							<or><not> &xbox; </not></or>
+						</_is_targetable>
+						<_number_of_visible_items> <copy src="load_main_scrollbar_vert" trait="_number_of_visible_items"/> </_number_of_visible_items>
+						
+<rect name="lb_scrollbar"></rect>	<!-- to make listbox class happy, search for name when removing -->
+						
+						
+<!-- START OF TEMPLATE =====================================================-->
+						<template name="item_template">
+							<hotrect name="load_item_template">
+								<_ItemName> </_ItemName>
+								
+								<visible>
+									<copy src="me()" trait="listindex"/>
+									<gte> 0 </gte>
+								</visible>
+								<id> &_ListItem; </id>
+								<target> &true; </target>
+								<listindex> 0 </listindex>
+								<width> <copy src="parent()" trait="width"/> </width>
+								<height> <copy src="load_list_window_frame" trait="_line_height"/> </height>
+								<x> 0 </x>
+								<y>
+									<copy src="me()" trait="listindex"/>
+									<mul src="load_list_window_frame" trait="_line_height"/>
+								</y>
+								<depth> 2 </depth>
+								<locus> &true; </locus>
+								<clips> &true; </clips>
+								<alpha> 0 </alpha>
+								
+								<!-- This element is a list item. If it gets an input command it doesn't know how to handle
+									it will defer the command to its parent. The xlist trait set to &xitem; triggers this. -->
+								<xdefault> 1 </xdefault>
+								<xlist> &xitem; </xlist>
+								<xup> &prev; </xup>
+								<xdown> &next; </xdown>
+								<xscroll>
+									<copy src="me()" trait="listindex" />
+									<sub>
+										<copy src="parent()" trait="_number_of_visible_items"/>
+										<div> 2 </div>
+										<ceil> 0 </ceil>
+									</sub>
+									<add> 1 </add>
+								</xscroll>
+								<repeatvertical> &true; </repeatvertical>
+								
+								<_ItemName> &-sSpace; </_ItemName>
+								
+								<text name="load_item_name">
+									<string> <copy src="parent()" trait="_ItemName"/> </string>
+									<font> 2 </font>
+									<clips> &true; </clips>
+									<x> 35 </x>
+									<y>
+										<copy src="parent()" trait="height"/>
+										<sub src="me()" trait="height"/>
+										<div> 2 </div>
+										<add> 8 </add>
+									</y>
+									<brightness> <copy src="globals()" trait="_text_brightness"/> </brightness>
+									<_VUI+OutlineIntensity>3 </_VUI+OutlineIntensity>
+									<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+								</text>
+								<include src="VUI+\outline.xml"/>
+								
+								<rect name="load_item_selection_frame">
+									<include src="box.xml"/>
+									<visible>
+										<copy src="parent()" trait="mouseover"/>
+										<gt> 0 </gt>
+									</visible>
+									<clips> &true; </clips>
+								</rect>
+							</hotrect>
+						</template>
+<!-- END OF TEMPLATE =======================================================-->
+					</hotrect>
+				</rect>
+			</hotrect>
+		</rect>
+	</rect>
+</menu>

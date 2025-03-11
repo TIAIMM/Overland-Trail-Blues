@@ -1,0 +1,655 @@
+<include src="MAPMO\globals_mapmo.xml"/>
+<rect name="MAPMOChecker">
+  <_warning>0</_warning>
+  <_controllershow>0</_controllershow>
+  <_height><copy src="child(Icon)" trait="height"/></_height>
+  <locus>&true;</locus>
+  <visible><copy src="io" trait="_MAPMOShowPluginChecker"/></visible>
+  <y>
+    <copy src="screen" trait="height"/>
+    <sub src="child(Icon)" trait="height"/>
+    <sub>5</sub>
+  </y>
+  <image name="Icon">
+    <_type>0</_type>
+    <_icon_0>mapmo\checker_0.dds</_icon_0>
+    <_icon_1>mapmo\checker_mouseover_0.dds</_icon_1>
+    <_icon_2>mapmo\checker_2.dds</_icon_2>
+    <_icon_3>mapmo\checker_mouseover_2.dds</_icon_3>
+    <_icon_4>mapmo\checker_4.dds</_icon_4>
+    <_icon_5>mapmo\checker_mouseover_4.dds</_icon_5>
+    <alpha>255</alpha>
+    <brightness><copy src="me" trait="alpha"/></brightness>
+    <filename>
+      <copy src="me" trait="mouseover"/>
+      <add src="parent" trait="_controllershow"/>
+      <add src="me" trait="_type"/>
+      <copy src="me" trait="_icon_"/>
+    </filename>
+    <height>50</height>
+    <systemcolor>
+      <copy>0</copy>
+      <add><copy src="MAPMO" trait="systemcolor"/><onlyifnot src="parent" trait="_warning"/></add>
+      <add><copy>&hudalt;</copy><onlyif src="parent" trait="_warning"/></add>
+    </systemcolor>
+    <target>&true;</target>
+    <width><copy src="me" trait="height"/></width>
+    <zoom>&scale;</zoom>
+  </image>
+  <text name="FNVVersion">
+    <alpha><copy src="sibling(Icon)" trait="alpha"/></alpha>
+    <brightness><copy src="me" trait="alpha"/></brightness>
+    <font>7</font>
+    <justify>&left;</justify>
+    <string><copy src="io" trait="_FNVVER"/></string>
+    <systemcolor><copy src="MAPMO" trait="systemcolor"/></systemcolor>
+    <visible>
+      <copy src="sibling(Icon)" trait="mouseover"/>
+      <add src="parent" trait="_controllershow"/>
+    </visible>
+    <x><copy src="sibling(Icon)" trait="width"/></x>
+    <y>
+      <copy src="sibling(Icon)" trait="height"/>
+      <sub>25</sub>
+    </y>
+    <zoom>75</zoom>
+	<_VUI+OutlineIntensity>3 </_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+  </text>
+  <include src="VUI+\outline.xml"/>
+  <text name="NVSE">
+    <_warning>0</_warning>
+    <alpha><copy src="sibling(Icon)" trait="alpha"/><div>1.25</div></alpha>
+    <brightness><copy src="me" trait="alpha"/></brightness>
+    <font><copy src="sibling(FNVVersion)" trait="font"/></font>
+    <justify><copy src="sibling(FNVVersion)" trait="justify"/></justify>
+    <string>- NVSE</string>
+    <systemcolor>
+      <copy>0</copy>
+      <add><copy src="MAPMO" trait="systemcolor"/><onlyifnot src="me" trait="_warning"/></add>
+      <add><copy>&hudalt;</copy><onlyif src="me" trait="_warning"/></add>
+    </systemcolor>
+    <visible><copy src="sibling(FNVVersion)" trait="visible"/></visible>
+    <x><copy src="sibling(FNVVersion)" trait="x"/><add src="sibling(FNVVersion)" trait="width"/></x>
+    <y><copy src="sibling(FNVVersion)" trait="y"/></y>
+    <zoom><copy src="sibling(FNVVersion)" trait="zoom"/></zoom>
+	<_VUI+OutlineIntensity>3 </_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+  </text>
+  <include src="VUI+\outline.xml"/>
+  <text name="NVSEVersion">
+    <alpha><copy src="sibling(FNVVersion)" trait="alpha"/></alpha>
+    <brightness><copy src="me" trait="alpha"/></brightness>
+    <font><copy src="sibling(FNVVersion)" trait="font"/></font>
+    <justify><copy src="sibling(FNVVersion)" trait="justify"/></justify>
+    <string><copy src="io" trait="_NVSEVER"/></string>
+    <systemcolor><copy src="sibling(NVSE)" trait="systemcolor"/></systemcolor>
+    <visible><copy src="sibling(FNVVersion)" trait="visible"/></visible>
+    <x><copy src="sibling(NVSE)" trait="x"/><add src="sibling(NVSE)" trait="width"/></x>
+    <y><copy src="sibling(FNVVersion)" trait="y"/></y>
+    <zoom><copy src="sibling(FNVVersion)" trait="zoom"/></zoom>
+	<_VUI+OutlineIntensity>3 </_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+  </text>
+  <include src="VUI+\outline.xml"/>
+  <rect name="AnhNVSE">
+    <_index>8</_index>
+    <_name>AnhNVSE</_name>
+    <_version><copy src="io" trait="_AnhNVSEVER"/></_version>
+    <_warning>0</_warning>
+    <include src="MAPMO\prefabs\plugin.xml"/>
+  </rect>
+  <rect name="JIPNVSEPlugin">
+    <_index>7</_index>
+    <_name>JIP LN NVSE</_name>
+    <_version><copy src="io" trait="_JIPNVSEPluginVER"/></_version>
+    <_warning>0</_warning>
+    <include src="MAPMO\prefabs\plugin.xml"/>
+  </rect>
+  <rect name="JohnnyGuitarNVSE">
+    <_index>6</_index>
+    <_name>JohnnyGuitar NVSE</_name>
+    <_version><copy src="io" trait="_JohnnyGuitarNVSEVER"/></_version>
+    <_warning>0</_warning>
+    <include src="MAPMO\prefabs\plugin.xml"/>
+  </rect>
+  <rect name="kNVSE">
+    <_index>5</_index>
+    <_name>kNVSE</_name>
+    <_version><copy src="io" trait="_kNVSEVER"/></_version>
+    <_warning>0</_warning>
+    <include src="MAPMO\prefabs\plugin.xml"/>
+  </rect>
+  <rect name="StewieTweaks">
+    <_index>4</_index>
+    <_name>lStewieAl's Tweaks</_name>
+    <_version><copy src="io" trait="_StewieTweaksVER"/></_version>
+    <_warning>0</_warning>
+    <include src="MAPMO\prefabs\plugin.xml"/>
+  </rect>
+  <rect name="ShowOffNVSE">
+    <_index>3</_index>
+    <_name>ShowOff xNVSE</_name>
+    <_version><copy src="io" trait="_ShowOffNVSEVER"/></_version>
+    <_warning>0</_warning>
+    <include src="MAPMO\prefabs\plugin.xml"/>
+  </rect>
+  <rect name="SUPNVSE">
+    <_index>2</_index>
+    <_name>SUP NVSE</_name>
+    <_version><copy src="io" trait="_SUPNVSEVER"/></_version>
+    <_warning>0</_warning>
+    <include src="MAPMO\prefabs\plugin.xml"/>
+  </rect>
+  <rect name="UIO">
+    <_index>1</_index>
+    <_name>User Interface Organizer</_name>
+    <_version><copy src="io" trait="_UIOVER"/></_version>
+    <_warning>0</_warning>
+    <include src="MAPMO\prefabs\plugin.xml"/>
+  </rect>
+  <rect name="yUI">
+    <_index>0</_index>
+    <_name>yUser Interface</_name>
+    <_version><copy src="io" trait="_yUIVER"/></_version>
+    <_warning>0</_warning>
+    <include src="MAPMO\prefabs\plugin.xml"/>
+  </rect>
+</rect>
+
+<rect name="MAPMODescription">
+  <_type>0</_type>
+  <include src="MAPMO\prefabs\menu_box.xml"/>
+  <alpha>255</alpha>
+  <height><copy src="child(Text)" trait="height"/><add>25</add></height>
+  <locus>&true;</locus>
+  <visible><copy src="io" trait="_MAPMOConfig"/></visible>
+  <width><copy src="child(Text)" trait="width"/><add>50</add></width>
+  <x><copy src="screen" trait="width"/><sub src="me" trait="width"/><div>2</div></x>
+  <y><copy src="screen" trait="height"/><sub src="me" trait="height"/><sub>100</sub></y>
+  <text name="Text">
+    <justify>&center;</justify>
+    <string>0</string>
+    <systemcolor><copy src="MAPMO" trait="systemcolor"/></systemcolor>
+    <x><copy src="parent" trait="width"/><div>2</div></x>
+    <y><copy src="parent" trait="height"/><sub src="me" trait="height"/><div>2</div><add>5</add></y>
+	<_VUI+OutlineIntensity>3 </_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+  </text>
+  <include src="VUI+\outline.xml"/>
+</rect>
+
+<image name="MAPMOPauseTitle">
+  <locus>&true;</locus>
+  <alpha>
+    <copy>0</copy>
+    <add><copy src="main_title" trait="alpha"/><onlyif src="main_title" trait="visible"/></add>
+    <add><copy src="sibling(MAPMO)" trait="alpha"/><onlyifnot src="main_title" trait="visible"/></add>
+  </alpha>
+  <brightness><copy src="me" trait="alpha"/></brightness>
+  <depth>-1007</depth>
+  <filename>interface/main/main_title.dds</filename>
+  <height><copy src="me" trait="fileheight"/><mult><copy src="me" trait="zoom"/><div>100</div><add>1</add></mult></height>
+  <systemcolor>
+    <copy>0</copy>
+    <add>
+      <copy src="MAPMO" trait="systemcolor"/>
+      <onlyif src="io" trait="_MAPMOMainTitleUsePauseColor"/>
+      <onlyif src="main_title" trait="visible"/>
+    </add>
+    <add>
+      <copy src="MAPMO" trait="systemcolor"/>
+      <onlyif src="io" trait="_MAPMOPauseTitleUsePauseColor"/>
+      <onlyifnot src="main_title" trait="visible"/>
+    </add>
+  </systemcolor>
+  <visible>
+    <copy src="main_title" trait="visible"/>
+    <add src="io" trait="_MAPMOShowLogoInPauseMenu"/>
+  </visible>
+  <width><copy src="me" trait="filewidth"/><mult><copy src="me" trait="zoom"/><div>100</div><add>1</add></mult></width>
+  <x>
+    <copy>0</copy>
+    <add><copy src="io" trait="_MAPMOMainTitleXPos"/><onlyif src="main_title" trait="visible"/></add>
+    <add><copy src="io" trait="_MAPMOPauseTitleXPos"/><onlyifnot src="main_title" trait="visible"/></add>
+  </x>
+  <y>
+    <copy>0</copy>
+    <add><copy src="io" trait="_MAPMOMainTitleYPos"/><onlyif src="main_title" trait="visible"/></add>
+    <add><copy src="io" trait="_MAPMOPauseTitleYPos"/><onlyifnot src="main_title" trait="visible"/></add>
+  </y>
+  <zoom>
+    <copy>0</copy>
+    <add><copy src="io" trait="_MAPMOMainTitleSize"/><onlyif src="main_title" trait="visible"/></add>
+    <add><copy src="io" trait="_MAPMOPauseTitleSize"/><onlyifnot src="main_title" trait="visible"/></add>
+  </zoom>
+</image>
+
+<rect name="MAPMO">
+  <_enabled><copy src="main_container" trait="_enabled"/></_enabled>
+  <_init>0</_init>
+  <_pause><copy>1</copy><sub src="main_title" trait="visible"/></_pause>
+  <alpha>0</alpha>
+  <systemcolor><copy src="NOGLOW_BRANCH" trait="systemcolor"/></systemcolor>
+
+  <rect name="Hotkeys">
+    <_type>4</_type>
+    <_buttoncount>
+      <copy>2</copy>
+      <add src="MCMButton" trait="visible"/>
+      <add src="B42NotifyButton" trait="visible"/>
+    </_buttoncount>
+    <include src="MAPMO\prefabs\menu_box.xml"/>
+    <alpha><copy src="MAPMO" trait="alpha"/><onlyif src="io" trait="_MAPMOShowMainPauseMenuBox"/></alpha>
+    <height><copy src="MAPMOButton" trait="height"/></height>
+    <locus>&true;</locus>
+    <systemcolor><copy src="MAPMO" trait="systemcolor"/></systemcolor>
+    <visible><copy src="parent" trait="_pause"/></visible>
+    <width><copy src="MAPMOButton" trait="width"/><mult src="me" trait="_buttoncount"/></width>
+    <x><copy><copy src="screen" trait="width"/><div>2</div></copy><sub><copy src="me" trait="width"/><div>2</div></sub></x>
+    <y><copy src="screen" trait="height"/><mult>0.925</mult></y>
+    <hotrect name="MAPMOButton">
+      <_button>mapmo\button_back.dds</_button>
+      <_icon>mapmo\mapmo.dds</_icon>
+      <_key><copy src="io" trait="_MAPMOMAPMOHotkey"/></_key>
+      <_scale>40</_scale>
+      <include src="MAPMO\prefabs\hotkey_box.xml"/>
+      <x>0</x>
+      <y>0</y>
+    </hotrect>
+    <hotrect name="MCMButton">
+      <_button>mapmo\button_lb.dds</_button>
+      <_icon>mapmo\mcm.dds</_icon>
+      <_key><copy src="io" trait="_MAPMOMCMHotkey"/></_key>
+      <_scale><copy src="MAPMOButton" trait="_scale"/></_scale>
+      <include src="MAPMO\prefabs\hotkey_box.xml"/>
+      <visible><copy src="io" trait="_MAPMOMCM"/></visible>
+      <x><copy src="sibling(MAPMOButton)" trait="width"/></x>
+      <y><copy src="sibling(MAPMOButton)" trait="y"/></y>
+    </hotrect>
+    <hotrect name="AchievementsButton">
+      <_button>mapmo\button_x.dds</_button>
+      <_icon>mapmo\achievement.dds</_icon>
+      <_key><copy src="io" trait="_MAPMOAchievementsLogHotkey"/></_key>
+      <_scale><copy src="MAPMOButton" trait="_scale"/></_scale>
+      <include src="MAPMO\prefabs\hotkey_box.xml"/>
+      <x><copy src="sibling(MCMButton)" trait="x"/><add src="sibling(MCMButton)" trait="width"/></x>
+      <y><copy src="sibling(MAPMOButton)" trait="y"/></y>
+    </hotrect>
+    <hotrect name="B42NotifyButton">
+      <_button>mapmo\button_y.dds</_button>
+      <_icon>mapmo\log.dds</_icon>
+      <_key><copy src="io" trait="_MAPMOB42NotifyHotkey"/></_key>
+      <_scale><copy src="MAPMOButton" trait="_scale"/></_scale>
+      <include src="MAPMO\prefabs\hotkey_box.xml"/>
+      <visible><copy src="io" trait="_MAPMOB42Notify"/></visible>
+      <x><copy src="sibling(AchievementsButton)" trait="x"/><add src="sibling(AchievementsButton)" trait="width"/></x>
+      <y><copy src="sibling(MAPMOButton)" trait="y"/></y>
+    </hotrect>
+  </rect>
+
+  <rect name="QuestLog">
+    <_init>0</_init>
+    <alpha><copy src="MAPMO" trait="alpha"/></alpha>
+    <locus>&true;</locus>
+    <visible><copy src="io" trait="_MAPMOShowQuestPauseMenu"/></visible>
+    <x><copy src="io" trait="_MAPMOQuestXPos"/></x>
+    <y><copy src="io" trait="_MAPMOQuestYPos"/></y>
+  </rect>
+
+  <template name="QuestTitleTemplate">
+    <rect name="QuestTitle">
+      <_active>0</_active>
+      <_icon_0>mapmo\quest.dds</_icon_0>
+      <_icon_1>mapmo\quest_active.dds</_icon_1>
+      <alpha><copy src="parent" trait="alpha"/></alpha>
+      <height><copy src="child(Text)" trait="height"/></height>
+      <locus>&true;</locus>
+      <y>0</y>
+      <image name="Icon">
+        <alpha><copy src="parent" trait="alpha"/></alpha>
+        <brightness><copy src="me" trait="alpha"/></brightness>
+        <filename>
+          <copy src="parent" trait="_active"/>
+          <copy src="parent" trait="_icon_"/>
+        </filename>
+        <height><copy>0.5</copy><mult src="io" trait="_MAPMOQuestScale"/></height>
+        <systemcolor><copy src="MAPMO" trait="systemcolor"/></systemcolor>
+        <width><copy src="me" trait="height"/></width>
+        <zoom>&scale;</zoom>
+      </image>
+      <text name="Text">
+        <alpha><copy src="parent" trait="alpha"/></alpha>
+        <brightness><copy src="me" trait="alpha"/></brightness>
+        <font>8</font>
+        <justify>&left;</justify>
+        <string>QUEST TITLE</string>
+        <systemcolor><copy src="MAPMO" trait="systemcolor"/></systemcolor>
+        <x><copy src="sibling(Icon)" trait="width"/></x>
+        <y><copy src="io" trait="_MAPMOQuestScale"/><mult>0.15</mult></y>
+        <zoom><copy src="io" trait="_MAPMOQuestScale"/><mult>0.75</mult></zoom>
+		<_VUI+OutlineIntensity>3 </_VUI+OutlineIntensity>
+		<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+      </text>
+	  <include src="VUI+\outline.xml"/>
+    </rect>
+  </template>
+
+  <template name="QuestObjectiveTemplate">
+    <rect name="QuestObjective">
+      <alpha><copy src="parent" trait="alpha"/></alpha>
+      <locus>&true;</locus>
+      <height><copy src="child(Text)" trait="height"/></height>
+      <y>0</y>
+      <text name="Text">
+        <alpha><copy src="parent" trait="alpha"/><div>1.25</div></alpha>
+        <brightness><copy src="me" trait="alpha"/></brightness>
+        <font>7</font>
+        <justify>&left;</justify>
+        <string>Objective text. Do some stuff.</string>
+        <systemcolor><copy src="io" trait="_MAPMOObjectiveTextColor"/></systemcolor>
+        <wrapwidth><copy>5.12</copy><mult src="me" trait="zoom"/></wrapwidth>
+        <x><copy>0.5</copy><mult src="io" trait="_MAPMOQuestScale"/></x>
+        <zoom><copy src="io" trait="_MAPMOQuestScale"/></zoom>
+		<_VUI+OutlineIntensity>3 </_VUI+OutlineIntensity>
+		<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+      </text>
+	  <include src="VUI+\outline.xml"/>
+    </rect>
+  </template>
+
+  <hotrect name="PauseBackgroundBG">
+    <alpha><copy src="pause_background" trait="alpha"/><div>5</div></alpha>
+    <brightness><copy src="pause_background" trait="alpha"/><div>2</div></brightness>
+    <depth>-1010</depth>
+    <height><copy src="screen" trait="height"/></height>
+    <systemcolor><copy src="MAPMO" trait="systemcolor"/></systemcolor>
+    <visible><copy src="pause_background" trait="visible"/><mult src="io" trait="_MAPMOPauseBackgroundMatchUIColor"/></visible>
+    <width><copy src="screen" trait="width"/></width>
+  </hotrect>
+
+  <rect name="XPMeter">
+    <_currentXP>0</_currentXP>
+    <_totalwidth><copy>1.9</copy><mult src="io" trait="_MAPMOXPMeterScale"/></_totalwidth>
+    <_XP>0</_XP>
+    <alpha><copy src="parent" trait="alpha"/></alpha>
+    <locus>&true;</locus>
+    <systemcolor><copy src="MAPMO" trait="systemcolor"/></systemcolor>
+    <visible><copy src="io" trait="_MAPMOShowXPMeterPauseMenu"/></visible>
+    <x><copy src="io" trait="_MAPMOXPMeterXPos"/></x>
+    <y><copy src="io" trait="_MAPMOXPMeterYPos"/></y>
+    <text name="PlayerName">
+      <alpha>
+        <copy src="parent" trait="alpha"/>
+        <div><copy>1.5</copy><onlyif src="LevelUp" trait="visible"/></div>
+      </alpha>
+      <brightness><copy src="me" trait="alpha"/></brightness>
+      <depth>3</depth>
+      <font>7</font>
+      <justify>&right;</justify>
+      <string>&PCName;</string>
+      <systemcolor><copy src="MAPMO" trait="systemcolor"/></systemcolor>
+      <x><copy>1.15</copy><mult src="io" trait="_MAPMOXPMeterScale"/></x>
+      <zoom><copy>0.75</copy><mult src="io" trait="_MAPMOXPMeterScale"/></zoom>
+	  <_VUI+OutlineIntensity>3 </_VUI+OutlineIntensity>
+	  <_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+    </text>
+	<include src="VUI+\outline.xml"/>
+    <text name="PlayerLevel">
+      <alpha><copy src="PlayerName" trait="alpha"/></alpha>
+      <brightness><copy src="me" trait="alpha"/></brightness>
+      <depth><copy src="sibling(PlayerName)" trait="depth"/></depth>
+      <font><copy src="sibling(PlayerName)" trait="font"/></font>
+      <justify>&left;</justify>
+      <string>0</string>
+      <systemcolor><copy src="MAPMO" trait="systemcolor"/></systemcolor>
+      <x><copy>1.35</copy><mult src="io" trait="_MAPMOXPMeterScale"/></x>
+      <zoom><copy src="sibling(PlayerName)" trait="zoom"/></zoom>
+	  <_VUI+OutlineIntensity>3 </_VUI+OutlineIntensity>
+	  <_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+    </text>
+	<include src="VUI+\outline.xml"/>
+    <image name="Gauge">
+      <alpha><copy src="PlayerName" trait="alpha"/><div>1.25</div></alpha>
+      <brightness><copy src="me" trait="alpha"/></brightness>
+      <depth>1</depth>
+      <filename>interface\hud\hud_tick_mark.dds</filename>
+      <height><copy>0.15</copy><mult src="io" trait="_MAPMOXPMeterScale"/></height>
+      <systemcolor><copy src="MAPMO" trait="systemcolor"/></systemcolor>
+      <tile>&true;</tile>
+      <width>
+        <copy>0</copy>
+        <add><copy src="parent" trait="_totalwidth"/><onlyif><copy src="parent" trait="_XP"/><gte>1</gte></onlyif></add>
+        <add><copy><copy src="parent" trait="_XP"/><mult src="parent" trait="_totalwidth"/></copy><onlyif><copy src="parent" trait="_XP"/><lt>1</lt></onlyif></add>
+      </width>
+      <x><copy>0.33</copy><mult src="io" trait="_MAPMOXPMeterScale"/></x>
+      <y><copy>0.26</copy><mult src="io" trait="_MAPMOXPMeterScale"/></y>
+      <zoom><copy src="io" trait="_MAPMOXPMeterScale"/></zoom>
+    </image>
+    <image name="Bracket">
+      <alpha><copy src="PlayerName" trait="alpha"/></alpha>
+      <brightness><copy src="me" trait="alpha"/></brightness>
+      <depth>2</depth>
+      <filename>mapmo\xp_bracket.dds</filename>
+      <height><copy>1.28</copy><mult src="io" trait="_MAPMOXPMeterScale"/></height>
+      <systemcolor><copy src="MAPMO" trait="systemcolor"/></systemcolor>
+      <width><copy>2.56</copy><mult src="io" trait="_MAPMOXPMeterScale"/></width>
+      <y><copy>-0.25</copy><mult src="io" trait="_MAPMOXPMeterScale"/></y>
+      <zoom>&scale;</zoom>
+    </image>
+    <text name="XPCurrent">
+      <alpha><copy src="PlayerName" trait="alpha"/></alpha>
+      <brightness><copy src="me" trait="alpha"/></brightness>
+      <depth><copy src="sibling(PlayerName)" trait="depth"/></depth>
+      <font><copy src="sibling(PlayerName)" trait="font"/></font>
+      <justify><copy src="sibling(PlayerName)" trait="justify"/></justify>
+      <string><copy src="parent" trait="_currentXP"/></string>
+      <systemcolor><copy src="MAPMO" trait="systemcolor"/></systemcolor>
+      <x><copy src="sibling(PlayerName)" trait="x"/></x>
+      <y><copy>0.55</copy><mult src="io" trait="_MAPMOXPMeterScale"/></y>
+      <zoom><copy src="sibling(PlayerName)" trait="zoom"/></zoom>
+	  <_VUI+OutlineIntensity>3 </_VUI+OutlineIntensity>
+	  <_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+    </text>
+	<include src="VUI+\outline.xml"/>
+    <text name="XPTotal">
+      <alpha><copy src="PlayerName" trait="alpha"/></alpha>
+      <brightness><copy src="me" trait="alpha"/></brightness>
+      <depth><copy src="sibling(PlayerName)" trait="depth"/></depth>
+      <font><copy src="sibling(PlayerName)" trait="font"/></font>
+      <justify><copy src="sibling(PlayerLevel)" trait="justify"/></justify>
+      <string><copy src="parent" trait="_totalXP"/></string>
+      <systemcolor><copy src="MAPMO" trait="systemcolor"/></systemcolor>
+      <x><copy src="sibling(PlayerLevel)" trait="x"/></x>
+      <y><copy src="sibling(XPCurrent)" trait="y"/></y>
+      <zoom><copy src="sibling(PlayerName)" trait="zoom"/></zoom>
+	  <_VUI+OutlineIntensity>3 </_VUI+OutlineIntensity>
+	  <_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+    </text>
+	<include src="VUI+\outline.xml"/>
+    <text name="LevelUp">
+      <alpha><copy src="parent" trait="alpha"/></alpha>
+      <brightness><copy src="me" trait="alpha"/></brightness>
+      <depth>4</depth>
+      <font>8</font>
+      <justify>&center;</justify>
+      <string>&sLevelUp;</string>
+      <systemcolor><copy src="MAPMO" trait="systemcolor"/></systemcolor>
+      <visible>0</visible>
+      <x><copy src="sibling(Bracket)" trait="width"/><div>2</div></x>
+      <y><copy>0.25</copy><mult src="io" trait="_MAPMOXPMeterScale"/></y>
+      <zoom><copy src="sibling(PlayerName)" trait="zoom"/></zoom>
+	  <_VUI+OutlineIntensity>3 </_VUI+OutlineIntensity>
+	  <_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+    </text>
+	<include src="VUI+\outline.xml"/>
+  </rect>
+
+  <template name="PlayerInfoTemplate">
+    <rect name="PlayerInfo">
+      <_type>0</_type>
+      <alpha><copy src="parent" trait="alpha"/></alpha>
+      <locus>&true;</locus>
+      <systemcolor><copy src="MAPMO" trait="systemcolor"/></systemcolor>
+      <visible>
+        <copy>0</copy>
+        <add><copy src="io" trait="_MAPMOShowRealTime"/><onlyif><copy src="me" trait="_type"/><eq>1</eq></onlyif></add>
+        <add><copy src="io" trait="_MAPMOShowCapsCountPauseMenu"/><onlyif><copy src="me" trait="_type"/><eq>2</eq></onlyif></add>
+        <add><copy src="io" trait="_MAPMOShowWeightCountPauseMenu"/><onlyif><copy src="me" trait="_type"/><eq>3</eq></onlyif></add>
+        <add><copy src="io" trait="_MAPMOShowWeightCountPauseMenu"/><onlyif><copy src="me" trait="_type"/><eq>4</eq></onlyif></add>
+        <add><copy src="io" trait="_MAPMOShowLocationPauseMenu"/><onlyif><copy src="me" trait="_type"/><eq>5</eq></onlyif></add>
+      </visible>
+      <x>
+        <copy>0</copy>
+        <add><copy src="io" trait="_MAPMOUserTimeXPos"/><onlyif><copy src="me" trait="_type"/><eq>1</eq></onlyif></add>
+        <add><copy src="io" trait="_MAPMOCapsCountXPos"/><onlyif><copy src="me" trait="_type"/><eq>2</eq></onlyif></add>
+        <add><copy src="io" trait="_MAPMOWeightCountXPos"/><onlyif><copy src="me" trait="_type"/><eq>3</eq></onlyif></add>
+        <add><copy src="io" trait="_MAPMOWeightCountXPos"/><onlyif><copy src="me" trait="_type"/><eq>4</eq></onlyif></add>
+        <add><copy src="io" trait="_MAPMOLocationXPos"/><onlyif><copy src="me" trait="_type"/><eq>5</eq></onlyif></add>
+      </x>
+      <y>
+        <copy>0</copy>
+        <add><copy src="io" trait="_MAPMOUserTimeYPos"/><onlyif><copy src="me" trait="_type"/><eq>1</eq></onlyif></add>
+        <add><copy src="io" trait="_MAPMOCapsCountYPos"/><onlyif><copy src="me" trait="_type"/><eq>2</eq></onlyif></add>
+        <add><copy src="io" trait="_MAPMOWeightCountYPos"/><onlyif><copy src="me" trait="_type"/><eq>3</eq></onlyif></add>
+        <add><copy src="io" trait="_MAPMOWeightCountYPos"/><onlyif><copy src="me" trait="_type"/><eq>4</eq></onlyif></add>
+        <add><copy src="io" trait="_MAPMOLocationYPos"/><onlyif><copy src="me" trait="_type"/><eq>5</eq></onlyif></add>
+      </y>
+      <zoom>
+        <copy>0</copy>
+        <add><copy src="io" trait="_MAPMOUserTimeScale"/><onlyif><copy src="me" trait="_type"/><eq>1</eq></onlyif></add>
+        <add><copy src="io" trait="_MAPMOCapsCountScale"/><onlyif><copy src="me" trait="_type"/><eq>2</eq></onlyif></add>
+        <add><copy src="io" trait="_MAPMOWeightCountScale"/><onlyif><copy src="me" trait="_type"/><eq>3</eq></onlyif></add>
+        <add><copy src="io" trait="_MAPMOWeightCountScale"/><onlyif><copy src="me" trait="_type"/><eq>4</eq></onlyif></add>
+        <add><copy src="io" trait="_MAPMOLocationScale"/><onlyif><copy src="me" trait="_type"/><eq>5</eq></onlyif></add>
+      </zoom>
+      <image name="Icon">
+        <_icon_2>mapmo\caps.dds</_icon_2>
+        <_icon_3>mapmo\weight.dds</_icon_3>
+        <_icon_4>mapmo\weight_over_encumbered.dds</_icon_4>
+        <_icon_5>mapmo\location.dds</_icon_5>
+        <alpha><copy src="parent" trait="alpha"/></alpha>
+        <brightness><copy src="me" trait="alpha"/></brightness>
+        <filename><copy src="parent" trait="_type"/><copy src="me" trait="_icon_"/></filename>
+        <height><copy>0.5</copy><mult src="parent" trait="zoom"/></height>
+        <visible><copy>1</copy><sub><copy>1</copy><onlyif><copy src="parent" trait="_type"/><eq>1</eq></onlyif></sub></visible>
+        <width><copy src="me" trait="height"/></width>
+        <y><copy>-0.07</copy><mult src="parent" trait="zoom"/></y>
+        <zoom>&scale;</zoom>
+      </image>
+      <text name="Text">
+        <alpha><copy src="parent" trait="alpha"/></alpha>
+        <brightness><copy src="me" trait="alpha"/></brightness>
+        <font>7</font>
+        <justify>&left;</justify>
+        <string>0</string>
+        <x><copy>0</copy><add><copy src="sibling(Icon)" trait="width"/><onlyif><copy src="parent" trait="_type"/><neq>1</neq></onlyif></add></x>
+        <y>0</y>
+        <zoom><copy src="parent" trait="zoom"/></zoom>
+        <_VUI+OutlineIntensity>3 </_VUI+OutlineIntensity>
+        <_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+      </text>
+	  <include src="VUI+\outline.xml"/>
+    </rect>
+  </template>
+
+  <rect name="DeathCounter">
+    <alpha><copy src="MAPMO" trait="alpha"/></alpha>
+    <locus>&true;</locus>
+    <visible><copy src="io" trait="_MAPMOShowDeathCounter"/></visible>
+    <x><copy src="io" trait="_MAPMODeathCounterXPos"/></x>
+    <y><copy src="io" trait="_MAPMODeathCounterYPos"/></y>
+    <image name="Icon">
+      <alpha><copy src="parent" trait="alpha"/></alpha>
+      <brightness><copy src="me" trait="alpha"/></brightness>
+      <filename>mapmo\death.dds</filename>
+      <height><copy>0.63</copy><mult src="io" trait="_MAPMODeathCounterScale"/></height>
+      <systemcolor><copy src="MAPMO" trait="systemcolor"/></systemcolor>
+      <width><copy src="me" trait="height"/></width>
+      <zoom>&scale;</zoom>
+    </image>
+    <text name="Text">
+      <alpha><copy src="parent" trait="alpha"/></alpha>
+      <brightness><copy src="me" trait="alpha"/></brightness>
+      <font>8</font>
+      <justify>&left;</justify>
+      <string><copy src="io" trait="_MAPMODeathCounterTotal"/></string>
+      <systemcolor><copy src="MAPMO" trait="systemcolor"/></systemcolor>
+      <x><copy src="sibling(Icon)" trait="width"/></x>
+      <y><copy>0.2</copy><mult src="me" trait="zoom"/></y>
+      <zoom><copy src="io" trait="_MAPMODeathCounterScale"/></zoom>
+	  <_VUI+OutlineIntensity>3 </_VUI+OutlineIntensity>
+      <_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+    </text>
+	<include src="VUI+\outline.xml"/>
+  </rect>
+
+  <include src="MAPMO\achievements_log.xml"/>
+
+  <rect name="MainContainerBG">
+    <_type>1</_type>
+    <include src="MAPMO\prefabs\menu_box.xml"/>
+    <alpha>0</alpha>
+    <height><copy src="main_container" trait="height"/><sub>1</sub></height>
+    <locus>&true;</locus>
+    <systemcolor><copy src="MAPMO" trait="systemcolor"/></systemcolor>
+    <visible><copy src="io" trait="_MAPMOShowMainPauseMenuBox"/></visible>
+    <width><copy src="main_container" trait="width"/><sub>5</sub></width>
+    <x><copy src="main_container" trait="x"/><add src="main_container" trait="_item_offset"/></x>
+    <y><copy src="main_container" trait="y"/></y>
+  </rect>
+  <rect name="SettingsContainerBG">
+    <_type><copy src="MainContainerBG" trait="_type"/></_type>
+    <include src="MAPMO\prefabs\menu_box.xml"/>
+    <alpha>0</alpha>
+    <height><copy src="settings_container" trait="height"/><sub>1</sub></height>
+    <locus><copy src="MainContainerBG" trait="locus"/></locus>
+    <systemcolor><copy src="MainContainerBG" trait="systemcolor"/></systemcolor>
+    <visible><copy src="io" trait="_MAPMOShowMainPauseMenuBox"/></visible>
+    <width><copy src="settings_container" trait="width"/><sub>5</sub></width>
+    <x><copy src="settings_container" trait="x"/><add src="main_container" trait="_item_offset"/></x>
+    <y><copy src="settings_container" trait="y"/></y>
+  </rect>
+  <rect name="ContainerBackgroundBG">
+    <_type><copy src="MainContainerBG" trait="_type"/></_type>
+    <include src="MAPMO\prefabs\menu_box.xml"/>
+    <alpha><copy src="container_background" trait="alpha"/><mult>1.59</mult></alpha>
+    <height><copy src="screen" trait="height"/></height>
+    <locus><copy src="MainContainerBG" trait="locus"/></locus>
+    <systemcolor><copy src="MainContainerBG" trait="systemcolor"/></systemcolor>
+    <visible><copy src="container_background" trait="visible"/><mult src="io" trait="_MAPMOShowUITweaks"/></visible>
+    <width><copy src="container_background" trait="width"/></width>
+    <x><copy src="container_background" trait="x"/></x>
+  </rect>
+  <rect name="SaveBackgroundBG">
+    <_check>0</_check>
+    <_type>3</_type>
+    <include src="MAPMO\prefabs\menu_box.xml"/>
+    <alpha><copy src="saveload_screenshot" trait="alpha"/></alpha>
+    <depth><copy src="saveload_screenshot" trait="depth"/><sub>1</sub></depth>
+    <height><copy src="saveload_screenshot" trait="height"/></height>
+    <locus><copy src="MainContainerBG" trait="locus"/></locus>
+    <systemcolor><copy src="MainContainerBG" trait="systemcolor"/></systemcolor>
+    <visible><copy src="saveload_screenshot" trait="visible"/><mult src="io" trait="_MAPMOShowUITweaks"/></visible>
+    <width><copy src="saveload_screenshot" trait="width"/></width>
+    <x>0</x>
+    <y>0</y>
+    <hotrect name="TopShadow">
+      <alpha><copy src="sibling(Background)" trait="alpha"/></alpha>
+      <brightness><copy src="sibling(Background)" trait="brightness"/></brightness>
+      <depth><copy src="saveload_screenshot" trait="depth"/><add>1</add></depth>
+      <height><copy src="saveload_playername" trait="height"/></height>
+      <systemcolor><copy src="parent" trait="systemcolor"/></systemcolor>
+      <width><copy src="saveload_screenshot" trait="width"/></width>
+    </hotrect>
+    <hotrect name="BottomShadow">
+      <alpha><copy src="sibling(TopShadow)" trait="alpha"/></alpha>
+      <brightness><copy src="sibling(TopShadow)" trait="brightness"/></brightness>
+      <depth><copy src="sibling(TopShadow)" trait="depth"/></depth>
+      <height><copy><copy src="sibling(TopShadow)" trait="height"/><mult>2</mult></copy><add>10</add></height>
+      <systemcolor><copy src="sibling(TopShadow)" trait="systemcolor"/></systemcolor>
+      <width><copy src="sibling(TopShadow)" trait="width"/></width>
+      <y><copy src="saveload_screenshot" trait="height"/><sub src="me" trait="height"/></y>
+    </hotrect>
+  </rect>
+</rect>

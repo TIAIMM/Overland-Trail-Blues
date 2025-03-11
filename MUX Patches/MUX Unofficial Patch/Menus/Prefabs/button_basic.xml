@@ -1,0 +1,111 @@
+<!-- button_basic.xml -->
+<!-- <image name="button_basic"> -->
+	
+	<_enabled> &true; </_enabled>
+	<_string> &-sSpace; </_string>
+	<_font> 2 </_font>
+	<_box_visible>
+		<copy src="me()" trait="mouseover"/>
+		<gt> 0 </gt>
+	</_box_visible>
+	
+	<target> <copy src="me()" trait="_enabled"/> </target>
+	<filename> Interface\Shared\solid.dds </filename>
+	<alpha>
+		<copy src="me()" trait="mouseover"/>
+		<mul src="globals()" trait="_background_fill_alpha"/>
+	</alpha>
+	<brightness> <copy src="globals()" trait="_background_fill_brightness"/> </brightness>
+	<width>
+		<copy src="child(button_text)" trait="width"/>
+		<add> 40 </add>
+	</width>
+	<height>
+		<copy src="child(button_text)" trait="height"/>
+		<add> 14 </add>
+	</height>
+	<locus> &true; </locus>
+	<clips> &false; </clips>
+	<clicksound> <copy src="gloabls()" trait="_sound_button_click"/> </clicksound>
+	<systemcolor> &hudmain; </systemcolor>
+	
+	
+	<image name="button_basic_top">
+		<visible> <copy src="parent()" trait="_box_visible"/> </visible>
+		<width> <copy src="parent()" trait="width"/> </width>
+		<height> <copy src="globals()" trait="_line_thickness"/> </height>
+		<brightness> <copy src="globals()" trait="_line_brightness"/> </brightness>
+		<systemcolor> <copy src="parent()" trait="systemcolor"/> </systemcolor>
+		<clips> <copy src="parent()" trait="clips"/> </clips>
+	</image>
+
+	<image name="button_basic_left">
+		<visible> <copy src="parent()" trait="_box_visible"/> </visible>
+		<width> <copy src="globals()" trait="_line_thickness"/> </width>
+		<height>
+			<copy src="parent()" trait="height"/>
+			<sub src="sibling(button_basic_top)" trait="height"/>
+			<sub src="sibling(button_basic_top)" trait="height"/>
+		</height>
+		<y> <copy src="sibling(button_basic_top)" trait="height"/> </y>
+		<brightness> <copy src="globals()" trait="_line_brightness"/> </brightness>
+		<systemcolor> <copy src="parent()" trait="systemcolor"/> </systemcolor>
+		<clips> <copy src="parent()" trait="clips"/> </clips>
+	</image>
+
+	<image name="button_basic_bottom">
+		<visible> <copy src="parent()" trait="_box_visible"/> </visible>
+		<width> <copy src="parent()" trait="width"/> </width>
+		<height> <copy src="globals()" trait="_line_thickness"/> </height>
+		<y>
+			<copy src="parent()" trait="height"/>
+			<sub src="me()" trait="height"/>
+		</y>
+		<brightness> <copy src="globals()" trait="_line_brightness"/> </brightness>
+		<systemcolor> <copy src="parent()" trait="systemcolor"/> </systemcolor>
+		<clips> <copy src="parent()" trait="clips"/> </clips>
+	</image>
+
+	<image name="button_basic_right">
+		<visible> <copy src="parent()" trait="_box_visible"/> </visible>
+		<width> <copy src="globals()" trait="_line_thickness"/> </width>
+		<height>
+			<copy src="parent()" trait="height"/>
+			<sub src="sibling(button_basic_top)" trait="height"/>
+		</height>
+		<x>
+			<copy src="parent()" trait="width"/>
+			<sub src="me()" trait="width"/>
+		</x>
+		<y> <copy src="sibling(top)" trait="height"/> </y>
+		<brightness> <copy src="globals()" trait="_line_brightness"/> </brightness>
+		<systemcolor> <copy src="parent()" trait="systemcolor"/> </systemcolor>
+		<clips> <copy src="parent()" trait="clips"/> </clips>
+	</image>
+	
+	
+	<rect name="button_text">
+	<include src="VUI+\outline_rect.xml"/>
+		<depth> 2 </depth>
+		<string> <copy src="parent()" trait="_string"/> </string>
+		<font> <copy src="parent()" trait="_font"/> </font>
+		<justify> &center; </justify>
+		<clips> <copy src="parent()" trait="clips"/> </clips>
+		<brightness>
+			<copy src="globals()" trait="_text_brightness"/>
+			<onlyif src="parent()" trait="_enabled"/>
+			<add>
+				<copy src="globals()" trait="_text_brightness_disabled"/>
+				<onlyifnot src="parent()" trait="_enabled"/>
+			</add>
+		</brightness>
+		<systemcolor> <copy src="parent()" trait="systemcolor"/> </systemcolor>
+		<x>
+			<copy src="parent()" trait="width"/>
+			<div> 2 </div>
+		</x>
+		<y> 16 </y>
+	<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+<!-- </image> -->

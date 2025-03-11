@@ -1,0 +1,48 @@
+<!-- List box item prefab
+Used by list box items. These are defined by their listindex trait and they are scrolled based on the scrollbar's _current_value
+COPYRIGHT BY ZENIMAX; MODIFIED SEPTEMBER 2022 BY AXONIS FOR VANILLA UI PLUS
+* Added traits for efficiently providing highlighting data to all lists
+* Improved performance for MCM users by relocating the necessary code to the only menu that requires it (instead of having each menu in the game look for the MCM whenever you you press up!)
+-->
+<_VUI+> 1 </_VUI+>
+<_enabled> 1 </_enabled>
+<_VerticalSpacing>
+	<copy> 20 </copy>
+	<onlyifnot src="parent" trait="_VerticalSpacing" />
+	<add src="parent" trait="_VerticalSpacing" />
+</_VerticalSpacing>
+<x> <copy src="sibling(lb_highlight_box)" trait="x"/> </x>
+<y>
+	<copy src="me" trait="_y"/>
+	<sub>
+		<copy src="sibling(lb_scrollbar)" trait="_current_value"/>
+		<mul src="parent" trait="_scroll_delta"/>
+	</sub>
+</y>
+<width> <copy src="sibling(lb_highlight_box)" trait="width"/> </width>
+<xdefault> 1 </xdefault> <!--VUI+ necessary for keyboard navigation -->
+<repeatvertical> 1 </repeatvertical> <!--VUI+ necessary for controller navigation -->
+<locus> 1 </locus>
+<clips> 1 </clips>
+<clicksound>UIMenuOK</clicksound>
+<mouseoversound>UIMenuFocus</mouseoversound>
+<target>
+	<copy src="parent" trait="_enabled"/>
+	<and src="me" trait="_enabled"/>
+</target>
+<depth> 3 </depth>
+<visible>
+	<copy src="me" trait="listindex"/>
+	<gte> 0 </gte>
+</visible>
+<!--VUI+ target highlighting -->
+<_VUI+Highlighted>
+	<copy src="me" trait="y" />
+	<eq src="parent" trait="_highlight_y" />
+	<and src="parent" trait="_VUI+Focus" />
+</_VUI+Highlighted>
+<brightness>
+	<copy src="globals" trait="_VUI+Highlighting" />
+	<onlyif src="me" trait="_VUI+Highlighted" />
+	<add> 255 </add>
+</brightness>

@@ -1,0 +1,345 @@
+<!-- caravan_bet_menu.xml -->
+<!-- 
+ Obsidian Entertainment Incorporated
+ FILE     caravan_bet_menu.xml
+ VERSION  1.0
+ AUTHOR:	Jonathan Burke
+ DATE     4/6/2010
+ INFO     Caravan Bet Interface XML
+-->
+
+<!-- No controls for caravan should be handled in XMLs
+      All controls will be handled in code 
+      NOTE: Still should handle control images in XML. C
+      ontrols will not change with player settings.-->
+
+<!-- ID LIST: 
+0 MainRect
+4 NPC Ante
+5 Player Ante
+6 Total Funds 
+7 Accept Button -->
+
+  <!-- ===== MAIN POSITIONING RECT ===== -->
+  <rect name="CBM_MainRect">
+    <id> 0 </id>
+    <!-- Centered on screen-->
+    <x>
+      <copy src="screen()" trait="width"/>
+      <sub src="me()" trait="width"/>
+      <div> 2 </div>
+    </x>
+    <y>
+      <copy src="screen()" trait="height"/>
+      <sub src="me()" trait="height"/>
+      <div> 2 </div>
+    </y>
+    <visible> &true; </visible>
+
+    <!-- Total size of the safe zone -->
+    <width>
+      <copy src="screen()" trait="width"/>
+      <sub>
+        <copy src="screen()" trait="cropx"/>
+        <mul> 4 </mul>
+      </sub>
+    </width>
+    <height>
+      <copy src="screen()" trait="height"/>
+      <sub>
+        <copy src="screen()" trait="cropy"/>
+        <mul> 4 </mul>
+      </sub>
+    </height>
+
+    <locus> &true; </locus>
+    <systemcolor> &hudmain; </systemcolor>
+    <depth> 2 </depth>
+
+    <!--	===== INFO RECT ===== -->
+    <rect name="CBM_InfoRect">
+      <x> 10 </x>
+      <y>
+        <copy src="parent()" trait="height"/>
+        <sub src="me()" trait="height"/>
+        <sub> 10 </sub>
+      </y>
+      <width> 400 </width>
+      <height> 175 </height>
+      <locus> &true; </locus>
+      <visible>
+        <copy src="parent()" trait="visible"/>
+      </visible>
+
+      <!-- Bracket -->
+      <image name="CBM_TopFadeLine">
+        <filename> Interface\Shared\Line\fade_to_top.dds </filename>
+        <texatlas> Interface\InterfaceShared.tai </texatlas>
+        <zoom> &scale; </zoom>
+        <width>
+          <copy src="globals()" trait="_line_thickness"/>
+        </width>
+        <height> 30 </height>
+      </image>
+
+      <image name="CBM_LeftBorder">
+        <filename> Interface\Shared\Line\solid.dds </filename>
+        <texatlas> Interface\InterfaceShared.tai </texatlas>
+        <y> 28 </y>
+        <width>
+          <copy src="globals()" trait="_line_thickness"/>
+        </width>
+        <height>
+          <copy src="parent()" trait="height"/>
+          <sub> 30 </sub>
+        </height>
+      </image>
+
+      <image name="CBM_BottomBorder">
+        <filename> Interface\Shared\Line\solid.dds </filename>
+        <texatlas> Interface\InterfaceShared.tai </texatlas>
+        <y>
+          <copy src="parent()" trait="height"/>
+          <sub src="me()" trait="height"/>
+        </y>
+        <height>
+          <copy src="globals()" trait="_line_thickness"/>
+        </height>
+        <width>
+          <copy src="parent()" trait="width"/>
+          <sub> 30 </sub>
+        </width>
+      </image>
+
+      <image name="CBM_RightFadeLine">
+        <filename> Interface\Shared\Line\fade_to_right.dds </filename>
+        <texatlas> Interface\InterfaceShared.tai </texatlas>
+        <zoom> &scale; </zoom>
+        <x>
+          <copy src="sibling(CBM_BottomBorder)" trait="width"/>
+          <sub> 2 </sub>
+        </x>
+        <y>
+          <copy src="sibling(CBM_BottomBorder)" trait="y"/>
+        </y>
+        <height>
+          <copy src="globals()" trait="_line_thickness"/>
+        </height>
+        <width> 30 </width>
+      </image>
+
+      <!-- ===== INFO DISPLAYS ===== -->
+      <!-- NPC's Bet -->
+      <rect name="CBM_NPCBetDisplay">
+        <id> 4 </id>
+        <_Value></_Value>
+
+        <x> 20 </x>
+        <y> 35 </y>
+        <width>
+          <copy src="parent()" trait="width"/>
+          <sub> 80 </sub>
+        </width>
+        <locus> &true; </locus>
+        <visible>
+          <copy src="parent()" trait="visible"/>
+        </visible>
+
+        <rect name="CBM_NPCBetTitle">
+	<include src="VUI+\outline_rect.xml"/>
+          <font> 7 </font>
+          <string>
+            <copy src="parent()" trait="string"/>
+          </string>
+        <_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+
+        <rect name="CBM_NPCBetValue">
+	<include src="VUI+\outline_rect.xml"/>
+          <font> 7 </font>
+          <string>
+            <copy src="parent()" trait="_Value"/>
+          </string>
+          <justify> &right; </justify>
+          <x>
+            <copy src="parent()" trait="width"/>
+          </x>
+        <_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+      </rect>
+
+      <!-- Player's Bet -->
+      <rect name="CBM_PlayerBetDisplay">
+        <id> 5 </id>
+        <_Value></_Value>
+
+        <x> 20 </x>
+        <y> 80 </y>
+        <width>
+          <copy src="sibling(CBM_NPCBetDisplay)" trait="width"/>
+        </width>
+        <locus> &true; </locus>
+        <visible>
+          <copy src="parent()" trait="visible"/>
+        </visible>
+
+        <rect name="CBM_PlayerBetTitle">
+	<include src="VUI+\outline_rect.xml"/>
+          <font> 7 </font>
+          <string>Your Current Ante: </string>
+        <_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+
+        <rect name="CBM_PlayerBetValue">
+	<include src="VUI+\outline_rect.xml"/>
+          <font> 7 </font>
+          <string>
+            <copy src="parent()" trait="_Value"/>
+          </string>
+          <justify> &right; </justify>
+          <x>
+            <copy src="parent()" trait="width"/>
+          </x>
+        <_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+      </rect>
+
+      <!-- Player's Total Funds -->
+      <rect name="CBM_TotalFundsDisplay">
+        <id> 6 </id>
+        <_Value></_Value>
+
+        <x> 20 </x>
+        <y> 125 </y>
+        <width>
+          <copy src="sibling(CBM_PlayerBetDisplay)" trait="width"/>
+        </width>
+        <locus> &true; </locus>
+        <visible>
+          <copy src="parent()" trait="visible"/>
+        </visible>
+
+        <rect name="CBM_TotalFundsTitle">
+	<include src="VUI+\outline_rect.xml"/>
+          <font> 7 </font>
+          <string>Your Total Funds: </string>
+        <_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+
+        <rect name="CBM_TotalFundsValue">
+	<include src="VUI+\outline_rect.xml"/>
+          <font> 7 </font>
+          <string>
+            <copy src="parent()" trait="_Value"/>
+          </string>
+          <justify> &right; </justify>
+          <x>
+            <copy src="parent()" trait="width"/>
+          </x>
+        <_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+      </rect>
+      
+    </rect>
+    <!-- end CBM_InfoRect  -->
+
+    <!-- ===== BUTTON RECT ===== -->
+    <rect name="CBM_ButtonRect">
+      <x>
+        <copy src="parent()" trait="width"/>
+        <sub> 50 </sub>
+      </x>
+      <y>
+        <copy src="sibling(CBM_InfoRect)" trait="y"/>
+        <sub> 50 </sub>
+      </y>
+      <locus> &true; </locus>
+      <depth> 6 </depth>
+      <visible>
+        <copy src="parent()" trait="visible"/>
+      </visible>
+
+      <!-- Auto Match Button -->
+      <hotrect name="CBM_AutoMatchButton">
+        <include src="text_box.xml"/>
+	<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+        <string>Auto-Match</string>
+        <justify> &right; </justify>
+        <_glow> &true; </_glow>
+        <_verbuf> 9 </_verbuf>
+        <visible>
+          <copy src="parent()" trait="visible"/>
+        </visible>
+        <_xbox_button> &xbuttonA; </_xbox_button>
+      </hotrect>
+
+      <!-- Raise Button -->
+      <hotrect name="CBM_RaiseButton">
+        <include src="text_box.xml"/>
+	<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+        <_y>
+          <copy src="sibling(CBM_AutoMatchButton)" trait="_y"/>
+          <add src="sibling(CBM_AutoMatchButton)" trait="height"/>
+        </_y>
+        <string>Raise</string>
+        <justify> &right; </justify>
+        <_glow> &true; </_glow>
+        <_verbuf> 9 </_verbuf>
+        <visible>
+          <copy src="parent()" trait="visible"/>
+        </visible>
+        <_xbox_button> &xbuttonX; </_xbox_button>
+      </hotrect>
+
+      <!-- Accept Button -->
+      <hotrect name="CBM_AcceptButton">
+        <include src="text_box.xml"/>
+	<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+        <id>7</id>
+        <_y>
+          <copy src="sibling(CBM_RaiseButton)" trait="_y"/>
+          <add src="sibling(CBM_RaiseButton)" trait="height"/>
+        </_y>
+        <string>Accept</string>
+        <justify> &right; </justify>
+        <_glow> &true; </_glow>
+        <_verbuf> 9 </_verbuf>
+        <visible>
+          <copy src="parent()" trait="visible"/>
+        </visible>
+        <_xbox_button> &xbuttonY; </_xbox_button>
+      </hotrect>
+
+      <!-- Exit Button -->
+      <hotrect name="CBM_ExitButton">
+        <include src="text_box.xml"/>
+	<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+        <_y>
+          <copy src="sibling(CBM_AcceptButton)" trait="_y"/>
+          <add src="sibling(CBM_AcceptButton)" trait="height"/>
+        </_y>
+        <string>Exit</string>
+        <justify> &right; </justify>
+        <_glow> &true; </_glow>
+        <_verbuf> 9 </_verbuf>
+        <visible>
+          <copy src="parent()" trait="visible"/>
+        </visible>
+        <_xbox_button> &xbuttonB; </_xbox_button>
+      </hotrect>
+      
+    </rect>
+    <!-- end CBM_ButtonRect -->
+
+  </rect>
+  <!-- end LPM_MainRect -->

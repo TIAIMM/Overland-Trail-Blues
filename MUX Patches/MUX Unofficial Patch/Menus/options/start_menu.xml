@@ -1,0 +1,1555 @@
+<!-- Start menu
+This is the start menu and also the pause menu
+COPYRIGHT BY ZENIMAX; MODIFIED APRIL 2023 BY AXONIS FOR VANILLA UI PLUS
+* Common, cleaned up code for FO3 and NV
+* Added diagnostics for unsupported overwrites, deprecated or missing UIO, and broken font configs
+* Aligned list items using VUI+ font metrics to support custom fonts
+* Increased size of the save list, based on font height, taking into account the reason why it's meant to be short
+* Aligned the save screenshot and stats to the center of the listbox; easier to distinguish from the list items
+* Slightly reduced opacity of the save name prefix to distinguish it from the save location
+* Tweaked intensity and wrapwidth of the controls header
+* Game version is displayed in all settings, not just display, but not on help tutorials
+* Added the XML-calculated resolution next to the game version
+* Reduced highlighting on lists that aren't focused (eg. the Settings list when you click the Back button on an Options submenu)
+* Added a plugin placeholder for the VUI+ and various extender version strings right above the game version
+* Toggled visibility of the save/load scrollbar when the confirmation dialog is displayed
+* Toggled visibility of the controls mapping scrollbar when the "press the new control..." message is displayed
+* Added highlighting to list contents (text, images etc) and targetable images
+* Enforced clipping of the save/load list box to prevent long location names from clipping outside
+* Enforced clipping on meters whose values were edited via FalloutPrefs.ini to exceed their expected limits; a red percentage of their values will be displayed instead
+* To prevent accidental editing of such meters (which can only be undone via FalloutPrefs.ini), clicking is only allowed on their left or right arrows
+* Matched the size of left / right arrows at the meter bars with the arrows at the Container menu
+* Removed redundant stuff (LIVE, Downloads, Downloadable Content, Save file version, Redeem Code Button)
+* Replaced the brightness gradient with one that actually helps tune this setting, and also added an instruction tip
+* Color in New Vegas can be customized as HUD Color at the Display Settings
+* The list reference to the Mod Configuration Menu for New Vegas is relocated here for performance reasons (see MCM_Trigger)
+* Added support for xbox controller hot plugging/unplugging
+* Changed the fuzzy low-res background used for save and options with a cleaner one which obeys the HUD color setting
+-->
+<menu name="StartMenu">
+	<class> &StartMenu; </class>
+	<stackingtype> &no_click_past; </stackingtype>
+	<systemcolor>
+		<copy> &hudmain; </copy> <!--VUI+ hudmain for NV as it matches its default color and can be customized at settings -->
+		<sub> &mainmenu; </sub>
+		<onlyif src="globals" trait="_VUI+Vegas" />
+		<add> &mainmenu; </add> <!--VUI+ Fallout 3 uses a distinct color at the start menu and loading screens -->
+	</systemcolor>
+	<menufade> 0.2 </menufade> <!--VUI+ safe speed -->
+	<alpha> 0 </alpha>
+	<locus> 1 </locus>
+	<brightness> 255 </brightness>
+	<_VUI+> <copy src="sibling(HUDMainMenu)" trait="_VUI+" /> </_VUI+>
+	<_VUI+Extenders> <copy src="sibling(HUDMainMenu)" trait="_VUI+Extenders" /> </_VUI+Extenders>
+	<font> 7 </font>
+	<_item_height> 48 </_item_height>
+	<_center_x></_center_x> <!-- x position of user option (set in code) -->
+	<_use_ps3_saveload_settings> 0 </_use_ps3_saveload_settings>
+	<user0></user0> <!-- Set in code: True if 16:9 or wider, false otherwise -->
+	<user1> 360 </user1> <!-- Center x for Gameplay submenu options -->
+	<user2> 360 </user2> <!-- Center x for Display submenu options -->
+	<user3> 320 </user3> <!-- Center x for Audio submenu options -->
+	<user4> 360 </user4> <!-- Center x for Controls submenu options -->
+	<user5> <copy src="globals" trait="_Has360Controller" /> </user5> <!-- support controller hot (un)plugging -->
+
+	<rect name="NOGLOW_BRANCH">
+		<id> &noglow_branch; </id>
+		<systemcolor> <copy src="io" trait="systemcolor" /> </systemcolor>
+		<locus> 1 </locus>
+		<depth> 3 </depth>
+		<x> 0 </x>
+		<y> 0 </y>
+		<width> <copy src="screen" trait="width"/> </width>
+		<height> <copy src="screen" trait="height"/> </height>
+		<_x_buffer>
+			<copy src="screen" trait="cropx"/>
+			<mult> 2 </mult>
+			<add>
+				<copy> 20 </copy>
+				<onlyif src="globals" trait="_Has360Controller" />
+			</add>
+		</_x_buffer>
+
+		<nif name="pause_background">
+			<id> 13 </id>
+			<visible> <not src="sibling(main_title)" trait="visible"/> </visible>
+			<filename> Interface\PauseScreen\PauseScreen01.NIF </filename>
+			<x>
+				<copy src="screen" trait="width"/>
+				<div> 2 </div>
+			</x>
+			<y> 480 </y>
+			<systemcolor> &nosystemcolor; </systemcolor>
+		</nif>
+
+		<text name="main_press_start">
+			<id> 9 </id>
+			<visible>
+				<not src="sibling(main_container)" trait="visible"/>
+				<and src="globals" trait="_Has360Controller" />
+			</visible>
+			<alpha> 0 </alpha> <!-- fade value set in code -->
+			<depth> 3 </depth>
+			<font> <copy src="io" trait="font" /> </font>
+			<justify> &right; </justify>
+			<string> &-sPressStart; </string>
+			<x>
+				<copy src="parent" trait="width"/>
+				<sub src="parent" trait="_x_buffer"/>
+			</x>
+			<y>
+				<copy src="parent" trait="height"/>
+				<sub> 46 </sub>
+				<div> 2 </div>
+			</y>
+			<_VUI+OutlineIntensity>3 </_VUI+OutlineIntensity>
+			<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+		</text>
+		<include src="VUI+\outline.xml"/>
+
+		<rect name="main_version"> <!--VUI+ remove version from help tutorials -->
+			<id> 10 </id>
+			<x> <copy src="parent" trait="_x_buffer"/> </x>
+			<y>
+				<copy src="parent" trait="height"/>
+				<sub src="screen" trait="cropy"/>
+				<sub src="screen" trait="cropy"/>
+			</y>
+			<font> 3 </font>
+			<depth> 0 </depth>
+		</rect>
+
+		<rect name="VUI+MainVersion">
+			<include src="VUI+\outline_rect.xml"/>
+			<x> <copy src="sibling" trait="x"/> </x>
+			<y>
+				<copy src="sibling" trait="y"/>
+				<sub src="me" trait="height" />
+			</y>
+			<!--VUI+ display version on settings -->
+			<visible>
+				<not src="sibling(main_defaults_button)" trait="visible" />
+				<and src="sibling(settings_container)" trait="visible" />
+			</visible>
+			<font> <copy src="sibling(main_version)" trait="font" /> </font>
+			<string> <copy src="sibling(main_version)" trait="string"/> </string>
+			<alpha> <copy src="sibling(settings_container)" trait="_alpha" /> </alpha>
+			<depth> <copy src="sibling(main_version)" trait="depth" /> </depth>
+			<!--VUI+ show the real resolution next to the main version -->
+			<rect name="res_width">
+				<include src="VUI+\outline_rect.xml"/>
+				<string> <copy src="globals" trait="_VUI+ScreenWidth" /> </string>
+				<font> <copy src="parent" trait="font" /> </font>
+				<x> <copy src="sibling" trait="width" /> <add> 20 </add> </x>
+			</rect>
+			<rect name="res_x">
+				<include src="VUI+\outline_rect.xml"/>
+				<string> x </string>
+				<font> <copy src="parent" trait="font" /> </font>
+				<x> <copy src="sibling" trait="x" /> <add src="sibling" trait="width" /> </x>
+			</rect>
+			<rect name="res_height">
+				<include src="VUI+\outline_rect.xml"/>
+				<string> <copy src="globals" trait="_VUI+ScreenHeight" /> </string>
+				<font> <copy src="parent" trait="font" /> </font>
+				<x> <copy src="sibling" trait="x" /> <add src="sibling" trait="width" /> </x>
+			</rect>
+		</rect>
+
+		<rect name="VUI+Extenders">
+			<include src="VUI+\outline_rect.xml"/>
+			<x> <copy src="sibling" trait="x"/> </x>
+			<y>
+				<copy src="sibling" trait="y"/>
+				<sub src="me" trait="height" />
+			</y>
+			<visible> <copy src="sibling" trait="visible" /> </visible>
+			<font> <copy src="sibling" trait="font" /> </font>
+			<string> <copy src="io" trait="_VUI+Extenders" /> </string>
+			<depth> <copy src="sibling" trait="depth" /> </depth>
+			<alpha> <copy src="sibling" trait="alpha" /> </alpha>
+		</rect>
+
+		<hotrect name="main_container">
+			<include src="list_box.xml"/>
+			<id> 0 </id>
+			<x>
+				<copy src="parent" trait="width"/>
+				<sub src="me" trait="width"/>
+				<sub src="parent" trait="_x_buffer"/>
+			</x>
+			<y>
+				<copy src="parent" trait="height"/>
+				<sub src="me" trait="height"/>
+				<div> 2 </div>
+			</y>
+			<width> 300 </width> <!--VUI+ no "Downloadable Content" etc -->
+			<height>
+				<copy src="me" trait="_number_of_visible_items"/>
+				<mult src="io" trait="_item_height"/>
+			</height>
+			<_alpha> 0 </_alpha> <!-- Fade value (set in code by fade control) -->
+			<_scrollbar_vis> 0 </_scrollbar_vis>
+			<_enabled> 0 </_enabled>
+			<alpha> 0 </alpha>
+			<visible>
+				<copy src="me" trait="_alpha"/>
+				<gt> 0 </gt>
+				<!-- Because so much of StartMenu's logic is based on the visibility of the main listbox,
+				we will fake that it is still visible while the PS3 save/load system utility has control
+				even though we are fading it out in code. -->
+				<or src="io" trait="_use_ps3_saveload_settings"/>
+			</visible>
+			<target>
+				<not src="me" trait="_enabled"/>
+				<and> <not> <copy src="io" trait="user5"/> </not> </and>
+			</target>
+			<xup> <ref src="MCM_Trigger" trait="mouseover"/> </xup> <!--VUI+ these are the only list items that need to check for the MCM; we can safely remove this reference from list_box_template and free every other list item in the game from checking for the MCM when you press up -->
+			<_VUI+Focus> <not src="main_back_button" trait="visible" /> </_VUI+Focus> <!--VUI+ the main list isn't focused when the back button is visible -->
+		</hotrect>
+
+		<hotrect name="settings_container">
+			<include src="list_box.xml"/>
+			<id> 1 </id>
+			<visible>
+				<copy src="me" trait="_alpha"/>
+				<gt> 0 </gt>
+			</visible>
+			<alpha> 0 </alpha>
+			<target>
+				<not src="me" trait="_enabled"/>
+				<and src="me" trait="visible"/>
+				<and> <not> <copy src="io" trait="user5"/> </not> </and>
+			</target>
+			<x>
+				<copy src="sibling(main_container)" trait="x"/>
+				<sub src="me" trait="width"/>
+				<add> 70 </add>
+			</x>
+			<y> <copy src="sibling(main_container)" trait="y"/> </y>
+			<width> 155 </width>
+			<_number_of_visible_items> 5 </_number_of_visible_items>
+			<_alpha></_alpha> <!-- Fade value (set in code by fade control) -->
+			<_enabled> 0 </_enabled>
+			<_scrollbar_vis> 0 </_scrollbar_vis>
+			<!--VUI+ settings isn't focus when defaults is visible or when the user is in the back button -->
+			<_VUI+Focus>
+				<not>
+					<copy src="sibling(main_defaults_button)" trait="visible" />
+					<or src="main_back_button" trait="_box_visible" />
+				</not>
+			</_VUI+Focus>
+		</hotrect>
+
+		<image name="saveload_screenshot">
+			<id> 11 </id>
+			<depth> 4 </depth>
+			<visible> 0 </visible>
+			<filename> Interface\Main\main_title.dds </filename>
+			<x>
+				<copy src="sibling(saveload_container)" trait="x"/>
+				<!--VUI+ align the screenshot and stats to the center of the listbox -->
+				<add>
+					<copy src="sibling(saveload_container)" trait="width"/>
+					<sub src="me" trait="width" />
+					<div> 2 </div>
+				</add>
+			</x>
+			<y>
+				<copy src="sibling(saveload_playername)" trait="y"/>
+				<sub src="me" trait="height"/>
+			</y>
+			<systemcolor> &nosystemcolor; </systemcolor>
+		</image>
+
+		<text name="saveload_playername">
+			<id> 12 </id>
+			<depth> 4 </depth>
+			<font> <copy src="io" trait="font" /> </font>
+			<visible> 0 </visible>
+			<wrapwidth> <copy src="sibling(saveload_container)" trait="width"/> </wrapwidth>
+			<justify> &center; </justify> <!--VUI+ align save info to the center of the image -->
+			<x>
+				<copy src="sibling(saveload_screenshot)" trait="x"/>
+				<add> <copy src="sibling(saveload_screenshot)" trait="width"/> <div> 2 </div> </add>
+			</x>
+			<!--VUI+ affects the location of the save list; make sure the save list has enough empty space at the bottom to allow for the confirmation options to appear on the screen -->
+			<y> 355 </y>
+			<_VUI+OutlineIntensity>3 </_VUI+OutlineIntensity>
+			<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+		</text>
+		<include src="VUI+\outline.xml"/>
+
+		<text name="saveload_playerlevel">
+			<id> 18 </id>
+			<depth> 4 </depth>
+			<font> <copy src="io" trait="font" /> </font>
+			<visible> 0 </visible>
+			<justify> &center; </justify>
+			<x> <copy src="sibling(saveload_playername)" trait="x"/> </x>
+			<y>
+				<copy src="sibling" trait="y" />
+				<add src="sibling" trait="height" />
+			</y>
+			<_VUI+OutlineIntensity>3 </_VUI+OutlineIntensity>
+			<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+		</text>
+		<include src="VUI+\outline.xml"/>
+
+		<text name="saveload_playtime">
+			<id> 19 </id>
+			<depth> 4 </depth>
+			<font> <copy src="io" trait="font" /> </font>
+			<visible> 0 </visible>
+			<justify> &center; </justify>
+			<x> <copy src="sibling(saveload_playername)" trait="x"/> </x>
+			<y>
+				<copy src="sibling" trait="y" />
+				<add src="sibling" trait="height" />
+			</y>
+			<_VUI+OutlineIntensity>3 </_VUI+OutlineIntensity>
+			<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+		</text>
+		<include src="VUI+\outline.xml"/>
+
+		<rect name="saveload_version"> <id> 22 </id> </rect> <!--VUI+ New Vegas redundancy -->
+
+		<hotrect name="saveload_container">
+			<include src="list_box.xml"/>
+			<id> 6 </id>
+			<visible>
+				<copy src="me" trait="_alpha"/>
+				<gt> 0 </gt>
+			</visible>
+			<_VUI+VerticalSpacing> 10 </_VUI+VerticalSpacing>
+			<depth> 4 </depth>
+			<x> <!--VUI+ center to the screen similar to ther sub-menus -->
+				<copy src="screen" trait="width"/>
+				<sub src="me" trait="width"/>
+				<div> 2 </div>
+			</x>
+			<y>
+				<copy src="sibling(saveload_playtime)" trait="y" />
+				<add src="sibling(saveload_playtime)" trait="height" />
+			</y>
+			<width> 650 </width>
+			<user0> 1 </user0> <!-- true=unselected items are visible -->
+			<_alpha> 0 </_alpha> <!-- set in code by fade control -->
+			<_enabled> 0 </_enabled> <!--VUI+ otherwise the Default button will crash -->
+			<_VUI+Scrollbar> <copy src="me" trait="_enabled" /> </_VUI+Scrollbar> <!--VUI+ hide when displaying a confirmation dialog (also see list_box.xml) -->
+			<_number_of_visible_items>
+				<copy> 52 </copy> <!--VUI+ in main menu mode the warning is shorter, thus allowing more space for the list -->
+				<onlyif src="sibling(main_title)" trait="visible"/>
+				<add> 312 </add> <!--VUI+ enough to fit 6 items using default #7 font; do not increase because the space is necessary for the warning dialog -->
+				<div>
+					<copy src="io" trait="font" />
+					<copy src="globals" trait="_VUI+FontH_" />
+					<add src="me" trait="_VUI+VerticalSpacing" />
+				</div>
+				<round> 1 </round>
+			</_number_of_visible_items>
+			<_text_offset> 5 </_text_offset> <!--VUI+ equal left top bottom padding -->
+			<target> <not src="sibling(confirm_container)" trait="visible" /> </target> <!--VUI+ fix not being able to click on confirmation "Yes" if you first click here -->
+		</hotrect>
+
+		<hotrect name="confirm_container">
+			<include src="list_box.xml"/>
+			<id> 7 </id>
+			<visible>
+				<copy src="me" trait="_alpha"/>
+				<gt> 0 </gt>
+			</visible>
+			<depth> 3 </depth>
+			<x></x> 	<!-- will be set in code -->
+			<y></y> 	<!-- will be set in code -->
+			<width></width> <!-- will be set in code -->
+			<_enabled> 0 </_enabled>
+			<_number_of_visible_items> 3 </_number_of_visible_items>
+			<_scrollbar_vis> 0 </_scrollbar_vis>
+			<_alpha></_alpha> <!-- Fade value -->
+
+			<text name="confirm_warning">
+				<id> 20 </id>
+				<string> &-sConfirmWarning; </string>
+				<alpha> <copy src="parent" trait="_alpha"/> </alpha>
+				<depth> 3 </depth>
+				<brightness> <copy src="io" trait="brightness"/> </brightness>
+				<font> <copy src="io" trait="font" /> </font>
+				<x>
+					<copy src="sibling(confirm_question)" trait="x"/>
+					<sub src="sibling(confirm_question)" trait="width"/>
+				</x>
+				<y>
+					<copy src="io" trait="font" />
+					<copy src="globals" trait="_VUI+FontH_" />
+					<mul> -1 </mul>
+				</y>
+			</text>
+
+			<text name="confirm_question">
+				<id> 8 </id>
+				<alpha> <copy src="parent" trait="_alpha"/> </alpha>
+				<depth> 3 </depth>
+				<brightness> <copy src="io" trait="brightness"/> </brightness>
+				<font> <copy src="io" trait="font" /> </font>
+				<justify> &right; </justify>
+				<x> -20 </x>
+				<y>
+					<copy> 7 </copy>
+					<add>
+						<copy> 3 </copy>
+						<onlyifnot> <copy src="io" trait="user5"/> </onlyifnot>
+					</add>
+				</y>
+				<wrapwidth> 520 </wrapwidth>
+			</text>
+		</hotrect>
+
+		<image name="options_brightness_gradient">
+			<id> 17 </id>
+			<depth> 3 </depth>
+			<visible> 0 </visible>
+			<filename> Interface\VUI+\brightness_calibration.dds </filename>
+			<width> 523 </width>
+			<height> 139 </height>
+			<x>
+				<copy src="sibling(options_container)" trait="width"/>
+				<sub src="me" trait="width"/>
+				<div> 2 </div>
+				<add src="sibling(options_container)" trait="x"/>
+			</x>
+			<y>
+				<copy src="sibling(options_container)" trait="y"/>
+				<sub src="me" trait="height"/>
+				<sub> 10 </sub>
+			</y>
+			<systemcolor> &nosystemcolor; </systemcolor>
+			<locus> 1 </locus>
+
+			<text name="VUI+Tip">
+				<systemcolor> <copy src="io" trait="systemcolor" /> </systemcolor>
+				<x> <copy src="parent" trait="width" /> <div> 2 </div> </x>
+				<y> <copy> 2 </copy> <sub src="me" trait="height" /> </y>
+				<font> 3 </font>
+				<wrapwidth> 500 </wrapwidth>
+				<justify> &center; </justify>
+				<string> <copy src="globals" trait="_VUI+BrightnessCalibrationTip" /> </string>
+				<_VUI+OutlineIntensity>3 </_VUI+OutlineIntensity>
+				<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+			</text>
+			<include src="VUI+\outline.xml"/>
+		</image>
+
+		<rect name="controls_header">
+			<include src="VUI+\outline_rect.xml"/>
+			<id> 16 </id>
+			<font> <copy src="io" trait="font" /> </font>
+			<depth> 3 </depth>
+			<justify> &center; </justify>
+			<visible> 0 </visible>
+			<alpha> <copy src="sibling(options_container)" trait="_alpha"/> </alpha>
+			<x>
+				<copy src="sibling(options_container)" trait="x"/>
+				<add>
+					<copy src="sibling(options_container)" trait="width"/>
+					<div> 2 </div>
+				</add>
+			</x>
+			<y>
+				<copy src="sibling(options_container)" trait="y"/>
+				<sub src="me" trait="height"/>
+				<sub> 5 </sub>
+			</y>
+			<include src="VUI+\orphancontrol.xml" />
+			<_VUI+MaxWrapwidth> <copy src="sibling(options_container)" trait="width" /> <sub> 20 </sub> </_VUI+MaxWrapwidth>
+		</rect>
+
+		<hotrect name="options_container">
+			<include src="list_box.xml"/>
+			<id> 2 </id>
+			<x>
+				<copy src="screen" trait="width"/>
+				<sub src="me" trait="width"/>
+				<div> 2 </div>
+			</x>
+			<y>
+				<copy src="parent" trait="height"/>
+				<sub src="me" trait="height"/>
+				<div> 1.4 </div>
+			</y>
+			<width> 520 </width>
+			<_enabled> 0 </_enabled>
+			<_alpha> 0 </_alpha> <!-- Fade value -->
+			<visible>
+				<copy src="me" trait="_alpha"/>
+				<gt> 0 </gt>
+			</visible>
+			<depth> 3 </depth>
+			<_VUI+Scrollbar> <copy src="me" trait="_enabled" /> </_VUI+Scrollbar> <!--VUI+ no scrollbar when altering a control -->
+			<_number_of_visible_items> 12 </_number_of_visible_items> <!--VUI+ a small increase, no need to shoehorn -->
+			<_leftjustify> 1 </_leftjustify>
+		</hotrect>
+
+		<rect name="downloads_container"> <!--VUI+ removed redundant Downloadable Content -->
+			<id> 14 </id>
+			<visible> 0 </visible>
+		</rect>
+
+		<image name="container_background">
+			<filename> Interface\Shared\Background\solid_black.dds </filename> <!--VUI+ vanilla is too fuzzy -->
+			<zoom> &scale; </zoom>
+			<visible>
+				<copy src="sibling(options_container)" trait="visible"/>
+				<or src="sibling(saveload_container)" trait="visible"/>
+			</visible>
+			<depth> 2 </depth>
+			<brightness> <copy src="globals" trait="_VUI+DarkBrightness" /> </brightness>
+			<alpha>
+				<copy src="sibling(options_container)" trait="_alpha"/>
+				<onlyif src="sibling(options_container)" trait="visible"/>
+				<add>
+					<copy src="sibling(saveload_container)" trait="_alpha"/>
+					<onlyif src="sibling(saveload_container)" trait="visible"/>
+				</add>
+				<div> 255 </div>
+				<mult>
+					<copy> 255 </copy>
+					<onlyif src="io" trait="_use_ps3_saveload_settings" />
+					<add> 180 </add> <!--VUI+ full fade in, slightly increase for readability -->
+				</mult>
+			</alpha>
+			<x>
+				<copy src="sibling(options_container)" trait="x"/>
+				<onlyif src="sibling(options_container)" trait="visible"/>
+				<add>
+					<copy src="sibling(saveload_container)" trait="x"/>
+					<onlyif src="sibling(saveload_container)" trait="visible"/>
+				</add>
+				<sub src="me" trait="_x_stretch"/>
+			</x>
+			<y>
+				<copy> 0 </copy>
+				<sub src="me" trait="_y_stretch"/>
+			</y>
+			<width>
+				<copy src="sibling(options_container)" trait="width"/>
+				<onlyif src="sibling(options_container)" trait="visible"/>
+				<add>
+					<copy src="sibling(saveload_container)" trait="width"/>
+					<onlyif src="sibling(saveload_container)" trait="visible"/>
+				</add>
+				<add src="me" trait="_x_stretch"/>
+				<add src="me" trait="_x_stretch"/>
+			</width>
+			<height>
+				<copy src="parent" trait="height"/>
+				<add src="me" trait="_y_stretch"/>
+				<add src="me" trait="_y_stretch"/>
+			</height>
+			<_x_stretch>
+				<copy> 500 </copy>
+				<onlyif src="io" trait="_use_ps3_saveload_settings" />
+				<add> 50 </add>
+			</_x_stretch>
+			<_y_stretch> 175 </_y_stretch>
+		</image>
+
+		<image name="main_title">
+			<id> 3 </id>
+			<alpha> 0 </alpha> <!-- Fade value set in code -->
+			<depth> 1.5 </depth>
+			<systemcolor> &nosystemcolor; </systemcolor>
+			<filename> Interface\Main\main_title.dds </filename>
+			<zoom>
+				<copy> 100 </copy>
+				<add>
+					<copy> 33.33 </copy>
+					<onlyif src="io" trait="user0"/>
+				</add>
+			</zoom>
+			<width> <copy src="me" trait="filewidth"/> </width>
+			<height> <copy src="me" trait="fileheight"/> </height>
+			<x> <copy src="screen" trait="cropx"/> <mult> 2 </mult> </x> <!--VUI+ position of the logo should not be affected by controllers -->
+			<y>
+				<copy src="parent" trait="height"/>
+				<sub src="me" trait="height"/>
+				<div> 2 </div>
+			</y>
+		</image>
+
+		<hotrect name="main_device_button">
+			<id> 15 </id>
+			<include src="text_box.xml"/>
+			<depth> 3 </depth>
+			<visible>
+				<copy src="me" trait="_line_alpha"/>
+				<gt> 0 </gt>
+				<and src="me" trait="user0"/>
+			</visible>
+			<target>
+				<copy src="sibling(saveload_container)" trait="_enabled"/>
+				<onlyif src="globals" trait="_Has360Controller" />
+				<add>
+					<copy src="sibling(options_container)" trait="_enabled"/>
+					<onlyifnot src="io" trait="user5"/>
+				</add>
+			</target>
+			<string> &-sDevice; </string>
+			<justify> &right; </justify>
+			<clicksound> UIMenuOK </clicksound>
+			<alpha>
+				<copy> 40 </copy>
+				<onlyif src="me" trait="_box_visible"/>
+			</alpha>
+			<_x> <copy src="sibling(main_defaults_button)" trait="_x"/> </_x>
+			<_y>
+				<copy src="sibling(main_defaults_button)" trait="_y"/>
+				<sub>47</sub>
+			</_y>
+			<_glow> 1 </_glow>
+			<brightness> <copy src="me" trait="_line_alpha"/> </brightness>
+			<_horbuf> <copy src="sibling(main_defaults_button)" trait="_horbuf"/> </_horbuf>
+			<_verbuf> <copy src="sibling(main_defaults_button)" trait="_verbuf"/> </_verbuf>
+			<_fixedwidth> <copy src="sibling(main_defaults_button)" trait="_fixedwidth"/> </_fixedwidth>
+			<_xbox_button> &xbuttonx; </_xbox_button>
+			<user0> 0 </user0> <!-- additional visibility check -->
+			<_line_alpha>
+				<copy src="sibling(options_container)" trait="_alpha"/>
+				<max src="sibling(saveload_container)" trait="_alpha"/>
+				<min>
+					<copy> 128 </copy>
+					<add>
+						<copy> 127 </copy>
+						<onlyif src="me" trait="target"/>
+					</add>
+				</min>
+			</_line_alpha>
+		</hotrect>
+
+		<hotrect name="main_defaults_button">
+			<!-- Used for defaults button with options or delete button with save/load -->
+			<id> 4 </id>
+			<include src="text_box.xml"/>
+			<depth> 3 </depth>
+			<visible>
+				<copy src="me" trait="_line_alpha"/>
+				<gt> 0 </gt>
+				<and src="me" trait="user0"/>
+			</visible>
+			<target>
+				<copy src="sibling(options_container)" trait="_enabled"/>
+				<or>
+					<copy src="io" trait="user5"/>
+					<and src="sibling(saveload_container)" trait="_enabled"/>
+					<and src="me" trait="_target"/>
+				</or>
+			</target>
+			<_target> 0 </_target> <!-- Set in code: true when a save game is currently highlighted -->
+			<justify> &right; </justify>
+			<clicksound> UIMenuOK </clicksound>
+			<alpha>
+				<copy> 40 </copy>
+				<onlyif src="me" trait="_box_visible"/>
+			</alpha>
+			<_x>
+				<copy src="sibling(main_container)" trait="x"/>
+				<add src="sibling(main_container)" trait="width"/>
+				<sub>
+					<copy src="child(xbox_button)" trait="width"/>
+					<sub> 25 </sub>
+					<onlyif> <copy src="io" trait="user5"/> </onlyif>
+				</sub>
+			</_x>
+			<_y>
+				<copy src="sibling(main_back_button)" trait="_y"/>
+				<sub>47</sub>
+			</_y>
+			<_glow> 1 </_glow>
+			<_xbox_button> &xbuttony; </_xbox_button>
+			<_fixedwidth> 150 </_fixedwidth>
+			<brightness> <copy src="me" trait="_line_alpha"/> </brightness>
+			<_horbuf> 30 </_horbuf>
+			<_verbuf> 10 </_verbuf>
+			<user0> 1 </user0> <!-- additional visibility check -->
+			<_line_alpha>
+				<copy src="sibling(options_container)" trait="_alpha"/>
+				<max>
+					<copy src="sibling(saveload_container)" trait="_alpha"/>
+					<onlyif> <copy src="io" trait="user5"/> </onlyif>
+				</max>
+				<min>
+					<copy> 128 </copy>
+					<add>
+						<copy> 127 </copy>
+						<onlyif src="me" trait="target"/>
+					</add>
+				</min>
+			</_line_alpha>
+		</hotrect>
+
+		<hotrect name="main_back_button">
+			<id> 5 </id>
+			<include src="text_box.xml"/>
+			<depth> 3 </depth>
+			<visible>
+				<copy src="me" trait="_line_alpha"/>
+				<gt> 0 </gt>
+			</visible>
+			<string> &-sBack; </string>
+			<justify> &right; </justify>
+			<clicksound> UIMenuCancel </clicksound>
+			<alpha>
+				<copy> 40 </copy>
+				<onlyif src="me" trait="_box_visible"/>
+			</alpha>
+			<_glow> 1 </_glow>
+			<_alpha> 0 </_alpha> <!-- Fade value. Set in code by fade control -->
+			<_x> <copy src="sibling(main_defaults_button)" trait="_x"/> </_x>
+			<_y>
+				<copy src="parent" trait="height"/>
+				<sub src="me" trait="height"/>
+				<sub src="screen" trait="cropy"/>
+				<sub src="screen" trait="cropy"/>
+			</_y>
+			<_line_alpha>
+				<copy src="me" trait="_alpha"/>
+				<min>
+					<copy> 255 </copy>
+					<sub>
+						<copy> 127 </copy>
+						<onlyifnot src="me" trait="target"/>
+					</sub>
+				</min>
+			</_line_alpha>
+			<brightness> <copy src="me" trait="_line_alpha"/> </brightness>
+			<_xbox_button> &xbuttonb; </_xbox_button>
+			<_fixedwidth> <copy src="sibling(main_defaults_button)" trait="_fixedwidth"/> </_fixedwidth>
+			<_horbuf> <copy src="sibling(main_defaults_button)" trait="_horbuf"/> </_horbuf>
+			<_verbuf> <copy src="sibling(main_defaults_button)" trait="_verbuf"/> </_verbuf>
+		</hotrect>
+
+		<rect name="main_redeem_code_button"> <!--VUI+ removed NV leftover -->
+			<id> 21 </id>
+			<visible> 0 </visible>
+		</rect>
+	</rect>
+
+	<rect name="GLOW_BRANCH">
+		<id> &glow_branch; </id>
+	</rect>
+
+	<hotrect name="VUI+Warning">
+		<hotrect name="border">
+			<brightness> 255 </brightness>
+			<alpha> 255 </alpha>
+			<x> -5 </x>
+			<y> -5 </y>
+			<width> <copy src="parent" trait="width" /> <add> 10 </add> </width>
+			<height> <copy src="parent" trait="height" /> <add> 10 </add> </height>
+			<depth> -1 </depth>
+			<systemcolor> &hudalt; </systemcolor>
+		</hotrect>
+		<x>
+			<copy src="screen" trait="width" />
+			<sub src="me" trait="width" />
+			<div> 2 </div>
+		</x>
+		<y>
+			<copy src="screen" trait="height" />
+			<sub src="me" trait="height" />
+			<div> 2 </div>
+		</y>
+		<width> 1000 </width>
+		<height>
+			<copy src="child(overwrite_warning)" trait="height" />
+			<add> 15 </add>
+			<onlyif src="child(overwrite_warning)" trait="visible" />
+			<add>
+				<copy src="child(UIO_warning)" trait="height" />
+				<add> 15 </add>
+				<onlyif src="child(UIO_warning)" trait="visible" />
+			</add>
+			<add>
+				<copy src="child(font_warning)" trait="height" />
+				<add> 15 </add>
+				<onlyif src="child(font_warning)" trait="visible" />
+			</add>
+		</height>
+		<locus> 1 </locus>
+		<brightness> 0 </brightness>
+		<alpha> 255 </alpha>
+		<depth> 8 </depth>
+		<visible>
+			<not>
+				<!-- don't show warning if: -->
+				<copy src="me" trait="_VUI+OverwriteVerify" /> <!-- there are no overwrites -->
+				<and src="me" trait="_VUI+UIO_Verify" /> <!-- and UIO checks out -->
+				<and src="me" trait="_VUI+FontVerify" /> <!-- and all normal fonts are present -->
+				<or src="options_container" trait="visible"/> <!-- but don't spam the warning everywhere -->
+				<or src="saveload_container" trait="visible"/>
+				<or src="confirm_container" trait="visible"/>
+			</not>
+		</visible>
+
+		<_VUI+OverwriteVerify>
+			<copy src="io" trait="_VUI+" /> <!-- the settings have been correctly propagated through hudtemplates -->
+			<and src="child(list_box_templates)" trait="_VUI+" /> <!-- and our list_box_templates isn't overwritten -->
+			<and src="child(list_box_templates)" trait="_VUI+Fade" /> <!-- nor is our vertical_fade_line -->
+			<and src="child(list_box)" trait="_VUI+ScrollbarOffsetHeight" /> <!-- nor is our list_box -->
+		</_VUI+OverwriteVerify>
+
+		<_VUI+UIO_Verify>
+			<copy src="child(list_box_templates)" trait="childcount" /> <eq> 4 </eq> <!--VUI+ expected childcount, old UIO screws that -->
+			<or> <not src="child(list_box_templates)" trait="_VUI+Fade" /> </or> <!--VUI+ unless its overwritten by the Loot Menu (in which case it will trigger the standard warning) -->
+			<and>
+				<not>
+					<copy src="child(MCMarrow)" trait="filewidth" />
+					<div src="child(MCMarrow)" trait="fileheight" />
+					<neq> 1 </neq> <!--VUI+ MCM is installed but... -->
+					<onlyifnot src="MCM" trait="_MCM" /> <!--VUI+ ...it's not registered on the start_menu -->
+					<and> <neg> -1 </neg> <sub> 1 </sub> </and> <!--VUI+ and UIO isn't installed -->
+				</not>
+			</and>
+			<or> <not src="globals" trait="_VUI+Vegas" /> </or> <!--VUI+ excempt FO3 from this diagnostic -->
+		</_VUI+UIO_Verify>
+		
+		<image name="MCMarrow"> <filename> MCM\MeterArrow.dds </filename> </image>
+		
+		<_VUI+FontVerify>
+			<!--VUI+ results in 0 if one of the standard fonts is mapped to a non-existing texture (issue caused by old guides) -->
+			<copy src="globals" trait="_VUI+FontH_1" />
+			<mul src="globals" trait="_VUI+FontH_2" />
+			<mul src="globals" trait="_VUI+FontH_3" />
+			<mul src="globals" trait="_VUI+FontH_4" />
+			<mul src="globals" trait="_VUI+FontH_5" />
+			<mul src="globals" trait="_VUI+FontH_6" />
+			<mul src="globals" trait="_VUI+FontH_7" />
+			<mul src="globals" trait="_VUI+FontH_8" />
+		</_VUI+FontVerify>
+
+		<rect name="list_box_templates">
+			<include src="list_box_template.xml" />
+			<include src="vertical_fade_line.xml" /> <!--VUI+ contains a child block -->
+			<include src="vertical_fade_line.xml" /> <!--VUI+ old versions of UIO will erroneously delete this 2nd include -->
+			<visible> 0 </visible>
+		</rect>
+
+		<rect name="list_box">
+			<include src="list_box.xml" />
+			<visible> 0 </visible>
+		</rect>
+
+		<text name="overwrite_warning">
+			<x> 15 </x>
+			<y> 15 </y>
+			<wrapwidth>
+				<copy src="parent" trait="width" />
+				<sub> 30 </sub>
+			</wrapwidth>
+			<font> 3 </font>
+			<systemcolor> &nosystemcolor </systemcolor>
+			<depth> 1 </depth>
+			<string>Vanilla UI Plus has detected an installation error. If you are using MO2, simply drag this mod (not the plugin) under conflicting mods and make sure you have installed UIO!</string>
+			<visible> <not src="parent" trait="_VUI+OverwriteVerify" /> </visible>
+			<_VUI+OutlineIntensity>3 </_VUI+OutlineIntensity>
+			<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+		</text>
+		<include src="VUI+\outline.xml"/>
+
+		<text name="UIO_warning">
+			<x> <copy src="sibling" trait="x" /> </x>
+			<y>
+				<copy src="sibling" trait="height" />
+				<add> 15 </add>
+				<onlyif src="sibling" trait="visible" />
+				<add src="sibling" trait="y" />
+			</y>
+			<wrapwidth> <copy src="sibling" trait="wrapwidth" /> </wrapwidth>
+			<font> <copy src="sibling" trait="font" /> </font>
+			<systemcolor> <copy src="sibling" trait="systemcolor" /> </systemcolor>
+			<depth> <copy src="sibling" trait="depth" /> </depth>
+			<string> Vanilla UI Plus has detected that your game is missing the User Interface Organizer, or you are using a deprecated version. Please upgrade UIO to the latest version. </string>
+			<visible> <not src="parent" trait="_VUI+UIO_Verify" /> </visible>
+			<_VUI+OutlineIntensity>3 </_VUI+OutlineIntensity>
+			<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+		</text>
+		<include src="VUI+\outline.xml"/>
+
+		<image name="font_warning">
+			<include src="VUI+\cropratio.xml" />
+			<filename> Interface\VUI+\font_warning.dds </filename>
+			<x> <copy src="sibling" trait="x" /> </x>
+			<y>
+				<copy src="sibling" trait="height" />
+				<add> 15 </add>
+				<onlyif src="sibling" trait="visible" />
+				<add src="sibling" trait="y" />
+			</y>
+			<width> <copy src="sibling" trait="wrapwidth" /> </width>
+			<systemcolor> <copy src="sibling" trait="systemcolor" /> </systemcolor>
+			<depth> <copy src="sibling" trait="depth" /> </depth>
+			<visible> <not src="parent" trait="_VUI+FontVerify" /> </visible>
+		</image>
+	</hotrect>
+
+	<template name="lb_item_template">
+		<hotrect name="lb_item_hotrect">
+			<include src="list_box_template.xml"/>
+			<brightness> <copy src="io" trait="brightness"/> </brightness>
+			<height> <copy src="io" trait="_item_height"/> </height>
+			<user0> 0 </user0> <!-- action mapping visibility: 0=none 1=button text 2=button icon -->
+			<user1></user1> <!-- button text or icon filename -->
+			<visible>
+				<!--VUI+ remove FO3 LIVE & Downloads -->
+				<copy src="parent" trait="id" /> <gt> 0 </gt>
+				<or> <copy src="parent" trait="childcount" /> <lt> 9 </lt> </or>
+				<or> <copy src="parent" trait="childcount" /> <gt> 10 </gt> </or>
+				<or> <copy src="me" trait="listindex" /> <lt> 5 </lt> </or>
+				<or> <copy src="me" trait="listindex" /> <gt> 6 </gt> </or>
+				<or>
+					<copy src="me" trait="listindex" /> <eq> 6 </eq>
+					<and> <copy src="parent" trait="childcount" /> <neq> 10 </neq> </and>
+				</or>
+				<onlyifnot src="globals" trait="_VUI+Vegas" />
+				<or>
+					<!--VUI+ remove NV "Downloadable Content" -->
+					<copy src="parent" trait="id" /> <gt> 0 </gt>
+					<or> <copy src="parent" trait="childcount" /> <neq> 9 </neq> </or>
+					<or> <copy src="me" trait="listindex" /> <neq> 5 </neq> </or>
+					<onlyif src="globals" trait="_VUI+Vegas" />
+				</or>
+			</visible>
+			<_enabled> <copy src="me" trait="visible" /> </_enabled> <!--VUI+ prevent removed items from being selectable -->
+
+			<text name="ListItemText">
+				<font> <copy src="io" trait="font" /> </font>
+				<string> <copy src="parent" trait="string"/> </string>
+				<justify>
+					<copy> &left; </copy>
+					<onlyif>
+						<copy src="grandparent" trait="_leftjustify"/>
+						<eq> 1 </eq>
+					</onlyif>
+					<add>
+						<copy> &right; </copy>
+						<onlyifnot>
+							<copy src="grandparent" trait="_leftjustify"/>
+							<eq> 1 </eq>
+						</onlyifnot>
+					</add>
+				</justify>
+				<alpha>
+					<copy src="grandparent" trait="_alpha"/>
+					<min>
+						<copy> 255 </copy>
+						<sub>
+							<copy> 128 </copy>
+							<onlyifnot>
+								<copy src="grandparent" trait="_enabled"/>
+								<or src="parent" trait="_selected"/>
+								<and src="parent" trait="_enabled"/>
+							</onlyifnot>
+						</sub>
+					</min>
+				</alpha>
+				<brightness>
+					<copy src="me" trait="alpha"/>
+					<add> <!--VUI+ target highlighting -->
+						<copy src="globals" trait="_VUI+Highlighting" />
+						<onlyif src="parent" trait="_VUI+Highlighted" />
+					</add>
+				</brightness>
+				<x>
+					<copy src="parent" trait="width"/>
+					<sub> 20 </sub>
+					<onlyif>
+						<copy src="me" trait="justify"/>
+						<eq> &right; </eq>
+					</onlyif>
+					<add>
+						<copy> 20 </copy>
+						<onlyif>
+							<copy src="me" trait="justify"/>
+							<eq> &left; </eq>
+						</onlyif>
+					</add>
+				</x>
+				<y>
+					<copy src="parent" trait="height" />
+					<sub src="me" trait="height" />
+					<div> 2 </div>
+					<add>
+						<copy src="me" trait="font" />
+						<copy src="globals" trait="_VUI+FontY_"/>
+					</add>
+				</y>
+			</text>
+
+			<text name="lb_item_button_text">
+				<visible>
+					<copy src="parent" trait="user0"/>
+					<eq> 1 </eq>
+				</visible>
+				<string> <copy src="parent" trait="user1"/> </string>
+				<justify> &center; </justify>
+				<font> <copy src="io" trait="font" /> </font>
+				<alpha>
+					<copy src="grandparent" trait="_alpha"/>
+					<min>
+						<copy> 255 </copy>
+						<sub>
+							<copy> 128 </copy>
+							<onlyifnot>
+								<copy src="grandparent" trait="_enabled"/>
+								<or src="parent" trait="_selected"/>
+								<and src="parent" trait="_enabled"/>
+							</onlyifnot>
+						</sub>
+					</min>
+				</alpha>
+				<brightness> <copy src="sibling" trait="brightness" /> </brightness> <!--VUI+ target highlighting -->
+				<x>
+					<copy src="parent" trait="width"/>
+					<sub> 50 </sub>
+					<sub>
+						<copy> 30 </copy>
+						<onlyifnot> <copy src="io" trait="user5"/> </onlyifnot>
+					</sub>
+				</x>
+				<y> <copy src="sibling" trait="y" /> </y>
+			</text>
+
+			<image name="lb_item_button_icon">
+				<visible>
+					<copy src="parent" trait="user0"/>
+					<eq> 2 </eq>
+				</visible>
+				<filename> <copy src="parent" trait="user1"/> </filename>
+				<texatlas> Interface\InterfaceShared.tai </texatlas> <!-- Make sure to pull button icons from the texture atlas -->
+				<!-- #37077: For reasons unknown, making the icons 64x64 introduces small artifacts. Going to 63x63 seems to fix it -->
+				<width> 63 </width>
+				<height> 63 </height>
+				<alpha>
+					<copy src="grandparent" trait="_alpha"/>
+					<min>
+						<copy> 255 </copy>
+						<sub>
+							<copy> 128 </copy>
+							<onlyifnot>
+								<copy src="grandparent" trait="_enabled"/>
+								<or src="parent" trait="_selected"/>
+								<and src="parent" trait="_enabled"/>
+							</onlyifnot>
+						</sub>
+					</min>
+				</alpha>
+				<brightness> <copy src="sibling" trait="brightness" /> </brightness> <!--VUI+ target highlighting -->
+				<x>
+					<copy src="sibling(lb_item_button_text)" trait="x"/>
+					<sub>
+						<copy src="me" trait="width"/>
+						<div> 2 </div>
+					</sub>
+				</x>
+				<y>
+					<copy src="parent" trait="height"/>
+					<sub src="me" trait="height"/>
+					<div> 2 </div>
+				</y>
+			</image>
+		</hotrect>
+	</template>
+
+	<template name="lb_meter_template">
+		<hotrect name="lb_meter_template_item">
+			<include src="list_box_template.xml"/>
+			<mouseoversound> &nosound; </mouseoversound>
+			<clicksound> &nosound; </clicksound>
+			<xdefault> 1 </xdefault>
+			<repeathorizontal> 1 </repeathorizontal>
+			<user0></user0> <!-- num ticks to display -->
+			<user1>
+				<copy src="me" trait="user3"/>
+				<div> 5 </div>
+			</user1>
+			<user2> 1 </user2> <!-- arrow display (0=left 1=both 2=right) -->
+			<user3></user3> <!-- max ticks to display -->
+			<user4> 10 </user4> <!-- arrow spacing -->
+			<_VUI+Value> <!--VUI+ 0 for min, 1 for max -->
+				<copy src="me" trait="user0"/>
+				<div src="me" trait="user3"/>
+			</_VUI+Value>
+			<brightness> <copy src="io" trait="brightness"/> </brightness>
+			<_VerticalSpacing> 10 </_VerticalSpacing>
+
+			<text name="ListItemText">
+				<font> <copy src="io" trait="font" /> </font>
+				<string> <copy src="parent" trait="string"/> </string>
+				<brightness>
+					<copy> 255 </copy>
+					<add>
+						<copy src="globals" trait="_VUI+Highlighting" /> <div> 2 </div>
+						<onlyif>
+							<copy src="parent" trait="mouseover" />
+							<and src="globals" trait="_Has360Controller" />
+							<copy src="sibling(lb_meter_hotrect)" trait="mouseover" />
+							<or src="sibling(lb_meter_left)" trait="mouseover" />
+							<or src="sibling(lb_meter_right)" trait="mouseover" />
+						</onlyif>
+					</add>
+				</brightness>
+				<alpha>
+					<copy src="grandparent" trait="_alpha"/>
+					<min>
+						<copy> 255 </copy>
+						<sub>
+							<copy> 128 </copy>
+							<onlyifnot src="parent" trait="_enabled"/>
+						</sub>
+					</min>
+				</alpha>
+				<x> 10 </x>
+				<y>
+					<copy src="parent" trait="height" />
+					<sub src="me" trait="height" />
+					<div> 2 </div>
+					<add>
+						<copy src="me" trait="font" />
+						<copy src="globals" trait="_VUI+FontY_"/>
+					</add>
+				</y>
+			</text>
+
+			<image name="lb_meter_left">
+				<id> 100 </id>
+				<filename> Interface\Main\main_arrow_left.dds </filename>
+				<target> 1 </target>
+				<mouseoversound> UIMenuFocus </mouseoversound>
+				<clicksound> UIMenuPrevNext </clicksound>
+				<depth> 3 </depth>
+				<visible>
+					<copy src="parent" trait="mouseover"/>
+					<add src="me" trait="mouseover"/>
+					<add src="sibling(lb_meter_hotrect)" trait="mouseover"/>
+					<add src="sibling(lb_meter_right)" trait="mouseover"/>
+					<eq> 1 </eq>
+					<and>
+						<copy src="parent" trait="user2"/>
+						<lt> 2 </lt>
+					</and>
+					<and> <!--VUI+ don't display for values < 0 -->
+						<copy src="parent" trait="_VUI+Value" />
+						<gte> 0 </gte>
+					</and>
+				</visible>
+				<alpha> <copy src="grandparent" trait="_alpha"/> </alpha>
+				<x>
+					<copy src="sibling(lb_meter_hotrect)" trait="x"/>
+					<sub src="parent" trait="user4"/>
+					<sub src="me" trait="width"/>
+					<add> 6 </add>
+				</x>
+				<y>
+					<copy src="parent" trait="height"/>
+					<sub src="me" trait="height"/>
+					<div> 2 </div>
+					<add> 5 </add>
+				</y>
+				<!--VUI+ match with the Container menu -->
+				<width> 17.4 </width>
+				<height> 35 </height>
+				<zoom> &scale; </zoom>
+			</image>
+
+			<hotrect name="lb_meter_hotrect">
+				<id> 102 </id>
+				<locus> 1 </locus>
+				<!--VUI+ disable clicking when the meter is beyond its limits -->
+				<target>
+					<copy src="parent" trait="_VUI+Value" /> <gte> 0 </gte>
+					<and>
+						<copy src="parent" trait="_VUI+Value" /> <lte> 1 </lte>
+					</and>
+				</target>
+				<alpha>
+					<copy src="globals" trait="_VUI+Highlighting" />
+					<onlyif>
+						<copy src="parent" trait="_VUI+Highlighted" />
+						<and src="globals" trait="_Has360Controller" />
+						<or src="me" trait="mouseover" />
+						<or src="sibling(lb_meter_left)" trait="mouseover" />
+						<or src="sibling(lb_meter_right)" trait="mouseover" />
+					</onlyif>
+					<add>
+						<copy src="grandparent" trait="_alpha"/>
+						<div> 1.2 </div>
+					</add>
+				</alpha>
+				<mouseoversound> UIMenuFocus </mouseoversound>
+				<clicksound> UIMenuPrevNext </clicksound>
+				<depth> 3 </depth>
+				<x>
+					<copy src="me" trait="_center_x"/>
+					<sub>
+						<copy src="me" trait="width"/>
+						<div> 2 </div>
+					</sub>
+				</x>
+				<y>
+					<copy src="parent" trait="height"/>
+					<sub src="me" trait="height"/>
+					<div> 2 </div>
+				</y>
+				<width>
+					<copy src="parent" trait="user3"/>
+					<mul> 8 </mul>
+				</width>
+				<height> 23 </height> <!--VUI+ see meter.xml -->
+				<_alpha> <copy src="me" trait="alpha"/> </_alpha>
+				<_center_x> <copy src="io" trait="_center_x"/> </_center_x>
+				<brightness> <!--VUI+ target highlighting -->
+					<copy src="globals" trait="_VUI+Highlighting" />
+					<onlyif>
+						<copy src="parent" trait="_VUI+Highlighted" />
+						<and src="globals" trait="_Has360Controller" />
+						<or src="me" trait="mouseover" />
+						<or src="sibling(lb_meter_left)" trait="mouseover" />
+						<or src="sibling(lb_meter_right)" trait="mouseover" />
+					</onlyif>
+					<add> 30 </add>
+				</brightness>
+
+				<rect name="lb_meter_image">
+					<include src="meter.xml"/>
+					<alpha>
+						<copy src="parent" trait="_alpha"/>
+						<add> <copy src="parent" trait="brightness" /> <mul> 2 </mul> </add> <!--VUI+ target highlighting -->
+					</alpha>
+					<width> <copy src="parent" trait="width"/> </width>
+					<_Value>
+						<copy src="grandparent" trait="_VUI+Value"/>
+						<min> 1 </min> <!--VUI+ don't allow the meter bar to break outside its limits -->
+						<max> 0 </max>
+					</_Value>
+				</rect>
+
+				<!--VUI+ the following displays a percentage of the meter's value when it's overdriven above 1 or below 0; this is helpful when using FalloutPrefs tweaks -->
+				<rect name="VUI+Overdrive">
+					<include src="VUI+\outline_rect.xml"/>
+					<string>
+						<copy src="grandparent" trait="_VUI+Value" />
+						<mul> 100 </mul>
+					</string>
+					<font> 3 </font>
+					<justify> &center; </justify>
+					<x>
+						<copy src="parent" trait="width" />
+						<sub src="sibling(VUI+OverdrivePercent)" trait="width" />
+						<div> 2 </div>
+					</x>
+					<y>
+						<copy src="parent" trait="height" />
+						<sub src="me" trait="height" />
+						<div> 2 </div>
+						<add>
+							<copy src="me" trait="font" />
+							<copy src="globals" trait="_VUI+FontY_"/>
+						</add>
+						<sub> 0.5 </sub>
+					</y>
+					<alpha> <copy src="parent" trait="alpha" /> <mul> 1.8 </mul> </alpha>
+					<depth> 3 </depth>
+					<visible>
+						<copy src="grandparent" trait="_VUI+Value" />
+						<gt> 1 </gt>
+						<or>
+							<copy src="grandparent" trait="_VUI+Value" />
+							<lt> 0 </lt>
+						</or>
+					</visible>
+					<systemcolor> &hudalt; </systemcolor>
+				</rect>
+
+				<rect name="VUI+OverdrivePercent">
+					<include src="VUI+\outline_rect.xml"/>
+					<string>%</string>
+					<font> 3 </font>
+					<y> <copy src="sibling(VUI+Overdrive)" trait="y" /> </y>
+					<x>
+						<copy src="sibling(VUI+Overdrive)" trait="width" />
+						<div> 2 </div>
+						<add src="sibling(VUI+Overdrive)" trait="x" />
+					</x>
+					<alpha> <copy src="sibling" trait="alpha" /> </alpha>
+					<systemcolor> &hudalt; </systemcolor>
+					<depth> 3 </depth>
+					<visible> <copy src="sibling(VUI+Overdrive)" trait="visible" /> </visible>
+				</rect>
+			</hotrect>
+
+			<image name="lb_meter_right">
+				<id> 101 </id>
+				<alpha> <copy src="grandparent" trait="_alpha"/> </alpha>
+				<filename> Interface\Main\main_arrow_right.dds </filename>
+				<target> 1 </target>
+				<mouseoversound> UIMenuFocus </mouseoversound>
+				<clicksound> UIMenuPrevNext </clicksound>
+				<depth> 3 </depth>
+				<visible>
+					<copy src="parent" trait="mouseover"/>
+					<add src="me" trait="mouseover"/>
+					<add src="sibling(lb_meter_hotrect)" trait="mouseover"/>
+					<add src="sibling(lb_meter_left)" trait="mouseover"/>
+					<eq> 1 </eq>
+					<and>
+						<copy src="parent" trait="user2"/>
+						<gt> 0 </gt>
+					</and>
+					<and> <!--VUI+ don't display for values > 1 -->
+						<copy src="parent" trait="_VUI+Value" />
+						<lte> 1 </lte>
+					</and>
+				</visible>
+				<alpha> <copy src="grandparent" trait="_alpha"/> </alpha>
+				<x>
+					<copy src="sibling(lb_meter_hotrect)" trait="x"/>
+					<add src="sibling(lb_meter_hotrect)" trait="width"/>
+					<add src="parent" trait="user4"/>
+				</x>
+				<y> <copy src="sibling(lb_meter_left)" trait="y"/> </y>
+				<width> <copy src="sibling(lb_meter_left)" trait="width"/> </width>
+				<height> <copy src="sibling(lb_meter_left)" trait="height"/> </height>
+				<zoom> &scale; </zoom>
+			</image>
+		</hotrect>
+	</template>
+
+	<template name="lb_toggle_template">
+		<hotrect name="lb_toggle_template_item">
+			<include src="list_box_template.xml"/>
+			<mouseoversound> &nosound; </mouseoversound>
+			<clicksound> &nosound; </clicksound>
+			<xdefault> 1 </xdefault>
+			<user0></user0> <!-- value string -->
+			<user1> 0 </user1> <!-- jump value (LB/RB) -->
+			<user2></user2> <!-- arrow display (0=left 1=both 2=right) -->
+			<user4> 45 </user4> <!-- arrow spacing -->
+			<brightness> <copy src="io" trait="brightness"/> </brightness>
+			<_VerticalSpacing> 10 </_VerticalSpacing>
+
+			<text name="ListItemText">
+				<font> <copy src="io" trait="font" /> </font>
+				<string> <copy src="parent" trait="string"/> </string>
+				<!--VUI+ target highlighting -->
+				<brightness>
+					<copy> 255 </copy>
+					<add>
+						<copy src="globals" trait="_VUI+Highlighting" /> <div> 2 </div>
+						<onlyif>
+							<copy src="parent" trait="mouseover" />
+							<and src="globals" trait="_Has360Controller" />
+							<or src="sibling(lb_toggle_value)" trait="mouseover" />
+							<or src="sibling(lb_toggle_left)" trait="mouseover" />
+							<or src="sibling(lb_toggle_right)" trait="mouseover" />
+						</onlyif>
+					</add>
+				</brightness>
+				<alpha>
+					<copy src="grandparent" trait="_alpha"/>
+					<min>
+						<copy> 255 </copy>
+						<sub>
+							<copy> 128 </copy>
+							<onlyifnot src="parent" trait="_enabled"/>
+						</sub>
+					</min>
+				</alpha>
+
+				<x> 10 </x>
+				<y>
+					<copy src="parent" trait="height" />
+					<sub src="me" trait="height" />
+					<div> 2 </div>
+					<add>
+						<copy src="me" trait="font" />
+						<copy src="globals" trait="_VUI+FontY_"/>
+					</add>
+				</y>
+			</text>
+
+			<image name="lb_toggle_left">
+				<id> 100 </id>
+				<filename> Interface\Main\main_arrow_left.dds </filename>
+				<mouseoversound> UIMenuFocus </mouseoversound>
+				<clicksound> UIMenuPrevNext </clicksound>
+				<alpha> <copy src="sibling(ListItemText)" trait="alpha"/> </alpha>
+				<target> 1 </target>
+				<depth> 5 </depth>
+				<visible>
+					<copy src="parent" trait="mouseover"/>
+					<add src="me" trait="mouseover"/>
+					<add src="sibling(lb_toggle_right)" trait="mouseover"/>
+					<add src="sibling(lb_toggle_value)" trait="mouseover"/>
+					<eq> 1 </eq>
+					<and>
+						<copy src="parent" trait="user2"/>
+						<lt> 2 </lt>
+					</and>
+				</visible>
+				<x>
+					<copy src="sibling(lb_toggle_value)" trait="_x"/>
+					<sub src="parent" trait="user4"/>
+					<sub src="me" trait="width"/>
+					<add> 6 </add>
+				</x>
+				<y>
+					<copy src="parent" trait="height"/>
+					<sub src="me" trait="height"/>
+					<div> 2 </div>
+					<add> 5 </add>
+				</y>
+				<!--VUI+ match with the Container menu -->
+				<width> 17.4 </width>
+				<height> 35 </height>
+				<zoom> &scale; </zoom>
+			</image>
+
+			<hotrect name="lb_toggle_value">
+				<id> &generic; </id>
+				<include src="text_box.xml"/>
+				<mouseoversound> UIMenuFocus </mouseoversound>
+				<clicksound> UIMenuPrevNext </clicksound>
+				<depth> 3 </depth>
+				<_VUI+Highlight> <!--VUI+ brightness of this string must be controlled through the text_box template, otherwise it gets buggy when clicked upon -->
+					<copy src="parent" trait="mouseover" />
+					<and src="globals" trait="_Has360Controller" />
+					<or src="sibling(lb_toggle_left)" trait="mouseover" />
+					<or src="sibling(lb_toggle_right)" trait="mouseover" />
+				</_VUI+Highlight>
+				<string> <copy src="parent" trait="user0"/> </string>
+				<justify> &center; </justify>
+				<_glow> 1 </_glow>
+				<_x> <copy src="io" trait="_center_x"/> </_x>
+				<_y> 0 </_y>
+				<_box_visible> 0 </_box_visible>
+				<_horbuf> 20 </_horbuf>
+				<_verbuf> 10 </_verbuf>
+				<_line_alpha> <copy src="sibling(ListItemText)" trait="alpha"/> </_line_alpha>
+			</hotrect>
+
+			<image name="lb_toggle_right">
+				<id> 101 </id>
+				<alpha> <copy src="sibling(ListItemText)" trait="alpha"/> </alpha>
+				<filename> Interface\Main\main_arrow_right.dds </filename>
+				<mouseoversound> UIMenuFocus </mouseoversound>
+				<clicksound> UIMenuPrevNext </clicksound>
+				<target> 1 </target>
+				<depth> 5 </depth>
+				<visible>
+					<copy src="parent" trait="mouseover"/>
+					<add src="me" trait="mouseover"/>
+					<add src="sibling(lb_toggle_left)" trait="mouseover"/>
+					<add src="sibling(lb_toggle_value)" trait="mouseover"/>
+					<eq> 1 </eq>
+					<and>
+						<copy src="parent" trait="user2"/>
+						<gt> 0 </gt>
+					</and>
+				</visible>
+				<x>
+					<copy src="sibling(lb_toggle_value)" trait="_x"/>
+					<add src="parent" trait="user4"/>
+				</x>
+				<y> <copy src="sibling(lb_toggle_left)" trait="y"/> </y>
+				<width> <copy src="sibling(lb_toggle_left)" trait="width"/> </width>
+				<height> <copy src="sibling(lb_toggle_left)" trait="height"/> </height>
+				<zoom> &scale; </zoom>
+			</image>
+		</hotrect>
+	</template>
+
+	<template name="lb_saveload_template">
+		<hotrect name="lb_saveload_template_item">
+			<include src="list_box_template.xml" />
+			<xdefault> 1 </xdefault>
+			<user0></user0> <!-- Save prefix (either game number, AUTO, or QUICK) -->
+			<user1></user1> <!-- Save Location -->
+			<!--VUI+ prevent the location string from clipping outside of the list box -->
+			<clipwindow> 1 </clipwindow>
+			<width> <copy src="parent" trait="width" /> <sub> 50 </sub> </width>
+			<visible>
+				<copy src="parent" trait="user0"/>
+				<or src="me" trait="_selected"/>
+				<and>
+					<copy src="me" trait="listindex"/>
+					<gte> 0 </gte>
+				</and>
+				<and> <copy src="me" trait="y" /> <gte> 0 </gte> </and> <!--VUI+ required for clipwindow=true otherwise items scrolled outside the box are still visible -->
+				<and> <copy src="me" trait="y" /> <lt> <copy src="parent" trait="height" /> </lt> </and>
+			</visible>
+			<brightness> <copy src="io" trait="brightness"/> </brightness>
+			<_VerticalSpacing> <copy src="parent" trait="_VUI+VerticalSpacing" /> </_VerticalSpacing>
+
+			<text name="lb_saveload_prefix">
+				<brightness>
+					<copy src="io" trait="brightness"/>
+					<add> <!--VUI+ target highlighting -->
+						<copy src="globals" trait="_VUI+Highlighting" />
+						<onlyif src="parent" trait="_VUI+Highlighted" />
+					</add>
+				</brightness>
+				<font> <copy src="io" trait="font" /> </font>
+				<alpha> <copy src="grandparent" trait="_alpha"/> <div> 1.5 </div> </alpha> <!--VUI+ reduce opacity of the prefix to better pronounce the location -->
+				<string> <copy src="parent" trait="user0"/> </string>
+				<x> <copy src="grandparent" trait="_text_offset"/> </x>
+				<y>
+					<copy src="me" trait="font" />
+					<copy src="globals" trait="_VUI+FontY_"/>
+					<add>
+						<copy src="parent" trait="_VerticalSpacing" />
+						<div> 2 </div>
+					</add>
+				</y>
+			</text>
+
+			<text name="lb_saveload_location">
+				<brightness> <copy src="sibling" trait="brightness" /> </brightness>
+				<font> <copy src="io" trait="font" /> </font>
+				<alpha> <copy src="grandparent" trait="_alpha"/> </alpha>
+				<string> <copy src="parent" trait="user1"/> </string>
+				<x> 100 </x>
+				<y> <copy src="sibling" trait="y"/> </y>
+			</text>
+		</hotrect>
+	</template>
+
+	<template name="lb_newsave_template">
+		<hotrect name="lb_newsave_template_item">
+			<include src="list_box_template.xml" />
+			<xdefault> 1 </xdefault>
+			<visible>
+				<copy src="parent" trait="user0"/>
+				<or src="me" trait="_selected"/>
+				<and>
+					<copy src="me" trait="listindex"/>
+					<gte> 0 </gte>
+				</and>
+			</visible>
+			<brightness> <copy src="io" trait="brightness"/> </brightness>
+			<_VerticalSpacing> 10 </_VerticalSpacing>
+
+			<text name="ListItemText">
+				<font> <copy src="io" trait="font" /> </font>
+				<string> <copy src="parent" trait="string"/> </string>
+				<alpha> <copy src="grandparent" trait="_alpha"/> </alpha>
+				<brightness> <!--VUI+ target highlighting -->
+					<copy src="globals" trait="_VUI+Highlighting" />
+					<onlyif src="parent" trait="mouseover" /> <!--VUI+ non-standard list item -->
+					<add> 255 </add>
+				</brightness>
+				<x> <copy src="grandparent" trait="_text_offset"/> </x>
+				<y> 13 </y>
+			</text>
+		</hotrect>
+	</template>
+</menu>

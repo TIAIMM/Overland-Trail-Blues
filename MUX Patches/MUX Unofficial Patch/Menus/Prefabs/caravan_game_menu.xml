@@ -1,0 +1,547 @@
+<!-- caravan_game_menu.xml -->
+<!-- 
+ Obsidian Entertainment Incorporated
+ FILE     caravan_game_menu.xml
+ VERSION  1.0
+ AUTHOR:	Jonathan Burke
+ DATE     4/6/2010
+ INFO     Caravan Game Interface XML
+-->
+
+<!-- No controls should be defined caravan in XMLs
+      All controls will be handled in code -->
+
+<rect name="CDG_MainRect">
+  <id> 2 </id>
+  <!-- Centered on screen-->
+  <x>
+    <copy src="screen()" trait="width"/>
+    <sub src="me()" trait="width"/>
+    <div> 2 </div>
+  </x>
+  <y>
+    <copy src="screen()" trait="height"/>
+    <sub src="me()" trait="height"/>
+    <div> 2 </div>
+  </y>
+
+  <!-- Total size of the safe zone -->
+  <width>
+    <copy src="screen()" trait="width"/>
+    <sub>
+      <copy src="screen()" trait="cropx"/>
+      <mul> 4 </mul>
+    </sub>
+  </width>
+  <height>
+    <copy src="screen()" trait="height"/>
+    <sub>
+      <copy src="screen()" trait="cropy"/>
+      <mul> 4 </mul>
+    </sub>
+  </height>
+
+  <locus> &true; </locus>
+  <systemcolor> &hudmain; </systemcolor>
+  <depth> 2 </depth>
+
+  <!--	===== INFO RECT ===== -->
+  <rect name="CGM_InfoRect">
+    <x>
+      <copy src="parent()" trait="width"/>
+      <sub>300</sub>
+    </x>
+    <y> 10 </y>
+    <width> 300 </width>
+    <height> 200 </height>
+    <locus> &true; </locus>
+    <visible>
+      <copy src="parent()" trait="visible"/>
+    </visible>
+
+    <!-- ===== INFO DISPLAYS ===== -->
+    <!-- Ante -->
+    <rect name="CGM_AnteDisplay">
+      <id> 16 </id>
+      <_Value> 0 </_Value>
+      <locus> &true; </locus>
+      <x> 20 </x>
+      <y> 0 </y>
+      <width>
+        <copy src="parent()" trait="width"/>
+        <sub> 80 </sub>
+      </width>
+      <locus> &true; </locus>
+      <visible>
+        <copy src="parent()" trait="visible"/>
+      </visible>
+
+      <rect name="CGM_AnteTitle">
+	<include src="VUI+\outline_rect.xml"/>
+        <id> 44 </id>
+        <font> 7 </font>
+        <string>&-sAntePotText;</string>
+      <_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+
+      <rect name="CGM_AnteValue">
+	<include src="VUI+\outline_rect.xml"/>
+        <font> 7 </font>
+        <string>
+          <copy src="parent()" trait="_Value"/>
+        </string>
+        <justify> &right; </justify>
+        <x>
+          <copy src="parent()" trait="width"/>
+          <add> 20 </add>
+        </x>
+      <_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+    </rect>
+
+    <!-- NetTotal -->
+    <rect name="CGM_NetTotalDisplay">
+      <id> 17 </id>
+      <_Value> 0 </_Value>
+
+      <x> 20 </x>
+      <y> 45 </y>
+      <width>
+        <copy src="sibling(CGM_AnteDisplay)" trait="width"/>
+      </width>
+      <locus> &true; </locus>
+      <visible>
+        <copy src="parent()" trait="visible"/>
+      </visible>
+
+      <rect name="CGM_NetTotalTitle">
+	<include src="VUI+\outline_rect.xml"/>
+        <id> 45 </id>
+        <font> 7 </font>
+        <string>&-sNetTotalText</string>
+      <_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+
+      <rect name="CGM_NetTotalValue">
+	<include src="VUI+\outline_rect.xml"/>
+        <font> 7 </font>
+        <string>
+          <copy src="parent()" trait="_Value"/>
+        </string>
+        <justify> &right; </justify>
+        <x>
+          <copy src="parent()" trait="width"/>
+          <add> 20 </add>
+        </x>
+      <_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+    </rect>
+
+    <!-- Player's Total Funds -->
+    <rect name="CGM_WinLossDisplay">
+      <id> 18 </id>
+      <_Value> 0 </_Value>
+
+      <x> 20 </x>
+      <y> 90 </y>
+      <width>
+        <copy src="sibling(CGM_NetTotalDisplay)" trait="width"/>
+      </width>
+      <locus> &true; </locus>
+      <visible>
+        <copy src="parent()" trait="visible"/>
+      </visible>
+
+      <rect name="CGM_WinLossTitle">
+	<include src="VUI+\outline_rect.xml"/>
+        <id> 46 </id>
+        <font> 7 </font>
+        <string>&-sWinLossText;</string>
+      <_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+
+      <rect name="CGM_WinLossValue">
+	<include src="VUI+\outline_rect.xml"/>
+        <font> 7 </font>
+        <string>
+          <copy src="parent()" trait="_Value"/>
+        </string>
+        <justify> &right; </justify>
+        <x>
+          <copy src="parent()" trait="width"/>
+          <add> 20 </add>
+        </x>
+      <_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+    </rect>
+
+  </rect>
+  <!-- end CGM_InfoRect  -->
+
+  <!-- ===== BUTTON RECT ===== -->
+  <!-- creating from bottom up -->
+  <rect name="CGM_ButtonRect">
+    <x>
+      <copy src="parent()" trait="width"/>
+      <sub> 50 </sub>
+    </x>
+    <y>
+      <copy src="parent()" trait="height"/>
+      <sub src="me()" trait="height"/>
+      <sub> 10 </sub>
+    </y>
+    <width> 400 </width>
+    <height> 200 </height>
+    <locus> &true; </locus>
+    <depth> 6 </depth>
+    <visible>
+      <copy src="parent()" trait="visible"/>
+    </visible>
+
+    <!-- Select Card Button -->
+    <hotrect name="CGM_SelectCardButton">
+      <id>19</id>
+      <include src="text_box.xml"/>
+	<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+      <string>&-sSelectCardText;</string>
+      <justify> &right; </justify>
+      <_glow> &true; </_glow>
+      <_verbuf> 9 </_verbuf>
+      <visible>
+        <copy src="parent()" trait="visible"/>
+      </visible>
+      <_xbox_button> &xbuttonA; </_xbox_button>
+      <_PCButtonText> &-sPCMenuHintW; </_PCButtonText>
+    </hotrect>
+
+    <!-- Discard Card Button -->
+    <hotrect name="CGM_DiscardCardButton">
+      <include src="text_box.xml"/>
+	<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+      <id>20</id>
+      <_y>
+        <copy src="sibling(CGM_SelectCardButton)" trait="_y"/>
+        <add src="sibling(CGM_SelectCardButton)" trait="height"/>
+      </_y>
+      <string>&-sDiscardCardText;</string>
+      <justify> &right; </justify>
+      <_glow> &true; </_glow>
+      <_verbuf> 9 </_verbuf>
+      <visible>
+        <copy src="parent()" trait="visible"/>
+      </visible>
+      <_xbox_button> &xbuttonlt; </_xbox_button>
+      <_PCButtonText> &-sPCMenuHintQ; </_PCButtonText>
+    </hotrect>
+
+    <!-- Discard Track Button -->
+    <hotrect name="CGM_DiscardTrackButton">
+      <include src="text_box.xml"/>
+	<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+      <id>21</id>
+      <_y>
+        <copy src="sibling(CGM_DiscardCardButton)" trait="_y"/>
+        <add src="sibling(CGM_DiscardCardButton)" trait="height"/>
+      </_y>
+      <string>&-sDiscardTrackText;</string>
+      <justify> &right; </justify>
+      <_glow> &true; </_glow>
+      <_verbuf> 9 </_verbuf>
+      <visible>
+        <copy src="parent()" trait="visible"/>
+      </visible>
+      <_xbox_button> &xbuttonrt; </_xbox_button>
+      <_PCButtonText> &-sPCMenuHintE; </_PCButtonText>
+    </hotrect>
+
+    <!-- Cancel Button -->
+    <hotrect name="CGM_ForfeitGameButton">
+      <include src="text_box.xml"/>
+	<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+      <id>22</id>
+      <_y>
+        <copy src="sibling(CGM_DiscardTrackButton)" trait="_y"/>
+        <add src="sibling(CGM_DiscardTrackButton)" trait="height"/>
+      </_y>
+      <string>&-sForfeitGameText;</string>
+      <justify> &right; </justify>
+      <_glow> &true; </_glow>
+      <_verbuf> 9 </_verbuf>
+      <visible>
+        <copy src="parent()" trait="visible"/>
+      </visible>
+      <_xbox_button> &xbuttonB; </_xbox_button>
+      <_PCButtonText> &-sPCMenuHintR; </_PCButtonText>
+    </hotrect>
+
+  </rect>
+  <!-- end CGM_ButtonRect -->
+
+
+  <!--	===== NPC TRACK VALUES RECT ===== -->
+  <rect name="CGM_NPCTrackRect">
+    <x> 25 </x>
+    <y>
+      <copy src="parent()" trait="height"/>
+      <div> 2 </div>
+      <sub> 78 </sub> <!-- 78 -->
+    </y>
+    <height> 50 </height>
+    <width>
+      <copy src="parent()" trait="width"/>
+      <sub>
+        <copy src="parent()" trait="width"/>
+        <div>4</div>
+      </sub>
+    </width>
+    <locus> &true; </locus>
+    <visible>
+      &false;
+    </visible>
+
+    <rect name="CGM_NPCTrack1">
+      <id> 28 </id>
+      <_Value>  </_Value>
+
+      <width>50</width>
+      <x>  </x>
+      <locus> &true; </locus>
+      <visible>
+        <copy src="parent()" trait="visible"/>
+      </visible>
+      <rect name="CGM_NPCTrack1Value">
+	<include src="VUI+\outline_rect.xml"/>
+        <font> 7 </font>
+        <string>
+          <copy src="parent()" trait="_Value"/>
+        </string>
+        <justify> &right; </justify>
+      <_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+    </rect>
+
+    <rect name="CGM_NPCTrack2">
+      <id> 27 </id>
+      <_Value>  </_Value>
+
+      <width>50</width>
+      <!--<x>
+        <copy src="sibling(CGM_NPCTrack1)" trait="x"/>
+        <add> 270 </add>
+      </x>-->
+      <locus> &true; </locus>
+      <visible>
+        <copy src="parent()" trait="visible"/>
+      </visible>
+      <rect name="CGM_NPCTrack2Value">
+	<include src="VUI+\outline_rect.xml"/>
+        <font> 7 </font>
+        <string>
+          <copy src="parent()" trait="_Value"/>
+        </string>
+        <justify> &right; </justify>
+      <_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+    </rect>
+
+    <rect name="CGM_NPCTrack3">
+      <id> 26 </id>
+      <_Value>  </_Value>
+
+      <width>50</width>
+      <!--<x>
+        <copy src="sibling(CGM_NPCTrack2)" trait="x"/>
+        <add> 265 </add>
+      </x>-->
+      <locus> &true; </locus>
+      <visible>
+        <copy src="parent()" trait="visible"/>
+      </visible>
+      <rect name="CGM_NPCTrack3Value">
+	<include src="VUI+\outline_rect.xml"/>
+        <font> 7 </font>
+        <string>
+          <copy src="parent()" trait="_Value"/>
+        </string>
+        <justify> &right; </justify>
+      <_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+    </rect>
+
+  </rect>
+
+  <!--	===== Player TRACK VALUES RECT ===== -->
+  <rect name="CGM_PlayerTrackRect">
+    <x> 25 </x>
+    <y>
+      <copy src="parent()" trait="height"/>
+      <div> 2 </div>
+      <sub> 38 </sub> <!-- 38 -->
+    </y>
+    <height> 50 </height>
+    <width>
+      <copy src="parent()" trait="width"/>
+      <sub>
+        <copy src="parent()" trait="width"/>
+        <div>4</div>
+      </sub>
+    </width>
+    <locus> &true; </locus>
+    <visible>
+      &false;
+    </visible>
+    
+    <rect name="CGM_PlayerTrack1">
+      <id> 23 </id>
+      <_Value>  </_Value>
+
+      <width>50</width>
+      <x>  </x>
+      <locus> &true; </locus>
+      <visible>
+        <copy src="parent()" trait="visible"/>
+      </visible>
+      <rect name="CGM_PlayerTrack1Value">
+	<include src="VUI+\outline_rect.xml"/>
+        <_glow> &true; </_glow>
+        <font> 7 </font>
+        <string>
+          <copy src="parent()" trait="_Value"/>
+        </string>
+        <justify> &right; </justify>
+      <_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+    </rect>
+
+    <rect name="CGM_PlayerTrack2">
+      <id> 24 </id>
+      <_Value>  </_Value>
+      <systemcolor> &hudmain; </systemcolor>
+      <width>50</width>
+      <x>
+        <!--<copy src="sibling(CGM_PlayerTrack1)" trait="x"/>
+        <add> 270 </add>-->
+      </x>
+      <_glow> &true; </_glow>
+      <locus> &true; </locus>
+      <visible>
+        <copy src="parent()" trait="visible"/>
+      </visible>
+      <rect name="CGM_PlayerTrack2Value">
+	<include src="VUI+\outline_rect.xml"/>
+        <_glow> &true; </_glow>
+        <font> 7 </font>
+        <string>
+          <copy src="parent()" trait="_Value"/>
+        </string>
+        <justify> &right; </justify>
+      <_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+    </rect>
+
+    <rect name="CGM_PlayerTrack3">
+      <id> 25 </id>
+      <_Value>  </_Value>
+
+      <width>50</width>
+      <x>
+        <!--<copy src="sibling(CGM_PlayerTrack2)" trait="x"/>
+        <add> 265 </add>-->
+      </x>
+      <_glow> &true; </_glow>
+      <locus> &true; </locus>
+      <visible>
+        <copy src="parent()" trait="visible"/>
+      </visible>
+      <rect name="CGM_PlayerTrack3Value">
+	<include src="VUI+\outline_rect.xml"/>
+        <font> 7 </font>
+        <string>
+          <copy src="parent()" trait="_Value"/>
+        </string>
+        <justify> &right; </justify>
+      <_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+    </rect>
+
+  </rect>
+
+  <rect name="CGM_CardNumRect">
+    <x>
+      <copy src="parent()" trait="width"/>
+      <sub> 225 </sub>
+    </x>
+    <y>
+      <copy src="parent()" trait="height"/>
+      <div> 2 </div>
+      <sub> 145 </sub>
+    </y>
+    <locus> &true; </locus>
+    <visible>
+      <copy src="parent()" trait="visible"/>
+    </visible>
+
+    <rect name="CGM_NPCCardNum">
+      <id> 30 </id>
+      <_Value> 0 </_Value>
+
+      <width>50</width>
+      <locus> &true; </locus>
+      <visible>
+        <copy src="parent()" trait="visible"/>
+      </visible>
+      <rect name="CGM_NPCCardValue">
+	<include src="VUI+\outline_rect.xml"/>
+        <font> 7 </font>
+        <string>
+          <copy src="parent()" trait="_Value"/>
+        </string>
+        <justify> &left; </justify>
+      <_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+    </rect>
+
+    <rect name="CGM_PlayerCardNum">
+      <id> 29 </id>
+      <_Value> 0 </_Value>
+      <x> 25 </x>
+      <width>50</width>
+      <y>
+        230
+      </y>
+      <locus> &true; </locus>
+      <visible>
+        <copy src="parent()" trait="visible"/>
+      </visible>
+      <rect name="CGM_PlayerCardValue">
+	<include src="VUI+\outline_rect.xml"/>
+        <font> 7 </font>
+        <string>
+          <copy src="parent()" trait="_Value"/>
+        </string>
+        <justify> &left; </justify>
+      <_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+    </rect>
+  </rect>
+
+
+</rect>

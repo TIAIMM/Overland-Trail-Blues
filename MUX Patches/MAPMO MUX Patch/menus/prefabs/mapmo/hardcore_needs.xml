@@ -1,0 +1,817 @@
+<rect name="HardcoreNeeds">
+  <_water>0</_water>
+  <_water1>0</_water1>
+  <_water2>0</_water2>
+  <_water3>0</_water3>
+  <_water4>0</_water4>
+  <_water5>0</_water5>
+  <_food>0</_food>
+  <_food1>0</_food1>
+  <_food2>0</_food2>
+  <_food3>0</_food3>
+  <_food4>0</_food4>
+  <_food5>0</_food5>
+  <_sleep>0</_sleep>
+  <_sleep1>0</_sleep1>
+  <_sleep2>0</_sleep2>
+  <_sleep2>0</_sleep2>
+  <_sleep4>0</_sleep4>
+  <_sleep5>0</_sleep5>
+  <_rads>0</_rads>
+  <_rads1>0</_rads1>
+  <_rads2>0</_rads2>
+  <_rads2>0</_rads2>
+  <_rads4>0</_rads4>
+  <_rads5>0</_rads5>
+  <_totalwidth>
+    <copy src="child(WaterIcon)" trait="width"/>
+    <add>
+      <copy src="child(WaterGaugeBG)" trait="width"/>
+      <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsGauge"/><neq>0</neq></onlyif>
+      <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsGauge"/><neq>2</neq></onlyif>
+    </add>
+    <add>
+      <copy>0.9</copy><mult src="io" trait="_MAPMOHardcoreNeedsScale"/>
+      <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsGauge"/><eq>2</eq></onlyif>
+    </add>
+  </_totalwidth>
+  <alpha><copy src="parent" trait="alpha"/></alpha>
+  <locus>&true;</locus>
+  <visible><copy src="io" trait="_MAPMOShowHardcoreNeeds"/></visible>
+  <x><copy src="io" trait="_MAPMOHardcoreNeedsXPos"/></x>
+  <y><copy src="io" trait="_MAPMOHardcoreNeedsYPos"/></y>
+  <image name="WaterIcon">
+    <_toggle>1</_toggle>
+    <alpha>
+      <copy>0</copy>
+      <add><copy src="Dehydration" trait="alpha"/><onlyifnot src="io" trait="_MAPMOHardcoreNeedsAlwaysVisible"/></add>
+      <add><copy src="parent" trait="alpha"/><mult src="me" trait="_toggle"/><onlyif src="io" trait="_MAPMOHardcoreNeedsAlwaysVisible"/></add>
+      <max><copy>255</copy><onlyif src="io" trait="_MAPMOConfig"/></max>
+    </alpha>
+    <blue>
+      <copy>63</copy>
+      <sub><copy>39</copy><onlyif><copy src="parent" trait="_water"/><gt src="parent" trait="_water3"/></onlyif></sub>
+      <add><copy>36</copy><onlyif><copy src="parent" trait="_water"/><gt src="parent" trait="_water4"/></onlyif></add>
+    </blue>
+    <brightness>255</brightness>
+    <filename>mapmo\water.dds</filename>
+    <green>
+      <copy>255</copy>
+      <sub><copy>75</copy><onlyif><copy src="parent" trait="_water"/><gt src="parent" trait="_water3"/></onlyif></sub>
+      <sub><copy>85</copy><onlyif><copy src="parent" trait="_water"/><gt src="parent" trait="_water4"/></onlyif></sub>
+    </green>
+    <height><copy>0.63</copy><mult src="io" trait="_MAPMOHardcoreNeedsScale"/></height>
+    <red>255</red>
+    <systemcolor>
+      <copy>0</copy>
+      <add><copy>1</copy><onlyif><copy src="parent" trait="_water"/><lt src="parent" trait="_water2"/></onlyif></add>
+    </systemcolor>
+    <visible><copy src="io" trait="_MAPMOHardcore"/></visible>
+    <width><copy src="me" trait="height"/></width>
+    <x>
+      <copy>0</copy>
+      <add>
+        <copy src="sibling(WaterGaugeBG)" trait="width"/>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>0</neq></onlyif>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>2</neq></onlyif>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsGauge"/><neq>0</neq></onlyif>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsGauge"/><neq>2</neq></onlyif>
+      </add>
+    </x>
+    <zoom>&scale;</zoom>
+  </image>
+  <hotrect name="WaterGaugeBG">
+    <alpha><copy src="sibling(WaterIcon)" trait="alpha"/><mult>0.75</mult></alpha>
+    <brightness>255</brightness>
+    <depth>-2</depth>
+    <height><copy>0.4</copy><mult src="io" trait="_MAPMOHardcoreNeedsScale"/></height>
+    <visible>
+      <copy src="sibling(WaterIcon)" trait="visible"/>
+      <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsGauge"/><neq>0</neq></onlyif>
+      <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsGauge"/><neq>2</neq></onlyif>
+    </visible>
+    <width><copy>1.2</copy><mult src="io" trait="_MAPMOHardcoreNeedsScale"/></width>
+    <x>
+      <copy src="sibling(WaterIcon)" trait="x"/>
+      <add>
+        <copy src="sibling(WaterIcon)" trait="width"/>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>1</neq></onlyif>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>3</neq></onlyif>
+      </add>
+      <sub>
+        <copy src="me" trait="width"/>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>0</neq></onlyif>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>2</neq></onlyif>
+      </sub>
+    </x>
+    <y>
+      <copy src="sibling(WaterIcon)" trait="y"/>
+      <add><copy src="sibling(WaterIcon)" trait="height"/><div>2</div></add>
+      <sub><copy src="me" trait="height"/><div>2</div></sub>
+    </y>
+  </hotrect>
+  <hotrect name="WaterGauge">
+    <alpha><copy src="sibling(WaterGaugeBG)" trait="alpha"/></alpha>
+    <brightness>255</brightness>
+    <depth>-1</depth>
+    <blue><copy src="sibling(WaterIcon)" trait="blue"/></blue>
+    <green><copy src="sibling(WaterIcon)" trait="green"/></green>
+    <height><copy src="sibling(WaterGaugeBG)" trait="height"/></height>
+    <width><copy src="sibling(WaterGaugeBG)" trait="width"/><sub><copy src="sibling(WaterGaugeBG)" trait="width"/><mult><copy src="parent" trait="_water"/><div src="parent" trait="_water5"/></mult></sub></width>
+    <red><copy src="sibling(WaterIcon)" trait="red"/></red>
+    <systemcolor><copy src="sibling(WaterIcon)" trait="systemcolor"/></systemcolor>
+    <visible><copy src="sibling(WaterGaugeBG)" trait="visible"/></visible>
+    <x>
+      <copy src="sibling(WaterGaugeBG)" trait="x"/>
+      <add>
+        <copy src="sibling(WaterGaugeBG)" trait="width"/>
+        <sub><copy src="me" trait="width"/></sub>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>0</neq></onlyif>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>2</neq></onlyif>
+      </add>
+    </x>
+    <y><copy src="sibling(WaterGaugeBG)" trait="y"/></y>
+  </hotrect>
+  <image name="WaterThreshold">
+    <alpha><copy src="sibling(WaterGaugeBG)" trait="alpha"/></alpha>
+    <depth>1</depth>
+    <filename>interface\shared\arrow\repair_meter_pips.dds</filename>
+    <height><copy src="sibling(WaterGaugeBG)" trait="height"/></height>
+    <visible><copy src="sibling(WaterGaugeBG)" trait="visible"/><onlyif><copy src="parent" trait="_water"/><lte src="parent" trait="_water4"/></onlyif></visible>
+    <width><copy>0.32</copy><mult src="io" trait="_MAPMOHardcoreNeedsScale"/></width>
+    <x>
+      <copy src="sibling(WaterGaugeBG)" trait="x"/>
+      <add>
+        <copy src="sibling(WaterGaugeBG)" trait="width"/>
+        <sub>
+          <copy src="sibling(WaterGaugeBG)" trait="width"/><mult><copy src="parent" trait="_water1"/><div src="parent" trait="_water5"/></mult>
+          <onlyif><copy src="parent" trait="_water"/><lte src="parent" trait="_water1"/></onlyif>
+        </sub>
+        <sub>
+          <copy src="sibling(WaterGaugeBG)" trait="width"/><mult><copy src="parent" trait="_water2"/><div src="parent" trait="_water5"/></mult>
+          <onlyif><copy src="parent" trait="_water"/><gt src="parent" trait="_water1"/></onlyif>
+          <onlyif><copy src="parent" trait="_water"/><lte src="parent" trait="_water2"/></onlyif>
+        </sub>
+        <sub>
+          <copy src="sibling(WaterGaugeBG)" trait="width"/><mult><copy src="parent" trait="_water3"/><div src="parent" trait="_water5"/></mult>
+          <onlyif><copy src="parent" trait="_water"/><gt src="parent" trait="_water2"/></onlyif>
+          <onlyif><copy src="parent" trait="_water"/><lte src="parent" trait="_water3"/></onlyif>
+        </sub>
+        <sub>
+          <copy src="sibling(WaterGaugeBG)" trait="width"/><mult><copy src="parent" trait="_water4"/><div src="parent" trait="_water5"/></mult>
+          <onlyif><copy src="parent" trait="_water"/><gt src="parent" trait="_water3"/></onlyif>
+          <onlyif><copy src="parent" trait="_water"/><lte src="parent" trait="_water4"/></onlyif>
+        </sub>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>1</neq></onlyif>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>3</neq></onlyif>
+      </add>
+      <add>
+        <add>
+          <copy src="sibling(WaterGaugeBG)" trait="width"/><mult><copy src="parent" trait="_water1"/><div src="parent" trait="_water5"/></mult>
+          <onlyif><copy src="parent" trait="_water"/><lte src="parent" trait="_water1"/></onlyif>
+        </add>
+        <add>
+          <copy src="sibling(WaterGaugeBG)" trait="width"/><mult><copy src="parent" trait="_water2"/><div src="parent" trait="_water5"/></mult>
+          <onlyif><copy src="parent" trait="_water"/><gt src="parent" trait="_water1"/></onlyif>
+          <onlyif><copy src="parent" trait="_water"/><lte src="parent" trait="_water2"/></onlyif>
+        </add>
+        <add>
+          <copy src="sibling(WaterGaugeBG)" trait="width"/><mult><copy src="parent" trait="_water3"/><div src="parent" trait="_water5"/></mult>
+          <onlyif><copy src="parent" trait="_water"/><gt src="parent" trait="_water2"/></onlyif>
+          <onlyif><copy src="parent" trait="_water"/><lte src="parent" trait="_water3"/></onlyif>
+        </add>
+        <add>
+          <copy src="sibling(WaterGaugeBG)" trait="width"/><mult><copy src="parent" trait="_water4"/><div src="parent" trait="_water5"/></mult>
+          <onlyif><copy src="parent" trait="_water"/><gt src="parent" trait="_water3"/></onlyif>
+          <onlyif><copy src="parent" trait="_water"/><lte src="parent" trait="_water4"/></onlyif>
+        </add>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>0</neq></onlyif>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>2</neq></onlyif>
+      </add>
+      <sub><copy>0.075</copy><mult src="io" trait="_MAPMOHardcoreNeedsScale"/></sub>
+    </x>
+    <y><copy src="sibling(WaterGaugeBG)" trait="y"/></y>
+    <zoom><copy src="sibling(WaterIcon)" trait="zoom"/></zoom>
+  </image>
+  <text name="WaterPercentage">
+    <alpha><copy src="sibling(WaterGaugeBG)" trait="alpha"/></alpha>
+    <blue><copy src="sibling(WaterIcon)" trait="blue"/></blue>
+    <depth>2</depth>
+    <font>3</font>
+    <green><copy src="sibling(WaterIcon)" trait="green"/></green>
+    <string></string>
+    <red><copy src="sibling(WaterIcon)" trait="red"/></red>
+    <systemcolor><copy src="sibling(WaterIcon)" trait="systemcolor"/></systemcolor>
+    <visible>
+      <copy src="sibling(WaterIcon)" trait="visible"/>
+      <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsGauge"/><gt>1</gt></onlyif>
+    </visible>
+    <x>
+      <copy src="sibling(WaterGaugeBG)" trait="x"/>
+      <add>
+        <add><copy src="sibling(WaterGaugeBG)" trait="width"/><div>2</div></add>
+        <sub><copy src="me" trait="width"/><div>2</div></sub>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsGauge"/><eq>3</eq></onlyif>
+      </add>
+      <add>
+        <copy src="sibling(WaterGaugeBG)" trait="width"/>
+        <sub src="me" trait="width"/>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>0</neq></onlyif>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>2</neq></onlyif>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsGauge"/><eq>2</eq></onlyif>
+      </add>
+    </x>
+    <y><copy src="sibling(WaterGaugeBG)" trait="height"/><div>2</div></y>
+    <zoom><copy>1.5</copy><mult src="io" trait="_MAPMOHardcoreNeedsScale"/></zoom>
+	<_VUI+OutlineIntensity>3 </_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+  </text>
+  <include src="VUI+\outline.xml"/>
+  <image name="FoodIcon">
+    <_toggle>1</_toggle>
+    <alpha>
+      <copy>0</copy>
+      <add><copy src="Hunger" trait="alpha"/><onlyifnot src="io" trait="_MAPMOHardcoreNeedsAlwaysVisible"/></add>
+      <add><copy src="parent" trait="alpha"/><mult src="me" trait="_toggle"/><onlyif src="io" trait="_MAPMOHardcoreNeedsAlwaysVisible"/></add>
+      <max><copy>255</copy><onlyif src="io" trait="_MAPMOConfig"/></max>
+    </alpha>
+    <blue>
+      <copy>63</copy>
+      <sub><copy>39</copy><onlyif><copy src="parent" trait="_food"/><gt src="parent" trait="_food3"/></onlyif></sub>
+      <add><copy>36</copy><onlyif><copy src="parent" trait="_food"/><gt src="parent" trait="_food4"/></onlyif></add>
+    </blue>
+    <brightness>255</brightness>
+    <filename>mapmo\food.dds</filename>
+    <green>
+      <copy>255</copy>
+      <sub><copy>75</copy><onlyif><copy src="parent" trait="_food"/><gt src="parent" trait="_food3"/></onlyif></sub>
+      <sub><copy>85</copy><onlyif><copy src="parent" trait="_food"/><gt src="parent" trait="_food4"/></onlyif></sub>
+    </green>
+    <height><copy src="sibling(WaterIcon)" trait="height"/></height>
+    <red>255</red>
+    <systemcolor>
+      <copy>0</copy>
+      <add><copy>1</copy><onlyif><copy src="parent" trait="_food"/><lt src="parent" trait="_food2"/></onlyif></add>
+    </systemcolor>
+    <visible><copy src="sibling(WaterIcon)" trait="visible"/></visible>
+    <width><copy src="me" trait="height"/></width>
+    <x>
+      <copy>0</copy>
+      <add><copy src="parent" trait="_totalwidth"/><onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><gte>2</gte></onlyif></add>
+      <add>
+        <copy src="sibling(FoodGaugeBG)" trait="width"/>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>0</neq></onlyif>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>2</neq></onlyif>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsGauge"/><neq>0</neq></onlyif>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsGauge"/><neq>2</neq></onlyif>
+      </add>
+    </x>
+    <y>
+      <copy src="sibling(WaterIcon)" trait="y"/>
+      <add><copy src="sibling(WaterIcon)" trait="height"/><onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><lt>2</lt></onlyif></add>
+    </y>
+    <zoom><copy src="sibling(WaterIcon)" trait="zoom"/></zoom>
+  </image>
+  <hotrect name="FoodGaugeBG">
+    <alpha><copy src="sibling(FoodIcon)" trait="alpha"/><mult>0.75</mult></alpha>
+    <brightness><copy src="sibling(WaterGaugeBG)" trait="brightness"/></brightness>
+    <depth><copy src="sibling(WaterGaugeBG)" trait="depth"/></depth>
+    <height><copy src="sibling(WaterGaugeBG)" trait="height"/></height>
+    <visible><copy src="sibling(WaterGaugeBG)" trait="visible"/></visible>
+    <width><copy src="sibling(WaterGaugeBG)" trait="width"/></width>
+    <x>
+      <copy src="sibling(FoodIcon)" trait="x"/>
+      <add>
+        <copy src="sibling(FoodIcon)" trait="width"/>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>1</neq></onlyif>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>3</neq></onlyif>
+      </add>
+      <sub>
+        <copy src="me" trait="width"/>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>0</neq></onlyif>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>2</neq></onlyif>
+      </sub>
+    </x>
+    <y>
+      <copy src="sibling(FoodIcon)" trait="y"/>
+      <add><copy src="sibling(FoodIcon)" trait="height"/><div>2</div></add>
+      <sub><copy src="me" trait="height"/><div>2</div></sub>
+    </y>
+  </hotrect>
+  <hotrect name="FoodGauge">
+    <alpha><copy src="sibling(FoodGaugeBG)" trait="alpha"/></alpha>
+    <brightness><copy src="sibling(WaterGauge)" trait="brightness"/></brightness>
+    <depth><copy src="sibling(WaterGauge)" trait="depth"/></depth>
+    <blue><copy src="sibling(FoodIcon)" trait="blue"/></blue>
+    <green><copy src="sibling(FoodIcon)" trait="green"/></green>
+    <height><copy src="sibling(WaterGauge)" trait="height"/></height>
+    <width><copy src="sibling(WaterGaugeBG)" trait="width"/><sub><copy src="sibling(WaterGaugeBG)" trait="width"/><mult><copy src="parent" trait="_food"/><div src="parent" trait="_food5"/></mult></sub></width>
+    <red><copy src="sibling(FoodIcon)" trait="red"/></red>
+    <systemcolor><copy src="sibling(FoodIcon)" trait="systemcolor"/></systemcolor>
+    <visible><copy src="sibling(WaterGauge)" trait="visible"/></visible>
+    <x>
+      <copy src="sibling(FoodGaugeBG)" trait="x"/>
+      <add>
+        <copy src="sibling(FoodGaugeBG)" trait="width"/>
+        <sub><copy src="me" trait="width"/></sub>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>0</neq></onlyif>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>2</neq></onlyif>
+      </add>
+    </x>
+    <y><copy src="sibling(FoodGaugeBG)" trait="y"/></y>
+  </hotrect>
+  <image name="FoodThreshold">
+    <alpha><copy src="sibling(FoodGaugeBG)" trait="alpha"/></alpha>
+    <depth><copy src="sibling(WaterThreshold)" trait="depth"/></depth>
+    <filename><copy src="sibling(WaterThreshold)" trait="filename"/></filename>
+    <height><copy src="sibling(WaterThreshold)" trait="height"/></height>
+    <visible><copy src="sibling(WaterGaugeBG)" trait="visible"/><onlyif><copy src="parent" trait="_food"/><lte src="parent" trait="_food4"/></onlyif></visible>
+    <width><copy src="sibling(WaterThreshold)" trait="width"/></width>
+    <x>
+      <copy src="sibling(FoodGaugeBG)" trait="x"/>
+      <add>
+        <copy src="sibling(FoodGaugeBG)" trait="width"/>
+        <sub>
+          <copy src="sibling(FoodGaugeBG)" trait="width"/><mult><copy src="parent" trait="_food1"/><div src="parent" trait="_food5"/></mult>
+          <onlyif><copy src="parent" trait="_food"/><lte src="parent" trait="_food1"/></onlyif>
+        </sub>
+        <sub>
+          <copy src="sibling(FoodGaugeBG)" trait="width"/><mult><copy src="parent" trait="_food2"/><div src="parent" trait="_food5"/></mult>
+          <onlyif><copy src="parent" trait="_food"/><gt src="parent" trait="_food1"/></onlyif>
+          <onlyif><copy src="parent" trait="_food"/><lte src="parent" trait="_food2"/></onlyif>
+        </sub>
+        <sub>
+          <copy src="sibling(FoodGaugeBG)" trait="width"/><mult><copy src="parent" trait="_food3"/><div src="parent" trait="_food5"/></mult>
+          <onlyif><copy src="parent" trait="_food"/><gt src="parent" trait="_food2"/></onlyif>
+          <onlyif><copy src="parent" trait="_food"/><lte src="parent" trait="_food3"/></onlyif>
+        </sub>
+        <sub>
+          <copy src="sibling(FoodGaugeBG)" trait="width"/><mult><copy src="parent" trait="_food4"/><div src="parent" trait="_food5"/></mult>
+          <onlyif><copy src="parent" trait="_food"/><gt src="parent" trait="_food3"/></onlyif>
+          <onlyif><copy src="parent" trait="_food"/><lte src="parent" trait="_food4"/></onlyif>
+        </sub>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>1</neq></onlyif>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>3</neq></onlyif>
+      </add>
+      <add>
+        <add>
+          <copy src="sibling(FoodGaugeBG)" trait="width"/><mult><copy src="parent" trait="_food1"/><div src="parent" trait="_food5"/></mult>
+          <onlyif><copy src="parent" trait="_food"/><lte src="parent" trait="_food1"/></onlyif>
+        </add>
+        <add>
+          <copy src="sibling(FoodGaugeBG)" trait="width"/><mult><copy src="parent" trait="_food2"/><div src="parent" trait="_food5"/></mult>
+          <onlyif><copy src="parent" trait="_food"/><gt src="parent" trait="_food1"/></onlyif>
+          <onlyif><copy src="parent" trait="_food"/><lte src="parent" trait="_food2"/></onlyif>
+        </add>
+        <add>
+          <copy src="sibling(FoodGaugeBG)" trait="width"/><mult><copy src="parent" trait="_food3"/><div src="parent" trait="_food5"/></mult>
+          <onlyif><copy src="parent" trait="_food"/><gt src="parent" trait="_food2"/></onlyif>
+          <onlyif><copy src="parent" trait="_food"/><lte src="parent" trait="_food3"/></onlyif>
+        </add>
+        <add>
+          <copy src="sibling(FoodGaugeBG)" trait="width"/><mult><copy src="parent" trait="_food4"/><div src="parent" trait="_food5"/></mult>
+          <onlyif><copy src="parent" trait="_food"/><gt src="parent" trait="_food3"/></onlyif>
+          <onlyif><copy src="parent" trait="_food"/><lte src="parent" trait="_food4"/></onlyif>
+        </add>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>0</neq></onlyif>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>2</neq></onlyif>
+      </add>
+      <sub><copy>0.075</copy><mult src="io" trait="_MAPMOHardcoreNeedsScale"/></sub>
+    </x>
+    <y><copy src="sibling(FoodGaugeBG)" trait="y"/></y>
+    <zoom><copy src="sibling(WaterIcon)" trait="zoom"/></zoom>
+  </image>
+  <text name="FoodPercentage">
+    <alpha><copy src="sibling(FoodGaugeBG)" trait="alpha"/></alpha>
+    <blue><copy src="sibling(FoodIcon)" trait="blue"/></blue>
+    <depth><copy src="sibling(WaterPercentage)" trait="depth"/></depth>
+    <font><copy src="sibling(WaterPercentage)" trait="font"/></font>
+    <green><copy src="sibling(FoodIcon)" trait="green"/></green>
+    <string></string>
+    <red><copy src="sibling(FoodIcon)" trait="red"/></red>
+    <systemcolor><copy src="sibling(FoodIcon)" trait="systemcolor"/></systemcolor>
+    <visible><copy src="sibling(WaterPercentage)" trait="visible"/></visible>
+    <x>
+      <copy src="sibling(FoodGaugeBG)" trait="x"/>
+      <add>
+        <add><copy src="sibling(FoodGaugeBG)" trait="width"/><div>2</div></add>
+        <sub><copy src="me" trait="width"/><div>2</div></sub>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsGauge"/><eq>3</eq></onlyif>
+      </add>
+      <add>
+        <copy src="sibling(FoodGaugeBG)" trait="width"/>
+        <sub src="me" trait="width"/>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>0</neq></onlyif>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>2</neq></onlyif>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsGauge"/><eq>2</eq></onlyif>
+      </add>
+    </x>
+    <y><copy src="sibling(FoodIcon)" trait="y"/><add><copy src="sibling(FoodGaugeBG)" trait="height"/><div>2</div></add></y>
+    <zoom><copy src="sibling(WaterPercentage)" trait="zoom"/></zoom>
+	<_VUI+OutlineIntensity>3 </_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+  </text>
+  <include src="VUI+\outline.xml"/>
+  <image name="SleepIcon">
+    <_toggle>1</_toggle>
+    <alpha>
+      <copy>0</copy>
+      <add><copy src="Sleep" trait="alpha"/><onlyifnot src="io" trait="_MAPMOHardcoreNeedsAlwaysVisible"/></add>
+      <add><copy src="parent" trait="alpha"/><mult src="me" trait="_toggle"/><onlyif src="io" trait="_MAPMOHardcoreNeedsAlwaysVisible"/></add>
+      <max><copy>255</copy><onlyif src="io" trait="_MAPMOConfig"/></max>
+    </alpha>
+    <blue>
+      <copy>63</copy>
+      <sub><copy>39</copy><onlyif><copy src="parent" trait="_sleep"/><gt src="parent" trait="_sleep3"/></onlyif></sub>
+      <add><copy>36</copy><onlyif><copy src="parent" trait="_sleep"/><gt src="parent" trait="_sleep4"/></onlyif></add>
+    </blue>
+    <brightness>255</brightness>
+    <filename>mapmo\sleep.dds</filename>
+    <green>
+      <copy>255</copy>
+      <sub><copy>75</copy><onlyif><copy src="parent" trait="_sleep"/><gt src="parent" trait="_sleep3"/></onlyif></sub>
+      <sub><copy>85</copy><onlyif><copy src="parent" trait="_sleep"/><gt src="parent" trait="_sleep4"/></onlyif></sub>
+    </green>
+    <height><copy src="sibling(WaterIcon)" trait="height"/></height>
+    <red>255</red>
+    <systemcolor>
+      <copy>0</copy>
+      <add><copy>1</copy><onlyif><copy src="parent" trait="_sleep"/><lt src="parent" trait="_sleep2"/></onlyif></add>
+    </systemcolor>
+    <visible><copy src="sibling(WaterIcon)" trait="visible"/></visible>
+    <width><copy src="me" trait="height"/></width>
+    <x>
+      <copy>0</copy>
+      <add><copy src="parent" trait="_totalwidth"/><mult>2</mult><onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><gte>2</gte></onlyif></add>
+      <add>
+        <copy src="sibling(SleepGaugeBG)" trait="width"/>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>0</neq></onlyif>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>2</neq></onlyif>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsGauge"/><neq>0</neq></onlyif>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsGauge"/><neq>2</neq></onlyif>
+      </add>
+    </x>
+    <y>
+      <copy src="sibling(FoodIcon)" trait="y"/>
+      <add><copy src="sibling(WaterIcon)" trait="height"/><onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><lt>2</lt></onlyif></add>
+    </y>
+    <zoom><copy src="sibling(WaterIcon)" trait="zoom"/></zoom>
+  </image>
+  <hotrect name="SleepGaugeBG">
+    <alpha><copy src="sibling(SleepIcon)" trait="alpha"/><mult>0.75</mult></alpha>
+    <brightness><copy src="sibling(WaterGaugeBG)" trait="brightness"/></brightness>
+    <depth><copy src="sibling(WaterGaugeBG)" trait="depth"/></depth>
+    <height><copy src="sibling(WaterGaugeBG)" trait="height"/></height>
+    <visible><copy src="sibling(WaterGaugeBG)" trait="visible"/></visible>
+    <width><copy src="sibling(WaterGaugeBG)" trait="width"/></width>
+    <x>
+      <copy src="sibling(SleepIcon)" trait="x"/>
+      <add>
+        <copy src="sibling(SleepIcon)" trait="width"/>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>1</neq></onlyif>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>3</neq></onlyif>
+      </add>
+      <sub>
+        <copy src="me" trait="width"/>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>0</neq></onlyif>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>2</neq></onlyif>
+      </sub>
+    </x>
+    <y>
+      <copy src="sibling(SleepIcon)" trait="y"/>
+      <add><copy src="sibling(SleepIcon)" trait="height"/><div>2</div></add>
+      <sub><copy src="me" trait="height"/><div>2</div></sub>
+    </y>
+  </hotrect>
+  <hotrect name="SleepGauge">
+    <alpha><copy src="sibling(SleepGaugeBG)" trait="alpha"/><</alpha>
+    <brightness><copy src="sibling(WaterGauge)" trait="brightness"/></brightness>
+    <depth><copy src="sibling(WaterGauge)" trait="depth"/></depth>
+    <blue><copy src="sibling(SleepIcon)" trait="blue"/></blue>
+    <green><copy src="sibling(SleepIcon)" trait="green"/></green>
+    <height><copy src="sibling(WaterGauge)" trait="height"/></height>
+    <width><copy src="sibling(WaterGaugeBG)" trait="width"/><sub><copy src="sibling(WaterGaugeBG)" trait="width"/><mult><copy src="parent" trait="_sleep"/><div src="parent" trait="_sleep5"/></mult></sub></width>
+    <red><copy src="sibling(SleepIcon)" trait="red"/></red>
+    <systemcolor><copy src="sibling(SleepIcon)" trait="systemcolor"/></systemcolor>
+    <visible><copy src="sibling(WaterGauge)" trait="visible"/></visible>
+    <x>
+      <copy src="sibling(SleepGaugeBG)" trait="x"/>
+      <add><copy src="sibling(SleepGaugeBG)" trait="width"/><sub><copy src="me" trait="width"/></sub><onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><eq>1</eq></onlyif></add>
+      <add><copy src="sibling(SleepGaugeBG)" trait="width"/><sub><copy src="me" trait="width"/></sub><onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><eq>3</eq></onlyif></add>
+    </x>
+    <y><copy src="sibling(SleepGaugeBG)" trait="y"/></y>
+  </hotrect>
+  <image name="SleepThreshold">
+    <alpha><copy src="sibling(SleepGaugeBG)" trait="alpha"/></alpha>
+    <depth><copy src="sibling(WaterThreshold)" trait="depth"/></depth>
+    <filename><copy src="sibling(WaterThreshold)" trait="filename"/></filename>
+    <height><copy src="sibling(WaterThreshold)" trait="height"/></height>
+    <visible><copy src="sibling(WaterGaugeBG)" trait="visible"/><onlyif><copy src="parent" trait="_sleep"/><lte src="parent" trait="_sleep4"/></onlyif></visible>
+    <width><copy src="sibling(WaterThreshold)" trait="width"/></width>
+    <x>
+      <copy src="sibling(SleepGaugeBG)" trait="x"/>
+      <add>
+        <copy src="sibling(SleepGaugeBG)" trait="width"/>
+        <sub>
+          <copy src="sibling(SleepGaugeBG)" trait="width"/><mult><copy src="parent" trait="_sleep1"/><div src="parent" trait="_sleep5"/></mult>
+          <onlyif><copy src="parent" trait="_sleep"/><lte src="parent" trait="_sleep1"/></onlyif>
+        </sub>
+        <sub>
+          <copy src="sibling(SleepGaugeBG)" trait="width"/><mult><copy src="parent" trait="_sleep2"/><div src="parent" trait="_sleep5"/></mult>
+          <onlyif><copy src="parent" trait="_sleep"/><gt src="parent" trait="_sleep1"/></onlyif>
+          <onlyif><copy src="parent" trait="_sleep"/><lte src="parent" trait="_sleep2"/></onlyif>
+        </sub>
+        <sub>
+          <copy src="sibling(SleepGaugeBG)" trait="width"/><mult><copy src="parent" trait="_sleep3"/><div src="parent" trait="_sleep5"/></mult>
+          <onlyif><copy src="parent" trait="_sleep"/><gt src="parent" trait="_sleep2"/></onlyif>
+          <onlyif><copy src="parent" trait="_sleep"/><lte src="parent" trait="_sleep3"/></onlyif>
+        </sub>
+        <sub>
+          <copy src="sibling(SleepGaugeBG)" trait="width"/><mult><copy src="parent" trait="_sleep4"/><div src="parent" trait="_sleep5"/></mult>
+          <onlyif><copy src="parent" trait="_sleep"/><gt src="parent" trait="_sleep3"/></onlyif>
+          <onlyif><copy src="parent" trait="_sleep"/><lte src="parent" trait="_sleep4"/></onlyif>
+        </sub>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>1</neq></onlyif>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>3</neq></onlyif>
+      </add>
+      <add>
+        <add>
+          <copy src="sibling(SleepGaugeBG)" trait="width"/><mult><copy src="parent" trait="_sleep1"/><div src="parent" trait="_sleep5"/></mult>
+          <onlyif><copy src="parent" trait="_sleep"/><lte src="parent" trait="_sleep1"/></onlyif>
+        </add>
+        <add>
+          <copy src="sibling(SleepGaugeBG)" trait="width"/><mult><copy src="parent" trait="_sleep2"/><div src="parent" trait="_sleep5"/></mult>
+          <onlyif><copy src="parent" trait="_sleep"/><gt src="parent" trait="_sleep1"/></onlyif>
+          <onlyif><copy src="parent" trait="_sleep"/><lte src="parent" trait="_sleep2"/></onlyif>
+        </add>
+        <add>
+          <copy src="sibling(SleepGaugeBG)" trait="width"/><mult><copy src="parent" trait="_sleep3"/><div src="parent" trait="_sleep5"/></mult>
+          <onlyif><copy src="parent" trait="_sleep"/><gt src="parent" trait="_sleep2"/></onlyif>
+          <onlyif><copy src="parent" trait="_sleep"/><lte src="parent" trait="_sleep3"/></onlyif>
+        </add>
+        <add>
+          <copy src="sibling(SleepGaugeBG)" trait="width"/><mult><copy src="parent" trait="_sleep4"/><div src="parent" trait="_sleep5"/></mult>
+          <onlyif><copy src="parent" trait="_sleep"/><gt src="parent" trait="_sleep3"/></onlyif>
+          <onlyif><copy src="parent" trait="_sleep"/><lte src="parent" trait="_sleep4"/></onlyif>
+        </add>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>0</neq></onlyif>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>2</neq></onlyif>
+      </add>
+      <sub><copy>0.075</copy><mult src="io" trait="_MAPMOHardcoreNeedsScale"/></sub>
+    </x>
+    <y><copy src="sibling(SleepGaugeBG)" trait="y"/></y>
+    <zoom><copy src="sibling(WaterIcon)" trait="zoom"/></zoom>
+  </image>
+  <text name="SleepPercentage">
+    <alpha><copy src="sibling(SleepGaugeBG)" trait="alpha"/></alpha>
+    <blue><copy src="sibling(SleepIcon)" trait="blue"/></blue>
+    <depth><copy src="sibling(WaterPercentage)" trait="depth"/></depth>
+    <font><copy src="sibling(WaterPercentage)" trait="font"/></font>
+    <green><copy src="sibling(SleepIcon)" trait="green"/></green>
+    <string></string>
+    <red><copy src="sibling(SleepIcon)" trait="red"/></red>
+    <systemcolor><copy src="sibling(SleepIcon)" trait="systemcolor"/></systemcolor>
+    <visible><copy src="sibling(WaterPercentage)" trait="visible"/></visible>
+    <x>
+      <copy src="sibling(SleepGaugeBG)" trait="x"/>
+      <add>
+        <add><copy src="sibling(SleepGaugeBG)" trait="width"/><div>2</div></add>
+        <sub><copy src="me" trait="width"/><div>2</div></sub>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsGauge"/><eq>3</eq></onlyif>
+      </add>
+      <add>
+        <copy src="sibling(SleepGaugeBG)" trait="width"/>
+        <sub src="me" trait="width"/>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>0</neq></onlyif>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>2</neq></onlyif>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsGauge"/><eq>2</eq></onlyif>
+      </add>
+    </x>
+    <y><copy src="sibling(SleepIcon)" trait="y"/><add><copy src="sibling(SleepGaugeBG)" trait="height"/><div>2</div></add></y>
+    <zoom><copy src="sibling(WaterPercentage)" trait="zoom"/></zoom>
+	<_VUI+OutlineIntensity>3 </_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+  </text>
+  <include src="VUI+\outline.xml"/>
+  <image name="RadsIcon">
+    <_toggle>1</_toggle>
+    <alpha>
+      <copy>0</copy>
+      <add><copy src="Rads" trait="alpha"/><onlyifnot src="io" trait="_MAPMOHardcoreNeedsAlwaysVisible"/></add>
+      <add><copy src="parent" trait="alpha"/><mult src="me" trait="_toggle"/><onlyif src="io" trait="_MAPMOHardcoreNeedsAlwaysVisible"/></add>
+      <max><copy>255</copy><onlyif src="io" trait="_MAPMOConfig"/></max>
+    </alpha>
+    <blue>
+      <copy>63</copy>
+      <sub><copy>39</copy><onlyif><copy src="parent" trait="_rads"/><gt src="parent" trait="_rads3"/></onlyif></sub>
+      <add><copy>36</copy><onlyif><copy src="parent" trait="_rads"/><gt src="parent" trait="_rads4"/></onlyif></add>
+    </blue>
+    <brightness>255</brightness>
+    <filename>mapmo\rads.dds</filename>
+    <green>
+      <copy>255</copy>
+      <sub><copy>75</copy><onlyif><copy src="parent" trait="_rads"/><gt src="parent" trait="_rads3"/></onlyif></sub>
+      <sub><copy>85</copy><onlyif><copy src="parent" trait="_rads"/><gt src="parent" trait="_rads4"/></onlyif></sub>
+    </green>
+    <height><copy src="sibling(WaterIcon)" trait="height"/></height>
+    <red>255</red>
+    <systemcolor>
+      <copy>0</copy>
+      <add><copy>1</copy><onlyif><copy src="parent" trait="_rads"/><lt src="parent" trait="_rads2"/></onlyif></add>
+    </systemcolor>
+    <width><copy src="me" trait="height"/></width>
+    <x>
+      <copy>0</copy>
+      <add><copy src="parent" trait="_totalwidth"/><mult>3</mult><onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><gte>2</gte></onlyif></add>
+      <add>
+        <copy src="sibling(RadsGaugeBG)" trait="width"/>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>0</neq></onlyif>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>2</neq></onlyif>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsGauge"/><neq>0</neq></onlyif>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsGauge"/><neq>2</neq></onlyif>
+      </add>
+    </x>
+    <y>
+      <copy src="sibling(SleepIcon)" trait="y"/>
+      <add><copy src="sibling(WaterIcon)" trait="height"/><onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><lt>2</lt></onlyif></add>
+    </y>
+    <zoom><copy src="sibling(WaterIcon)" trait="zoom"/></zoom>
+  </image>
+  <hotrect name="RadsGaugeBG">
+    <alpha><copy src="sibling(RadsIcon)" trait="alpha"/><mult>0.75</mult></alpha>
+    <brightness><copy src="sibling(WaterGaugeBG)" trait="brightness"/></brightness>
+    <depth><copy src="sibling(WaterGaugeBG)" trait="depth"/></depth>
+    <height><copy src="sibling(WaterGaugeBG)" trait="height"/></height>
+    <visible>
+      <copy src="sibling(RadsIcon)" trait="visible"/>
+      <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsGauge"/><neq>0</neq></onlyif>
+      <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsGauge"/><neq>2</neq></onlyif>
+    </visible>
+    <width><copy src="sibling(WaterGaugeBG)" trait="width"/></width>
+    <x>
+      <copy src="sibling(RadsIcon)" trait="x"/>
+      <add>
+        <copy src="sibling(RadsIcon)" trait="width"/>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>1</neq></onlyif>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>3</neq></onlyif>
+      </add>
+      <sub>
+        <copy src="me" trait="width"/>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>0</neq></onlyif>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>2</neq></onlyif>
+      </sub>
+    </x>
+    <y>
+      <copy src="sibling(RadsIcon)" trait="y"/>
+      <add><copy src="sibling(RadsIcon)" trait="height"/><div>2</div></add>
+      <sub><copy src="me" trait="height"/><div>2</div></sub>
+    </y>
+  </hotrect>
+  <hotrect name="RadsGauge">
+    <alpha><copy src="sibling(RadsGaugeBG)" trait="alpha"/></alpha>
+    <brightness><copy src="sibling(WaterGauge)" trait="brightness"/></brightness>
+    <depth><copy src="sibling(WaterGauge)" trait="depth"/></depth>
+    <blue><copy src="sibling(RadsIcon)" trait="blue"/></blue>
+    <green><copy src="sibling(RadsIcon)" trait="green"/></green>
+    <height><copy src="sibling(WaterGauge)" trait="height"/></height>
+    <width><copy>0</copy><add><copy src="sibling(WaterGaugeBG)" trait="width"/><add><copy src="parent" trait="_rads"/><div src="parent" trait="_rads5"/></mult></add></width>
+    <red><copy src="sibling(RadsIcon)" trait="red"/></red>
+    <systemcolor><copy src="sibling(RadsIcon)" trait="systemcolor"/></systemcolor>
+    <visible><copy src="sibling(RadsGaugeBG)" trait="visible"/></visible>
+    <x>
+      <copy src="sibling(RadsGaugeBG)" trait="x"/>
+      <add>
+        <copy src="sibling(RadsGaugeBG)" trait="width"/>
+        <sub><copy src="me" trait="width"/></sub>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>0</neq></onlyif>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>2</neq></onlyif>
+      </add>
+    </x>
+    <y><copy src="sibling(RadsGaugeBG)" trait="y"/></y>
+  </hotrect>
+  <image name="RadsThreshold">
+    <alpha><copy src="sibling(RadsGaugeBG)" trait="alpha"/></alpha>
+    <depth><copy src="sibling(WaterThreshold)" trait="depth"/></depth>
+    <filename><copy src="sibling(WaterThreshold)" trait="filename"/></filename>
+    <height><copy src="sibling(WaterThreshold)" trait="height"/></height>
+    <visible><copy src="sibling(RadsGaugeBG)" trait="visible"/><onlyif><copy src="parent" trait="_rads"/><lte src="parent" trait="_rads4"/></onlyif></visible>
+    <width><copy src="sibling(WaterThreshold)" trait="width"/></width>
+    <x>
+      <copy src="sibling(RadsGaugeBG)" trait="x"/>
+      <add>
+        <copy src="sibling(RadsGaugeBG)" trait="width"/>
+        <sub>
+          <copy src="sibling(RadsGaugeBG)" trait="width"/><mult><copy src="parent" trait="_rads1"/><div src="parent" trait="_rads5"/></mult>
+          <onlyif><copy src="parent" trait="_rads"/><lte src="parent" trait="_rads1"/></onlyif>
+        </sub>
+        <sub>
+          <copy src="sibling(RadsGaugeBG)" trait="width"/><mult><copy src="parent" trait="_rads2"/><div src="parent" trait="_rads5"/></mult>
+          <onlyif><copy src="parent" trait="_rads"/><gt src="parent" trait="_rads1"/></onlyif>
+          <onlyif><copy src="parent" trait="_rads"/><lte src="parent" trait="_rads2"/></onlyif>
+        </sub>
+        <sub>
+          <copy src="sibling(RadsGaugeBG)" trait="width"/><mult><copy src="parent" trait="_rads3"/><div src="parent" trait="_rads5"/></mult>
+          <onlyif><copy src="parent" trait="_rads"/><gt src="parent" trait="_rads2"/></onlyif>
+          <onlyif><copy src="parent" trait="_rads"/><lte src="parent" trait="_rads3"/></onlyif>
+        </sub>
+        <sub>
+          <copy src="sibling(RadsGaugeBG)" trait="width"/><mult><copy src="parent" trait="_rads4"/><div src="parent" trait="_rads5"/></mult>
+          <onlyif><copy src="parent" trait="_rads"/><gt src="parent" trait="_rads3"/></onlyif>
+          <onlyif><copy src="parent" trait="_rads"/><lte src="parent" trait="_rads4"/></onlyif>
+        </sub>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>0</neq></onlyif>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>2</neq></onlyif>
+      </add>
+      <add>
+        <add>
+          <copy src="sibling(RadsGaugeBG)" trait="width"/><mult><copy src="parent" trait="_rads1"/><div src="parent" trait="_rads5"/></mult>
+          <onlyif><copy src="parent" trait="_rads"/><lte src="parent" trait="_rads1"/></onlyif>
+        </add>
+        <add>
+          <copy src="sibling(RadsGaugeBG)" trait="width"/><mult><copy src="parent" trait="_rads2"/><div src="parent" trait="_rads5"/></mult>
+          <onlyif><copy src="parent" trait="_rads"/><gt src="parent" trait="_rads1"/></onlyif>
+          <onlyif><copy src="parent" trait="_rads"/><lte src="parent" trait="_rads2"/></onlyif>
+        </add>
+        <add>
+          <copy src="sibling(RadsGaugeBG)" trait="width"/><mult><copy src="parent" trait="_rads3"/><div src="parent" trait="_rads5"/></mult>
+          <onlyif><copy src="parent" trait="_rads"/><gt src="parent" trait="_rads2"/></onlyif>
+          <onlyif><copy src="parent" trait="_rads"/><lte src="parent" trait="_rads3"/></onlyif>
+        </add>
+        <add>
+          <copy src="sibling(RadsGaugeBG)" trait="width"/><mult><copy src="parent" trait="_rads4"/><div src="parent" trait="_rads5"/></mult>
+          <onlyif><copy src="parent" trait="_rads"/><gt src="parent" trait="_rads3"/></onlyif>
+          <onlyif><copy src="parent" trait="_rads"/><lte src="parent" trait="_rads4"/></onlyif>
+        </add>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>1</neq></onlyif>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>3</neq></onlyif>
+      </add>
+      <sub><copy>0.075</copy><mult src="io" trait="_MAPMOHardcoreNeedsScale"/></sub>
+    </x>
+    <y><copy src="sibling(RadsGaugeBG)" trait="y"/></y>
+    <zoom><copy src="sibling(WaterIcon)" trait="zoom"/></zoom>
+  </image>
+  <text name="RadsPercentage">
+    <alpha><copy src="sibling(RadsGaugeBG)" trait="alpha"/></alpha>
+    <blue><copy src="sibling(RadsIcon)" trait="blue"/></blue>
+    <depth><copy src="sibling(WaterPercentage)" trait="depth"/></depth>
+    <font><copy src="sibling(WaterPercentage)" trait="font"/></font>
+    <green><copy src="sibling(RadsIcon)" trait="green"/></green>
+    <string></string>
+    <red><copy src="sibling(RadsIcon)" trait="red"/></red>
+    <systemcolor><copy src="sibling(RadsIcon)" trait="systemcolor"/></systemcolor>
+    <visible>
+      <copy src="sibling(RadsIcon)" trait="visible"/>
+      <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsGauge"/><gt>1</gt></onlyif>
+    </visible>
+    <x>
+      <copy src="sibling(RadsGaugeBG)" trait="x"/>
+      <add>
+        <add><copy src="sibling(RadsGaugeBG)" trait="width"/><div>2</div></add>
+        <sub><copy src="me" trait="width"/><div>2</div></sub>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsGauge"/><eq>3</eq></onlyif>
+      </add>
+      <add>
+        <copy src="sibling(RadsGaugeBG)" trait="width"/>
+        <sub src="me" trait="width"/>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>0</neq></onlyif>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>2</neq></onlyif>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsGauge"/><eq>2</eq></onlyif>
+      </add>
+    </x>
+    <y><copy src="sibling(RadsIcon)" trait="y"/><add><copy src="sibling(RadsGaugeBG)" trait="height"/><div>2</div></add></y>
+    <zoom><copy src="sibling(WaterPercentage)" trait="zoom"/></zoom>
+	<_VUI+OutlineIntensity>3 </_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+  </text>
+  <include src="VUI+\outline.xml"/>
+  <image name="LimbsIcon">
+    <_toggle>1</_toggle>
+    <alpha>
+      <copy src="LMBs" trait="alpha"/>
+      <mult src="me" trait="_toggle"/><onlyif src="io" trait="_MAPMOHardcoreNeedsAlwaysVisible"/>
+      <max><copy>255</copy><onlyif src="io" trait="_MAPMOConfig"/></max>
+    </alpha>
+    <brightness>255</brightness>
+    <filename>mapmo\limbs.dds</filename>
+    <height><copy src="sibling(WaterIcon)" trait="height"/></height>
+    <systemcolor><copy src="LMBs" trait="systemcolor"/></systemcolor>
+    <width><copy src="me" trait="height"/></width>
+    <x>
+      <copy>0</copy>
+      <add><copy src="parent" trait="_totalwidth"/><mult>4</mult><onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><gte>2</gte></onlyif></add>
+      <add>
+        <copy src="sibling(RadsGaugeBG)" trait="width"/>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>0</neq></onlyif>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><neq>2</neq></onlyif>
+        <onlyifnot><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><eq>3</eq></onlyifnot>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsGauge"/><neq>0</neq></onlyif>
+        <onlyif><copy src="io" trait="_MAPMOHardcoreNeedsGauge"/><neq>2</neq></onlyif>
+      </add>
+    </x>
+    <y>
+      <copy src="sibling(RadsIcon)" trait="y"/>
+      <add><copy src="sibling(WaterIcon)" trait="height"/><onlyif><copy src="io" trait="_MAPMOHardcoreNeedsAlign"/><lt>2</lt></onlyif></add>
+    </y>
+    <zoom><copy src="sibling(WaterIcon)" trait="zoom"/></zoom>
+  </image>
+</rect>

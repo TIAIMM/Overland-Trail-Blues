@@ -1,0 +1,105 @@
+<!-- Stewie's Tweaks Character selector
+Shows a character selector for filtering the save/load menu
+COPYRIGHT BY STEWIEAL; MODIFIED SEPTEMBER 2022 BY AXONIS
+* Relocated the filter on the standard character name location for better integration with the UI and to prevent it from overlapping with the load warning message
+* Set the visibility of the filter based on the the standard character name
+* Set the filter to use the standard character name font
+* Added VUI+ highlighting support to denote which direction should be highlighted when hovering on the name
+-->
+<rect name="SaveCharacterSelector">
+	<image name="Save_LeftFilterArrow">
+		<id> &generic; </id>
+		<filename> Interface\Main\main_arrow_left.dds </filename>
+		<x>
+			<copy src="sibling(Save_CharacterName)" trait="x"/>
+			<sub>
+				<copy src="saveload_playername" trait="width"/>
+				<onlyif src="saveload_playername" trait="visible" />
+				<add>
+					<copy src="sibling(Save_CharacterName)" trait="width"/>
+					<onlyifnot src="saveload_playername" trait="visible" />
+				</add>
+				<div> 2 </div>
+			</sub>
+			<sub> 16 </sub>
+		</x>
+		<y>
+			<copy src="sibling(Save_CharacterName)" trait="y"/>
+			<add> 1 </add>
+		</y>
+		<width> 17.5 </width>
+		<height> 35 </height>
+		<zoom> &scale; </zoom>
+		<target> &true; </target>
+		<clicksound>UIMenuPrevNext</clicksound>
+		<visible> &true; </visible> <!-- Set in code -->
+		<depth> 5 </depth>
+		<alpha> <copy src="grandparent()" trait="_alpha"/> </alpha>
+		<brightness> <!--VUI+ target highlighting -->
+			<copy src="globals" trait="_VUI+Highlighting" />
+			<onlyif src="me" trait="mouseover" />
+			<add> 210 </add>
+		</brightness>
+	</image>
+
+	<rect name="Save_CharacterName">
+		<include src="VUI+\outline_rect.xml"/>
+		<id> &generic; </id>
+		<font> <copy src="saveload_playername" trait="font" /> </font>
+		<string> All </string>
+		<x>
+			<copy src="saveload_playername" trait="x" />
+			<sub src="grandparent" trait="x" />
+		</x>
+		<y>
+			<copy src="saveload_playername" trait="y" />
+			<sub src="grandparent" trait="y" />
+		</y>
+		<justify> &center; </justify>
+		<target> &true; </target>
+		<wheelable> &true; </wheelable>
+		<mouseoversound>UIMenuFocus</mouseoversound>
+		<clicksound>UIMenuPrevNext</clicksound>
+		<depth> 5 </depth>
+		<alpha> <copy src="grandparent()" trait="_alpha"/> </alpha>
+		<user0> -1 </user0> <!-- Set to the current index of the character, or -1 for 'All' -->
+		<visible> <not src="saveload_playername" trait="visible" /> </visible>
+		<_VUI+OutlineIntensity>3 </_VUI+OutlineIntensity>
+		<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+	</rect>
+
+	<image name="Save_RightFilterArrow">
+		<id> &generic; </id>
+		<filename> Interface\Main\main_arrow_right.dds </filename>
+		<x>
+			<copy src="sibling(Save_CharacterName)" trait="x"/>
+			<add>
+				<copy src="saveload_playername" trait="width"/>
+				<onlyif src="saveload_playername" trait="visible" />
+				<add>
+					<copy src="sibling(Save_CharacterName)" trait="width"/>
+					<onlyifnot src="saveload_playername" trait="visible" />
+				</add>
+				<div> 2 </div>
+			</add>
+			<add> 16 </add>
+		</x>
+		<y> <copy src="sibling(Save_LeftFilterArrow)" trait="y"/> </y>
+		<width> 17.5 </width>
+		<height> 35 </height>
+		<zoom> &scale; </zoom>
+		<target> &true; </target>
+		<clicksound>UIMenuPrevNext</clicksound>
+		<visible> &true; </visible> <!-- Set in code -->
+		<depth> 5 </depth>
+		<alpha> <copy src="grandparent()" trait="_alpha"/> </alpha>
+		<brightness> <!--VUI+ target highlighting -->
+			<copy src="globals" trait="_VUI+Highlighting" />
+			<onlyif>
+				<copy src="me" trait="mouseover" />
+				<or src="sibling" trait="mouseover" />
+			</onlyif>
+			<add> 210 </add>
+		</brightness>
+	</image>
+</rect>

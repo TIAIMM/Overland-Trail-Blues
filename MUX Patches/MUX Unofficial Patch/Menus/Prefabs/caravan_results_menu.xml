@@ -1,0 +1,253 @@
+<!-- caravan_results_menu.xml -->
+<!-- 
+ Obsidian Entertainment Incorporated
+ FILE     caravan_results_menu.xml
+ VERSION  1.0
+ AUTHOR:	Jonathan Burke
+ DATE     4/6/2010
+ INFO     Caravan Results Interface XML
+-->
+
+<rect name="CRM_MainRect">
+  <id> 3 </id>
+  <!-- Centered on screen-->
+  <x>
+    <copy src="screen()" trait="width"/>
+    <sub src="me()" trait="width"/>
+    <div> 2 </div>
+  </x>
+  <y>
+    <copy src="screen()" trait="height"/>
+    <sub src="me()" trait="height"/>
+    <div> 2 </div>
+  </y>
+  <visible> &true; </visible>
+
+  <!-- Total size of the safe zone -->
+  <width>
+    <copy src="screen()" trait="width"/>
+    <sub>
+      <copy src="screen()" trait="cropx"/>
+      <mul> 4 </mul>
+    </sub>
+  </width>
+  <height>
+    <copy src="screen()" trait="height"/>
+    <sub>
+      <copy src="screen()" trait="cropy"/>
+      <mul> 4 </mul>
+    </sub>
+  </height>
+
+  <locus> &true; </locus>
+  <systemcolor> &hudmain; </systemcolor>
+  <depth> 2 </depth>
+
+  <!--	===== INFO RECT ===== -->
+  <rect name="CRM_InfoRect">
+    <x>
+      200
+    </x>
+    <y>
+      200
+    </y>
+    <width> 500 </width>
+    <height> 175 </height>
+    <locus> &true; </locus>
+    <visible>
+      <copy src="parent()" trait="visible"/>
+    </visible>
+
+    <!-- ===== INFO DISPLAYS ===== -->
+    <!-- NPC's Bet -->
+    <rect name="CRM_NPCBetDisplay">
+      <id> 31 </id>
+      <_Value></_Value>
+
+      <x>  </x>
+      <y> 100 </y>
+      <width>
+        <copy src="parent()" trait="width"/>
+        <sub> 80 </sub>
+      </width>
+      <locus> &true; </locus>
+      <visible>
+        <copy src="parent()" trait="visible"/>
+      </visible>
+
+      <rect name="CRM_WinningsText">
+	<include src="VUI+\outline_rect.xml"/>
+        <id> 47 </id>
+        <font> 7 </font>
+        <string>&-sCaravanWinningsText;</string>
+      <_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+
+      <rect name="CRM_WinningsValue">
+	<include src="VUI+\outline_rect.xml"/>
+        <font> 7 </font>
+        <string>
+          <copy src="parent()" trait="_Value"/>
+        </string>
+        <justify> &right; </justify>
+        <x>
+          <copy src="parent()" trait="width"/>
+        </x>
+      <_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+    </rect>
+
+    <!-- Player's Bet -->
+    <rect name="CRM_Losses">
+      <id> 32 </id>
+      <_Value></_Value>
+
+      <x>  </x>
+      <y> 145 </y>
+      <width>
+        <copy src="sibling(CRM_NPCBetDisplay)" trait="width"/>
+      </width>
+      <locus> &true; </locus>
+      <visible>
+        <copy src="parent()" trait="visible"/>
+      </visible>
+
+      <rect name="CRM_LossesText">
+	<include src="VUI+\outline_rect.xml"/>
+        <id> 48 </id>
+        <font> 7 </font>
+        <string>&-sCaravanLossesText;</string>
+      <_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+
+      <rect name="CRM_LossesValue">
+	<include src="VUI+\outline_rect.xml"/>
+        <font> 7 </font>
+        <string>
+          <copy src="parent()" trait="_Value"/>
+        </string>
+        <justify> &right; </justify>
+        <x>
+          <copy src="parent()" trait="width"/>
+        </x>
+      <_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+    </rect>
+
+    <!-- Player's Total Funds -->
+    <rect name="CRM_WinLoss">
+      <id> 33 </id>
+      <_Value></_Value>
+
+      <x>  </x>
+      <y> 190 </y>
+      <width>
+        <copy src="sibling(CRM_Losses)" trait="width"/>
+      </width>
+      <locus> &true; </locus>
+      <visible>
+        <copy src="parent()" trait="visible"/>
+      </visible>
+
+      <rect name="CRM_WinLossText">
+	<include src="VUI+\outline_rect.xml"/>
+        <id> 49 </id>
+        <font> 7 </font>
+        <string>&-sCaravanWinLossText; </string>
+      <_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+
+      <rect name="CRM_WinLossValue">
+	<include src="VUI+\outline_rect.xml"/>
+        <font> 7 </font>
+        <string>
+          <copy src="parent()" trait="_Value"/>
+        </string>
+        <justify> &right; </justify>
+        <x>
+          <copy src="parent()" trait="width"/>
+        </x>
+      <_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+    </rect>
+
+    <!-- Player's Total Funds -->
+    <rect name="CRM_LargestWinning">
+      <id> 34 </id>
+      <_Value></_Value>
+
+      <x>  </x>
+      <y> 235 </y>
+      <width>
+        <copy src="sibling(CRM_WinLoss)" trait="width"/>
+      </width>
+      <locus> &true; </locus>
+      <visible>
+        <copy src="parent()" trait="visible"/>
+      </visible>
+
+      <rect name="CRM_LargestWinningText">
+	<include src="VUI+\outline_rect.xml"/>
+        <id> 50 </id>
+        <font> 7 </font>
+        <string>&-sCaravanBiggestAnteText; </string>
+      <_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+
+      <rect name="CRM_LargestWinningValue">
+	<include src="VUI+\outline_rect.xml"/>
+        <font> 7 </font>
+        <string>
+          <copy src="parent()" trait="_Value"/>
+        </string>
+        <justify> &right; </justify>
+        <x>
+          <copy src="parent()" trait="width"/>
+        </x>
+      <_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+    </rect>
+
+    <rect name="CRM_Info">
+      <id> 35 </id>
+      <_Value></_Value>
+
+      <x>
+        <copy src="parent()" trait="x"/>
+      </x>
+      <y>
+        
+      </y>
+      <width>
+        <copy src="sibling(CRM_LargestWinning)" trait="width"/>
+      </width>
+      <locus> &true; </locus>
+      <visible>
+        <copy src="parent()" trait="visible"/>
+      </visible>
+
+      <rect name="CRM_InfoText">
+	<include src="VUI+\outline_rect.xml"/>
+        <font> 7 </font>
+        <string>
+          <copy src="parent()" trait="string"/>
+        </string>
+      <_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+
+    </rect>
+
+  </rect>
+  <!-- end CRM_InfoRect  -->
+
+</rect>
+<!-- end LPM_MainRect -->

@@ -1,0 +1,56 @@
+<_selected>0</_selected>
+<clicksound>UIMenuOK</clicksound>
+<height><copy src="child(Icon)" trait="height"/></height>
+<locus>&true;</locus>
+<mouseoversound>UIMenuFocus</mouseoversound>
+<target>
+  <copy>0</copy>
+  <add src="MAPMO" trait="_enabled"/>
+  <add src="me" trait="_selected"/>
+</target>
+<systemcolor><copy src="parent" trait="systemcolor"/></systemcolor>
+<width>
+  <copy>0</copy>
+  <add><copy src="child(Icon)" trait="height"/><onlyif src="me" trait="visible"/></add>
+  <add><copy src="child(Button)" trait="width"/><onlyif src="me" trait="visible"/></add>
+</width>
+<image name="Icon">
+  <alpha>
+    <copy>0</copy>
+    <add><copy src="MAPMO" trait="alpha"/><onlyifnot src="parent" trait="_selected"/></add>
+    <add><copy>255</copy><onlyif src="parent" trait="_selected"/></add>
+  </alpha>
+  <brightness>
+    <copy>0</copy>
+    <add><copy src="me" trait="alpha"/><onlyifnot src="parent" trait="mouseover"/></add>
+    <add><copy>295</copy><onlyif src="parent" trait="mouseover"/></add>
+  </brightness>
+  <filename><copy src="parent" trait="_icon"/></filename>
+  <height><copy src="parent" trait="_scale"/></height>
+  <systemcolor><copy src="parent" trait="systemcolor"/></systemcolor>
+  <width><copy src="me" trait="height"/></width>
+  <zoom>&scale;</zoom>
+</image>
+<text name="Key">
+  <alpha><copy src="MAPMO" trait="alpha"/></alpha>
+  <brightness><copy src="me" trait="alpha"/></brightness>
+  <font>7</font>
+  <justify>&left;</justify>
+  <string><copy src="parent" trait="_key"/></string>
+  <systemcolor><copy src="parent" trait="systemcolor"/></systemcolor>
+  <visible><copy>&true;</copy><onlyifnot src="io" trait="_MAPMOController"/></visible>
+  <x><copy src="sibling(Icon)" trait="width"/></x>
+  <y><copy src="sibling(Icon)" trait="height"/><sub src="me" trait="height"/></y>
+  <zoom><copy src="sibling(Icon)" trait="height"/><mult>1.9</mult></zoom>
+</text>
+<image name="Button">
+  <alpha><copy src="MAPMO" trait="alpha"/></alpha>
+  <brightness><copy src="me" trait="alpha"/></brightness>
+  <filename><copy src="parent" trait="_button"/></filename>
+  <height><copy src="sibling(Icon)" trait="height"/><mult>0.75</mult></height>
+  <systemcolor><copy src="parent" trait="systemcolor"/></systemcolor>
+  <visible><copy src="globals" trait="_Has360Controller"/></visible>
+  <width><copy src="me" trait="height"/></width>
+  <x><copy src="sibling(Icon)" trait="width"/></x>
+  <zoom><copy src="sibling(Icon)" trait="zoom"/></zoom>
+</image>

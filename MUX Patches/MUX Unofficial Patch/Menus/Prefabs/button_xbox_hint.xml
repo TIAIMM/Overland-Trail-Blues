@@ -1,0 +1,133 @@
+<!-- button_xbox_hint.xml -->
+<!-- <hotrect name="button_xbox_hint"> -->
+	<_string> </_string>
+	<_xbox_button> &xbuttonb; </_xbox_button>
+	<_visible_for_pc> &true; </_visible_for_pc>
+	<_enabled> &true; </_enabled>
+	<_x> 0 </_x>
+	<_xbox> &xbox; </_xbox>
+	
+	<id> &generic; </id>
+	<target> <copy src="me()" trait="_enabled"/> </target>
+	<visible>
+		<copy src="me()" trait="_visible_for_pc"/>
+		<or src="me()" trait="_xbox"/>
+	</visible>
+	<width>
+		<copy src="child(button_text)" trait="width"/>
+		<add src="child(button_icon)" trait="width"/>
+		<add> 20 </add>
+	</width>
+	<height>
+		<copy src="child(button_text)" trait="height"/>
+		<max src="child(button_icon)" trait="height"/>
+		<add> 10 </add>
+		<add>
+			<copy> 10 </copy>
+			<onlyifnot src="me()" trait="_xbox"/>
+		</add>
+	</height>
+	<x>
+		<copy src="me()" trait="_x"/>
+		<sub src="me()" trait="width"/>
+		<add src="globals()" trait="_line_thickness"/>
+		<onlyifnot src="me()" trait="_xbox"/>
+		<add>
+			<copy src="me()" trait="_x"/>
+			<sub src="child(button_text)" trait="width"/>
+			<sub src="child(button_icon)" trait="width"/>
+			<sub> 2 </sub>
+			<onlyif src="me()" trait="_xbox"/>
+		</add>
+	</x>
+	<locus> &true; </locus>
+	
+	<image name="button_icon">
+		<visible> <copy src="parent()" trait="_xbox"/> </visible>
+		<filename>
+			<copy src="parent()" trait="_xbox_button"/>
+			<sub> &xbuttonA; </sub>
+			<add> 1 </add>
+			<copy src="me()" trait="_filename_"/>
+		</filename>
+		<x>
+			<copy src="parent()" trait="width"/>
+			<sub src="me()" trait="width"/>
+		</x>
+		<y>
+			<copy src="parent()" trait="height"/>
+			<sub src="me()" trait="height"/>
+			<div> 2 </div>
+		</y>
+		<width> 22 </width>
+		<height> 30 </height>
+		<brightness>
+			<copy src="globals()" trait="_line_brightness"/>
+			<onlyif src="parent()" trait="_enabled"/>
+			<add>
+				<copy src="globals()" trait="_line_brightness_disabled"/>
+				<onlyifnot src="parent()" trait="_enabled"/>
+			</add>
+		</brightness>
+		<_filename_1> Interface\Shared\Button\general_button_a.dds </_filename_1>
+		<_filename_2> Interface\Shared\Button\general_button_b.dds </_filename_2>
+		<_filename_3> Interface\Shared\Button\general_button_x.dds </_filename_3>
+		<_filename_4> Interface\Shared\Button\general_button_y.dds </_filename_4>
+		<_filename_5> Interface\Shared\Button\general_button_lt.dds </_filename_5>
+		<_filename_6> Interface\Shared\Button\general_button_rt.dds </_filename_6>
+		<_filename_7> Interface\Shared\Button\general_button_lb.dds </_filename_7>
+		<_filename_8> Interface\Shared\Button\general_button_rb.dds </_filename_8>
+		<_filename_9> Interface\Shared\Button\general_button_ls.dds </_filename_9>
+		<_filename_10> Interface\Shared\Button\general_button_rs.dds </_filename_10>
+	</image>
+					
+	<image name="button_frame">
+		<include src="button_box.xml"/>
+		<visible> <copy src="parent()" trait="_xbox"/> <eq> &false; </eq> </visible>
+		<width>
+			<copy src="parent()" trait="width"/>
+			<sub>
+				<copy src="sibling(button_icon)" trait="width"/>
+				<sub> 5 </sub>
+				<onlyif src="parent()" trait="_xbox"/>
+			</sub>
+		</width>
+		<_enabled> <copy src="parent()" trait="_enabled"/> </_enabled>
+		<_mouseover>
+			<copy src="parent()" trait="mouseover"/>
+			<add> 1 </add>
+		</_mouseover>
+	</image>
+	
+	<rect name="button_text">
+	<include src="VUI+\outline_rect.xml"/>
+		<string> <copy src="parent()" trait="_string"/> </string>
+		<x>
+			<copy src="parent()" trait="width"/>
+			<sub src="sibling(button_icon)" trait="width"/>
+			<sub>
+				<copy> 10 </copy>
+				<onlyif src="parent()" trait="_xbox"/>
+			</sub>
+		</x>
+		<y>
+			<copy src="parent()" trait="height"/>
+			<sub src="me()" trait="height"/>
+			<div> 2 </div>
+			<add> 9 </add>
+		</y>
+		<depth> 5 </depth>
+		<font> 2 </font>
+		<justify> &right; </justify>
+		<brightness>
+			<copy src="globals()" trait="_text_brightness"/>
+			<onlyif src="parent()" trait="_enabled"/>
+			<add>
+				<copy src="globals()" trait="_text_brightness_disabled"/>
+				<onlyifnot src="parent()" trait="_enabled"/>
+			</add>
+		</brightness>
+	<_VUI+OutlineIntensity>3</_VUI+OutlineIntensity>
+	<_VUI+ShadowOffset>1</_VUI+ShadowOffset>
+</rect>
+<!-- </image> -->

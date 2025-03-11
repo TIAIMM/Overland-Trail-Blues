@@ -1,0 +1,54 @@
+<height><copy src="child(BoxB)" trait="height"/></height>
+<locus>&true;</locus>
+<mouseoversound>UIMenuFocus</mouseoversound>
+<target>&true;</target>
+<width><copy src="child(BoxB)" trait="width"/></width>
+<text name="Text">
+  <alpha><copy>255</copy><add><copy>40</copy><onlyif src="parent" trait="mouseover"/></add></alpha>
+  <brightness><copy src="me" trait="alpha"/></brightness>
+  <font><copy src="parent" trait="_font"/></font>
+  <justify><copy src="parent" trait="_justify"/></justify>
+  <string><copy src="parent" trait="_text"/></string>
+  <systemcolor><copy src="MAPMO" trait="systemcolor"/></systemcolor>
+  <x><copy src="me" trait="width"/></x>
+  <y><copy src="me" trait="height"/><div>2</div></y>
+</text>
+<text name="Key">
+  <font><copy src="sibling(Text)" trait="font"/></font>
+  <string><copy src="parent" trait="_key"/></string>
+  <visible><copy>1</copy><sub src="io" trait="_MAPMOController"/></visible>
+  <systemcolor><copy src="MAPMO" trait="systemcolor"/></systemcolor>
+  <x><copy src="parent" trait="width"/></x>
+  <y><copy src="sibling(Text)" trait="y"/></y>
+</text>
+<image name="Button">
+  <filename><copy src="parent" trait="_button"/></filename>
+  <height>50</height>
+  <visible><copy src="globals" trait="_Has360Controller"/></visible>
+  <systemcolor><copy src="MAPMO" trait="systemcolor"/></systemcolor>
+  <width><copy src="me" trait="height"/></width>
+  <x><copy src="sibling(Text)" trait="x"/></x>
+  <y><copy src="sibling(BoxB)" trait="y"/><mult>2</mult></y>
+  <zoom>&scale;</zoom>
+</image>
+<hotrect name="BoxA">
+  <alpha><copy>215</copy><mult src="me" trait="visible"/></alpha>
+  <brightness><copy src="me" trait="alpha"/><div>4</div></brightness>
+  <depth>-1</depth>
+  <height><copy src="sibling(Text)" trait="height"/><add>10</add></height>
+  <visible><copy src="parent" trait="mouseover"/></visible>
+  <width><copy src="sibling(Text)" trait="width"/><add>10</add></width>
+  <x><copy src="sibling(Text)" trait="x"/><sub><copy src="sibling(Text)" trait="width"/><div>2</div></sub><sub><copy src="me" trait="width"/><div>2</div></sub></x>
+  <y><copy src="sibling(Text)" trait="y"/><sub><copy src="sibling(Text)" trait="height"/><div>2</div></sub></y>
+</hotrect>
+<hotrect name="BoxB">
+  <alpha><copy>255</copy><mult src="me" trait="visible"/></alpha>
+  <brightness><copy src="me" trait="alpha"/></brightness>
+  <depth>-2</depth>
+  <height><copy src="sibling(BoxA)" trait="height"/><add><copy src="globals" trait="_line_thickness"/><mult>2</mult></add></height>
+  <systemcolor><copy src="MAPMO" trait="systemcolor"/></systemcolor>
+  <visible><copy src="sibling(BoxA)" trait="visible"/></visible>
+  <width><copy src="sibling(BoxA)" trait="width"/><add><copy src="globals" trait="_line_thickness"/><mult>2</mult></add></width>
+  <x><copy src="sibling(BoxA)" trait="x"/><add><copy src="sibling(BoxA)" trait="width"/><div>2</div></add><sub><copy src="me" trait="width"/><div>2</div></sub></x>
+  <y><copy src="sibling(BoxA)" trait="y"/><add><copy src="sibling(BoxA)" trait="height"/><div>2</div></add><sub><copy src="me" trait="height"/><div>2</div></sub></y>
+</hotrect>
