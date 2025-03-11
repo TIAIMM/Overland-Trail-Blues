@@ -1,0 +1,24 @@
+ref rTargetref
+float fDamage
+int iTargetHealth
+int iIsCritical
+int iHitLocation
+
+begin function {rTargetref, fDamage, iTargetHealth, iIsCritical, iHitLocation}
+	if eval (AuxTimerTimeToCountdown "*_HSt") == -1
+		if fDamage >= iTargetHealth
+			if eval (Player.AuxVarGetFlt "*_HSeabhkhso") && (iHitLocation == 1 || iHitLocation == 2 || iHitLocation == 13)
+				PlaySound (Player.AuxVarGetRef "*_HSHKsound")
+			else
+				PlaySound (Player.AuxVarGetRef "*_HSKHsound")
+			endif
+		elseif iIsCritical
+			PlaySound (Player.AuxVarGetRef "*_HSCTsound")
+		elseif iHitLocation == 1 || iHitLocation == 2 || iHitLocation == 13
+			PlaySound (Player.AuxVarGetRef "*_HSHSsound")
+		else
+			PlaySound (Player.AuxVarGetRef "*_HSBDsound")
+		endif
+		DispatchEventAlt "SetTimer"
+	endif
+end
